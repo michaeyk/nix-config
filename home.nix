@@ -184,6 +184,8 @@ in {
     userEmail = "mike@michaelkim.net";
 
     extraConfig = {
+      init.defaultBranch = "main";
+      advice.addEmbeddedRepo = false;
       core = {
         editor = "${pkgs.helix}/bin/hx";
       };
