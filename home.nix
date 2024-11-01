@@ -70,6 +70,7 @@ in {
 
     # hyprland
     hypridle
+    hyprlock
     pyprland
     waybar
     dunst
@@ -223,7 +224,7 @@ in {
     font = {
       name = "Fira Code";
       package = pkgs.fira-code;
-      size = 12;
+      size = 8;
     };
     settings = {
       enable_audio_bell = false;
