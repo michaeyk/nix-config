@@ -113,6 +113,25 @@
         msmtp.enable = true;
         notmuch.enable = true;
       };
+
+      "notmuch" = {
+        address = "mike@michaelkim.net";
+        userName = "mike@michaelkim.net";
+        realName = "Michael Kim";
+        passwordCommand = "${pkgs.pass}/bin/pass show email/mike@michaelkim.net | head -n1";
+        imap.host = "imap.fastmail.com";
+        smtp.host = "smtp.fastmail.com";
+        maildir.path = "~/.maildir";
+        aerc = {
+          enable = true;
+          extraAccounts = {
+            source = "notmuch://~/.maildir";
+            outgoing = "msmtpq --read-envelope-from --read-recipients";
+          };
+        };
+        msmtp.enable = true;
+        notmuch.enable = true;
+      };
     };
   };
 
