@@ -8,8 +8,8 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # sops-nix.url = "github:Mic92/sops-nix";
-    # sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
   };
@@ -19,7 +19,7 @@
     nixpkgs,
     home-manager,
     stylix,
-    # sops-nix,
+    sops-nix,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -29,7 +29,7 @@
     # Please replace my-nixos with your hostname
     nixosConfigurations.babysnacks = lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit pkgs;};
+      specialArgs = {inherit pkgs inputs;};
       modules = [
         # Import the previous configuration.nix we used,
         # so the old configuration file still takes effect
