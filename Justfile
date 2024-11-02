@@ -5,6 +5,7 @@
 #  Nix commands related to the local machine
 #
 ############################################################################
+default: update deploy
 
 deploy:
   nixos-rebuild switch --flake . --use-remote-sudo
@@ -13,7 +14,7 @@ deploy:
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
 
-up:
+update: 
   nix flake update
 
 # Update specific input
