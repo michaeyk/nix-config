@@ -48,6 +48,7 @@ in {
     python313
     rustup
     gcc
+    just
 
     # encryption / passwords
     gnupg
