@@ -19,7 +19,11 @@
 
   sops.age.keyFile = "/home/mike/.config/sops/age/keys.txt";
 
-  sops.secrets.COPILOT_API_KEY = { };
+  sops.secrets = {
+    COPILOT_API_KEY = { 
+      owner = config.users.users.mike.name;
+    };
+  };
 
   # Larger font for bootloader
   # console = {

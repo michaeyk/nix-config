@@ -56,6 +56,7 @@ in {
     gnome-keyring
     seahorse
     libsecret
+    sops
 
     # fonts
     nerdfonts
@@ -167,6 +168,8 @@ in {
       	fi
       	rm -f -- "$tmp"
       }
+
+      export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
 
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
     '';
