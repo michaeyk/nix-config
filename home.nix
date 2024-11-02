@@ -83,6 +83,10 @@ in {
     swappy
     nwg-displays
 
+    # lsp
+    markdown-oxide
+    marksman
+
     # media
     mpv
     vlc
