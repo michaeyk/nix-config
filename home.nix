@@ -99,6 +99,7 @@ in {
     # productivity
     obsidian
     libreoffice
+    smartcat
 
     # remote connections
     lftp
