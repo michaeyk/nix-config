@@ -5,9 +5,12 @@
 #  Nix commands related to the local machine
 #
 ############################################################################
-default: update deploy
+default: update deploy-all
 
-deploy:
+deploy-home:
+  home-manager switch --flake . 
+
+deploy-all:
   nixos-rebuild switch --flake . --use-remote-sudo
   home-manager switch --flake . 
 

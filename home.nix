@@ -233,11 +233,12 @@ in {
     font = {
       name = "Fira Code";
       package = pkgs.fira-code;
-      size = 8;
+      size = 10;
     };
     settings = {
       enable_audio_bell = false;
     };
+    themeFile = "SpaceGray_Eighties";
   };
 
   # services.pcscd.enable = true;
