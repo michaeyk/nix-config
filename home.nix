@@ -331,6 +331,37 @@ in {
 
   home.sessionPath = ["$HOME/bin"];
 
+  # Define systemd service to back up home directory
+  systemd.user.services.restic = {
+    Unit = {
+      Description = "Back up home directory";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "/home/mike/bin/backup.sh"; # Command to run
+      Restart = "on-failure"; # Optional: restart on failure
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
+  };
+
+  # Define the systemd timer to run on boot
+  systemd.user.timers.restic = {
+    Unit = {
+      Description = "Back up home directory";
+    };
+    Timer = {
+      OnBootSec = "5m";
+      OnUnitInactiveSec = "1d";
+      Persistent=true;
+      Unit = "restic.service";
+    };
+    Install = {
+      WantedBy = ["timers.target"];
+    };
+  };
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
