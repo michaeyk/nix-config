@@ -277,6 +277,8 @@ in {
     };
     settings = {
       enable_audio_bell = false;
+      background = "#282828";
+      background_opacity = 0.7;
     };
     themeFile = "Catppuccin-Mocha";
   };
