@@ -1,0 +1,17 @@
+.aws
+.cache
+.cargo
+.config/chromium
+.config/google-chrome
+.config/BraveSoftware
+.gradle
+.local/share/Steam
+.local/share/mail
+.thunderbird
+.wine
+nextcloud
+videos
+Games
+tmp
+Downloads
+

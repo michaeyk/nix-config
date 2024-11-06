@@ -12,6 +12,8 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
+
+    yazi.url = "github:sxyazi/yazi";
   };
 
   outputs = {

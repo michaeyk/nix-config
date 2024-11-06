@@ -322,6 +322,11 @@ in {
       recursive = true;
     };
 
+    ".config/restic" = {
+      source = ./restic;
+      recursive = true;
+    };
+
     ".config/waybar" = {
       source = ./waybar;
       recursive = true;
