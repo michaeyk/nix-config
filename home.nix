@@ -272,7 +272,7 @@ in {
     settings = {
       enable_audio_bell = false;
     };
-    themeFile = "SpaceGray_Eighties";
+    themeFile = "Catppuccin-Mocha";
   };
 
   # services.pcscd.enable = true;
@@ -314,6 +314,9 @@ in {
 
   programs.zellij = {
     enable = true;
+    settings = {
+      theme = "catppuccin-mocha";
+    };
   };
 
   programs.zoxide = {
@@ -365,8 +368,6 @@ in {
       source = ./waybar;
       recursive = true;
     };
-
-    ".config/zellij/config.kdl".source = ./zellij/config.kdl;
   };
 
   home.sessionPath = ["$HOME/bin"];
