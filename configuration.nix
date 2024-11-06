@@ -137,12 +137,14 @@
     enableSSHSupport = true;
   };
 
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth = true;
+  security = {
+      polkit.enable = true;
+      pam.services = {
+        login.u2fAuth = true;
+        sudo.u2fAuth = true;
+        hyprlock = {};
+      };
   };
-
-  security.pam.services.hyprlock = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mike = {
