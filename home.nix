@@ -49,6 +49,7 @@ in {
     rustup
     gcc
     just
+    dart-sass
 
     # encryption / passwords
     gnupg
@@ -76,14 +77,18 @@ in {
     hyprpanel
     pyprland
     waybar
-    dunst
     wl-clipboard-rs
     fuzzel
     bemoji
     grim
     slurp
+    grimblast
     swappy
     nwg-displays
+    pywal
+    matugen
+    swww
+    brightnessctl
 
     # lsp
     markdown-oxide
@@ -118,6 +123,7 @@ in {
     bat
     btop
     dust
+    libgtop
 
     spaceship-prompt
 
