@@ -73,6 +73,7 @@ in {
     # hyprland
     hypridle
     hyprlock
+    hyprpanel
     pyprland
     waybar
     dunst
