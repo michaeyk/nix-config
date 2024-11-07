@@ -111,6 +111,7 @@ in {
     obsidian
     libreoffice
     smartcat
+    tealdeer
 
     # remote connections
     lftp
@@ -278,7 +279,7 @@ in {
     settings = {
       enable_audio_bell = false;
       background = "#282828";
-      background_opacity = 0.7;
+      background_opacity = 0.8;
     };
     themeFile = "Catppuccin-Mocha";
   };
@@ -371,6 +372,11 @@ in {
       source = ./restic;
       recursive = true;
     };
+
+    ".config/tealdeer/config.toml".text = ''
+      [updates]
+      auto_update = true
+    '';
 
     ".config/waybar" = {
       source = ./waybar;
