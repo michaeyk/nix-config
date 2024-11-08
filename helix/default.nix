@@ -65,11 +65,11 @@
       };
 
       keys = {
-        insert = {
-          k = {
-            j = "normal_mode";
-          };
-        };
+        # insert = {
+        #   k = {
+        #     j = "normal_mode";
+        #   };
+        # };
         normal = {
           ret = [
             "move_line_down"

@@ -42,7 +42,7 @@ in {
     restic
 
     # browsers
-    brave
+    # brave
 
     # dev
     python313
@@ -76,7 +76,6 @@ in {
     hyprlock
     hyprpanel
     pyprland
-    waybar
     wl-clipboard-rs
     fuzzel
     bemoji
@@ -89,6 +88,7 @@ in {
     matugen
     swww
     brightnessctl
+    gnome-bluetooth
 
     # lsp
     markdown-oxide
@@ -98,7 +98,7 @@ in {
     mpv
     vlc
     spotify
-    nsxiv
+    imv
 
     # messaging
     gajim
@@ -310,7 +310,9 @@ in {
       "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
       "default-web-browser" = ["firefox.desktop"];
       "text/html" = ["firefox.desktop"];
-      "x-scheme-handler/http" = ["firefox.desktop"];
+      "image/*" = "imv-folder.desktop";
+      "video/*" = "umpv.desktop";
+      "audio/*" = "org.gnome.Lollypop.desktop";
       "x-scheme-handler/https" = ["firefox.desktop"];
       "x-scheme-handler/about" = ["firefox.desktop"];
       "x-scheme-handler/unknown" = ["firefox.desktop"];
