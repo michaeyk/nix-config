@@ -107,6 +107,10 @@ in {
     poppler_utils
     pandoc
 
+    # photo editing
+    gimp
+    krita
+
     # productivity
     obsidian
     libreoffice

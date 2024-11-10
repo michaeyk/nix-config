@@ -169,6 +169,10 @@
   # experimental
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  nix.extraOptions = ''
+    trusted-users = root mike
+  '';
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -183,6 +187,7 @@
     gutenprintBin
     libnotify
     nixd
+    devenv
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
