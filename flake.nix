@@ -10,6 +10,8 @@
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -22,6 +24,7 @@
     self,
     nixpkgs,
     home-manager,
+    nixos-hardware,
     stylix,
     sops-nix,
     ...

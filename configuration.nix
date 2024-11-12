@@ -6,9 +6,11 @@
   inputs,
   pkgs,
   ...
-}: {
+}: 
+{
   imports = [
     # Include the results of the hardware scan.
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd        
     ./hardware-configuration.nix
     ./modules/wireguard.nix
     inputs.sops-nix.nixosModules.sops
@@ -37,7 +39,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd = {
-    luks.devices."luks-4efe156e-cec3-45bd-80b8-3d6c9635344d".device = "/dev/disk/by-uuid/4efe156e-cec3-45bd-80b8-3d6c9635344d";
+    luks.devices."luks-4efe156e-cec3-45bd-80b8-3d6c9635344d" = {
+      device = "/dev/disk/by-uuid/4efe156e-cec3-45bd-80b8-3d6c9635344d";
+      yubikey.twoFactor = true;
+    };
     supportedFilesystems = ["nfs"];
     kernelModules = ["nfs"];
   };
@@ -102,6 +107,17 @@
     openFirewall = true;
   };
 
+  services.fprintd.enable = true;
+
+  services.fwupd.enable = true;
+   # we need fwupd 1.9.7 to downgrade the fingerprint sensor firmware
+  services.fwupd.package = (import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/bb2009ca185d97813e75736c2b8d1d8bb81bde05.tar.gz";
+    sha256 = "sha256:003qcrsq5g5lggfrpq31gcvj82lb065xvr7bpfa8ddsw8x4dnysk";
+  }) {
+    inherit (pkgs) system;
+  }).fwupd;
+  
   # Enable boltd for thunderbolt
   services.hardware.bolt.enable = true;
 
@@ -136,9 +152,11 @@
     enable = true;
     enableSSHSupport = true;
   };
+  hardware.gpgSmartcards.enable = true;
 
   security = {
       polkit.enable = true;
+      pam.u2f.enable = true;
       pam.services = {
         login.u2fAuth = true;
         sudo.u2fAuth = true;
@@ -188,17 +206,16 @@
     libnotify
     nixd
     devenv
+    yubioath-flutter
+    yubikey-manager-qt
+    yubikey-touch-detector
+    yubikey-personalization-gui
+    yubikey-manager
+    pam_u2f
+    yubikey-personalization
+    libu2f-host
+    yubico-pam
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

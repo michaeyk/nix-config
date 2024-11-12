@@ -110,6 +110,7 @@ in {
     # photo editing
     gimp
     krita
+    photocollage
 
     # productivity
     obsidian
@@ -314,7 +315,9 @@ in {
       "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
       "default-web-browser" = ["firefox.desktop"];
       "text/html" = ["firefox.desktop"];
-      "image/*" = "imv-folder.desktop";
+      # "image/png" = "imv-folder.desktop";
+      "image/png" = "imv.desktop";
+      "image/jpg" = "imv-folder.desktop";
       "video/*" = "umpv.desktop";
       "audio/*" = "org.gnome.Lollypop.desktop";
       "x-scheme-handler/https" = ["firefox.desktop"];
