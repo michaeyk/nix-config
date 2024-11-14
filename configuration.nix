@@ -25,6 +25,12 @@
     COPILOT_API_KEY = { 
       owner = config.users.users.mike.name;
     };
+
+    "yubico/u2f_keys" = {
+      owner = config.users.users.mike.name;
+      inherit (config.users.users.mike) group;
+      path = "/home/mike/.config/Yubico/u2f_keys";
+    };
   };
 
   # Larger font for bootloader
@@ -143,25 +149,29 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  services.pcscd.enable = true;
   services.udev.packages = [pkgs.yubikey-personalization];
-
+  
   # FUSE mount filesystem on /bin for $PATH
   services.envfs.enable = true;
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-  hardware.gpgSmartcards.enable = true;
-
   security = {
-      polkit.enable = true;
-      pam.u2f.enable = true;
-      pam.services = {
-        login.u2fAuth = true;
-        sudo.u2fAuth = true;
-        hyprlock = {};
+    polkit.enable = true;
+    pam = {
+      sshAgentAuth.enable = true;
+      u2f = {
+        enable = true;
+        settings.authFile = "/home/mike/.config/Yubico/u2f_keys";
       };
+      services = {
+        login.u2fAuth = true;
+        sudo = {
+          u2fAuth = true;
+          sshAgentAuth = true;
+        };
+        hyprlock = {};
+      }; 
+    }; 
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -179,8 +189,17 @@
 
   programs.git.enable = true;
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    # set the flake package
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # make sure to also set the portal package, so that they are in sync
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;  
+  };
+    
 
+  programs.yubikey-touch-detector.enable = true;
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -207,14 +226,11 @@
     nixd
     devenv
     yubioath-flutter
-    yubikey-manager-qt
     yubikey-touch-detector
+    yubikey-personalization
     yubikey-personalization-gui
     yubikey-manager
     pam_u2f
-    yubikey-personalization
-    libu2f-host
-    yubico-pam
   ];
 
   # Enable the OpenSSH daemon.

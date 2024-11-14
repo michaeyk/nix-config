@@ -23,8 +23,8 @@
       };
       filters = {
         "text/plain" = "wrap -w 100 | colorize";
-        # "text/html" = "html | colorize"
-        "text/html" = "pandoc -f html -t plain";
+        "text/html" = "html | colorize";
+        # "text/html" = "pandoc -f html -t plain";
         "message/delivery-status" = "colorize";
         "message/rfc822" = "colorize";
         "text/calendar" = "calendar";

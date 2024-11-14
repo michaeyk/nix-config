@@ -21,7 +21,6 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
-    # inputs.sops-nix.homeManagerModules.sops
     ./email
     ./helix
   ];
@@ -74,7 +73,7 @@ in {
     # hyprland
     hypridle
     hyprlock
-    hyprpanel
+    # hyprpanel
     pyprland
     wl-clipboard-rs
     fuzzel
@@ -85,7 +84,7 @@ in {
     swappy
     nwg-displays
     pywal
-    matugen
+    # matugen
     swww
     brightnessctl
     gnome-bluetooth
@@ -106,6 +105,7 @@ in {
     # pdf
     poppler_utils
     pandoc
+    evince
 
     # photo editing
     gimp
@@ -289,25 +289,18 @@ in {
     themeFile = "Catppuccin-Mocha";
   };
 
-  # services.pcscd.enable = true;
   services.gpg-agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry-gtk2;
     enableSshSupport = true;
+    enableScDaemon = true;
+    sshKeys = ["534D47E4DE15638C320F1DF916AD55A5D6B92A63"];
     defaultCacheTtl = 1800;
   };
 
   services.syncthing.enable = true;
 
   services.gnome-keyring.enable = true;
-
-  # sops = {
-  #   age.keyFile = "/home/mike/.config/sops/keys.txt";
-  #   defaultSopsFile = ./secrets.yaml;
-  #   secrets.test = {
-  #     path = "%r/test.txt";
-  #   };
-  # };
 
   xdg.mimeApps = {
     enable = true;
