@@ -155,6 +155,8 @@
   # FUSE mount filesystem on /bin for $PATH
   services.envfs.enable = true;
 
+  services.yubikey-agent.enable = true;
+  
   security = {
     polkit.enable = true;
     pam = {
@@ -197,7 +199,6 @@
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;  
   };
     
-
   programs.yubikey-touch-detector.enable = true;
   
   # Allow unfree packages

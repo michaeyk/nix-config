@@ -42,6 +42,7 @@ in {
 
     # browsers
     # brave
+    w3m
 
     # dev
     python313
@@ -54,8 +55,6 @@ in {
     gnupg
     pass
     pinentry-gtk2
-    gnome-keyring
-    seahorse
     libsecret
     sops
 
@@ -73,7 +72,7 @@ in {
     # hyprland
     hypridle
     hyprlock
-    # hyprpanel
+    hyprpanel
     pyprland
     wl-clipboard-rs
     fuzzel
@@ -84,7 +83,7 @@ in {
     swappy
     nwg-displays
     pywal
-    # matugen
+    matugen
     swww
     brightnessctl
     gnome-bluetooth
@@ -101,6 +100,7 @@ in {
 
     # messaging
     gajim
+    dino
 
     # pdf
     poppler_utils
@@ -121,6 +121,7 @@ in {
     # remote connections
     lftp
     sshfs
+    dante
 
     # utils
     ripgrep
@@ -300,8 +301,6 @@ in {
 
   services.syncthing.enable = true;
 
-  services.gnome-keyring.enable = true;
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -310,7 +309,7 @@ in {
       "text/html" = ["firefox.desktop"];
       # "image/png" = "imv-folder.desktop";
       "image/png" = "imv.desktop";
-      "image/jpg" = "imv-folder.desktop";
+      "image/jpeg" = "imv.desktop";
       "video/*" = "umpv.desktop";
       "audio/*" = "org.gnome.Lollypop.desktop";
       "x-scheme-handler/https" = ["firefox.desktop"];
