@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
@@ -52,7 +53,7 @@ in {
     dart-sass
 
     # encryption / passwords
-    gnupg
+    # gnupg
     pass
     pinentry-gtk2
     libsecret
@@ -75,11 +76,12 @@ in {
     hyprpanel
     pyprland
     wl-clipboard-rs
+    # wl-clipboard
     fuzzel
     bemoji
     grim
     slurp
-    grimblast
+    # grimblast
     swappy
     nwg-displays
     pywal
@@ -131,6 +133,7 @@ in {
     btop
     dust
     libgtop
+    imgurbash2
 
     spaceship-prompt
 
@@ -158,6 +161,7 @@ in {
       ignoreAllDups = true;
       extended = true;
       expireDuplicatesFirst = true;
+      path = "$HOME/.zsh_history";
       size = 10000;
     };
     shellAliases = {
@@ -252,6 +256,9 @@ in {
     ];
   };
 
+  # interferes with gpg-agent, force it off
+  services.gnome-keyring.enable = lib.mkForce false;
+  
   services.hypridle = {
     enable = true;
     settings = {
@@ -290,12 +297,15 @@ in {
     themeFile = "Catppuccin-Mocha";
   };
 
+  programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry-gtk2;
     enableSshSupport = true;
     enableScDaemon = true;
-    sshKeys = ["534D47E4DE15638C320F1DF916AD55A5D6B92A63"];
+    sshKeys = [
+      "534D47E4DE15638C320F1DF916AD55A5D6B92A63"
+    ];
     defaultCacheTtl = 1800;
   };
 
@@ -317,10 +327,10 @@ in {
       "x-scheme-handler/unknown" = ["firefox.desktop"];
     };
   };
+  
+  programs.tmux.enable = true;
 
   programs.zathura.enable = true;
-
-  programs.tmux.enable = true;
 
   programs.zellij = {
     enable = true;
