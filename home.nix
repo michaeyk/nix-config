@@ -256,6 +256,18 @@ in {
     ];
   };
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      bastion = {
+        port = 22;
+        hostname = "34.197.186.111";
+        user = "ubuntu";
+        forwardAgent = true;
+      };
+    };
+  };
+
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
   
