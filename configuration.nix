@@ -6,11 +6,10 @@
   inputs,
   pkgs,
   ...
-}: 
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
-    inputs.nixos-hardware.nixosModules.framework-13-7040-amd        
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     ./hardware-configuration.nix
     ./modules/wireguard.nix
     inputs.sops-nix.nixosModules.sops
@@ -22,7 +21,7 @@
   sops.age.keyFile = "/home/mike/.config/sops/age/keys.txt";
 
   sops.secrets = {
-    COPILOT_API_KEY = { 
+    COPILOT_API_KEY = {
       owner = config.users.users.mike.name;
     };
 
@@ -36,7 +35,7 @@
   # Larger font for bootloader
   # console = {
   #   earlySetup = true;
-  #   font = "${pkgs.tamzen}/share/consolefonts/Tamzen8x16.psf";    
+  #   font = "${pkgs.tamzen}/share/consolefonts/Tamzen8x16.psf";
   #   packages = with pkgs; [ tamzen ];
   # };
 
@@ -69,7 +68,7 @@
 
   # Set your time zone.
   time.timeZone = "America/Denver";
- 
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -106,24 +105,35 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = [pkgs.gutenprint];
 
-  # services.avahi = {
-  #   enable = true;
-  #   nssmdns4 = true;
-  #   openFirewall = true;
-  # };
+  services.printing.browsing = true;
+  services.printing.browsedConf = ''
+    BrowseDNSSDSubTypes _cups,_print
+    BrowseLocalProtocols all
+    BrowseRemoteProtocols all
+    CreateIPPPrinterQueues All
+
+    BrowseProtocols all
+  '';
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
 
   services.fprintd.enable = true;
 
   services.fwupd.enable = true;
-   # we need fwupd 1.9.7 to downgrade the fingerprint sensor firmware
-  services.fwupd.package = (import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/bb2009ca185d97813e75736c2b8d1d8bb81bde05.tar.gz";
-    sha256 = "sha256:003qcrsq5g5lggfrpq31gcvj82lb065xvr7bpfa8ddsw8x4dnysk";
-  }) {
-    inherit (pkgs) system;
-  }).fwupd;
-  
+  # we need fwupd 1.9.7 to downgrade the fingerprint sensor firmware
+  services.fwupd.package =
+    (import (builtins.fetchTarball {
+        url = "https://github.com/NixOS/nixpkgs/archive/bb2009ca185d97813e75736c2b8d1d8bb81bde05.tar.gz";
+        sha256 = "sha256:003qcrsq5g5lggfrpq31gcvj82lb065xvr7bpfa8ddsw8x4dnysk";
+      }) {
+        inherit (pkgs) system;
+      })
+    .fwupd;
+
   # Enable boltd for thunderbolt
   services.hardware.bolt.enable = true;
 
@@ -151,12 +161,12 @@
   # services.xserver.libinput.enable = true;
   services.pcscd.enable = true;
   services.udev.packages = [pkgs.yubikey-personalization];
-  
+
   # FUSE mount filesystem on /bin for $PATH
   services.envfs.enable = true;
 
   # services.yubikey-agent.enable = true; # this doesn't work
-  
+
   security = {
     polkit.enable = true;
     pam = {
@@ -172,8 +182,8 @@
           sshAgentAuth = true;
         };
         hyprlock = {};
-      }; 
-    }; 
+      };
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -196,14 +206,14 @@
     # set the flake package
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # make sure to also set the portal package, so that they are in sync
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;  
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
-    
+
   programs.seahorse.enable = true;
-  
+
   programs.ssh.startAgent = false; # gpg-agent instead
   programs.yubikey-touch-detector.enable = true;
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -245,7 +255,7 @@
   fileSystems."/mnt/mike" = {
     device = "10.253.0.1:/mnt/user/mike";
     fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
   };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

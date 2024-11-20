@@ -76,12 +76,10 @@ in {
     hyprpanel
     pyprland
     wl-clipboard-rs
-    # wl-clipboard
     fuzzel
     bemoji
     grim
     slurp
-    # grimblast
     swappy
     nwg-displays
     pywal
@@ -119,6 +117,7 @@ in {
     libreoffice
     smartcat
     tealdeer
+    glabels
 
     # remote connections
     lftp
@@ -133,7 +132,6 @@ in {
     btop
     dust
     libgtop
-    imgurbash2
 
     spaceship-prompt
 
