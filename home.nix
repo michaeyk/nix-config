@@ -302,7 +302,7 @@ in {
     settings = {
       enable_audio_bell = false;
       background = "#282828";
-      background_opacity = 0.8;
+      background_opacity = 0.85;
     };
     themeFile = "Catppuccin-Mocha";
   };
