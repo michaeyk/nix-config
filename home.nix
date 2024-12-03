@@ -51,6 +51,7 @@ in {
     gcc
     just
     dart-sass
+    postman
 
     # encryption / passwords
     # gnupg
@@ -101,6 +102,8 @@ in {
     # messaging
     gajim
     dino
+    whatsapp-for-linux
+    discord
 
     # pdf
     poppler_utils
@@ -169,6 +172,7 @@ in {
       sxiv = "nsxiv";
       lg = "lazygit";
       gcob = "git branch | fzf | xargs git checkout";
+      ssh = "TERM=tmux ssh";
 
       # Add eza aliases
       ls = "eza ${ezaParams}";
@@ -359,6 +363,8 @@ in {
     builtins.elem (pkgs.lib.getName pkg) [
       "obsidian"
       "spotify"
+      "postman"
+      "discord"
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
