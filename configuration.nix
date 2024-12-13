@@ -252,6 +252,11 @@
     pam_u2f
   ];
 
+  fonts.packages = with pkgs; [
+  nerd-fonts.fira-code
+  nerd-fonts.droid-sans-mono
+];
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   boot.supportedFilesystems = ["nfs"];

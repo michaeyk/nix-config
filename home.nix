@@ -43,6 +43,7 @@ in {
 
     # browsers
     # brave
+    google-chrome
     w3m
 
     # dev
@@ -59,9 +60,6 @@ in {
     pinentry-gtk2
     libsecret
     sops
-
-    # fonts
-    nerdfonts
 
     # files and directories
     yazi
@@ -365,6 +363,7 @@ in {
       "spotify"
       "postman"
       "discord"
+      "google-chrome"
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
