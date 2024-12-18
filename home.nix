@@ -265,6 +265,12 @@ in {
         user = "ubuntu";
         forwardAgent = true;
       };
+      jbastion = {
+        port = 22;
+        hostname = "3.208.183.51";
+        user = "ubuntu";
+        forwardAgent = true;
+      };
     };
   };
 
