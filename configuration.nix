@@ -89,7 +89,7 @@
 
   # Enable the XFCE Desktop Environment.
   # services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  # services.xserver.desktopManager.xfce.enable = true;
 
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
@@ -138,7 +138,7 @@
   services.hardware.bolt.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -160,12 +160,19 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   services.pcscd.enable = true;
-  services.udev.packages = [pkgs.yubikey-personalization];
 
   # FUSE mount filesystem on /bin for $PATH
   services.envfs.enable = true;
 
-  # services.yubikey-agent.enable = true; # this doesn't work
+  # Ledger Nano X
+  hardware.ledger.enable = true;
+  
+  # yubikey and ledger live udev rules 
+  services = {
+    udev.packages = with pkgs; [ 
+        yubikey-personalization
+    ];
+  };
 
   security = {
     polkit.enable = true;
@@ -173,7 +180,11 @@
       sshAgentAuth.enable = true;
       u2f = {
         enable = true;
-        settings.authFile = "/home/mike/.config/Yubico/u2f_keys";
+        settings = {
+          # interactive = true;
+          cue = true;
+          authFile = "/home/mike/.config/Yubico/u2f_keys";          
+        };
       };
       services = {
         login.u2fAuth = true;
@@ -186,11 +197,14 @@
     };
   };
 
+  # Groups
+  users.groups.plugdev = {};
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "plugdev"];
     packages = with pkgs; [
       #  thunderbird
     ];

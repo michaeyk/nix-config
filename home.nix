@@ -41,9 +41,10 @@ in {
     rsync
     restic
 
-    # browsers
-    # brave
-    google-chrome
+    # browser and webdriver
+    chromium
+    chromedriver
+    geckodriver
     w3m
 
     # dev
@@ -60,6 +61,7 @@ in {
     pinentry-gtk2
     libsecret
     sops
+    ledger-live-desktop
 
     # files and directories
     yazi
@@ -97,7 +99,8 @@ in {
     spotify
     imv
 
-    # messaging
+    # messaging / email
+    thunderbird
     gajim
     dino
     whatsapp-for-linux
@@ -118,12 +121,15 @@ in {
     libreoffice
     smartcat
     tealdeer
-    glabels
+    # glabels
 
     # remote connections
     lftp
     sshfs
     dante
+
+    # Raspberry Pi
+    rpi-imager
 
     # utils
     ripgrep
@@ -133,6 +139,7 @@ in {
     btop
     dust
     libgtop
+    ffmpeg
 
     spaceship-prompt
 
@@ -276,6 +283,7 @@ in {
 
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
+  # services.gnome-keyring.enable = true;
   
   services.hypridle = {
     enable = true;
