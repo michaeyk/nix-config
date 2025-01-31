@@ -54,6 +54,7 @@ in {
     just
     dart-sass
     postman
+    mongodb-compass
 
     # encryption / passwords
     # gnupg
@@ -378,6 +379,7 @@ in {
       "postman"
       "discord"
       "google-chrome"
+      "mongodb-compass"
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -422,6 +424,13 @@ in {
       source = ./waybar;
       recursive = true;
     };
+
+    ".config/yazi/keymap.toml".text = ''
+      [[manager.prepend_keymap]]
+      on   = "<C-d>"
+      run  = "plugin diff"
+      desc = "Diff the selected with the hovered file"    
+    '';
   };
 
   home.sessionPath = ["$HOME/bin"];
