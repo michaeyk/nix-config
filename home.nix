@@ -89,6 +89,7 @@ in {
     swww
     brightnessctl
     gnome-bluetooth
+    pavucontrol
 
     # lsp
     markdown-oxide
