@@ -16,7 +16,7 @@ in  {
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   imports = [
-    ./helix
+    ../helix
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -150,6 +150,8 @@ in  {
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
 
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
+
+      source "$HOME/.nix-profile/etc/profile.d/nix.sh"
     '';
   };
 

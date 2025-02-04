@@ -205,6 +205,7 @@ in {
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
 
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
+      . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     '';
   };
 
