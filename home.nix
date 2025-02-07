@@ -190,6 +190,12 @@ in {
       lx = "eza -lbhHigUmuSa@";
       lt = "eza --tree ${ezaParams}";
       tree = "eza --tree ${ezaParams}";
+
+      # docker alias
+      dp = "docker ps";
+      dl = "docker logs --tail 10 --follow";
+      dc = "docker-compose up -d";
+      ds = "docker stop";
     };
 
     initExtra = ''
@@ -205,7 +211,6 @@ in {
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
 
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
-      . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     '';
   };
 
