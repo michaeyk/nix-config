@@ -22,5 +22,26 @@
         persistentKeepalive = 25;
       }];
     };
+
+    wg1 = {
+      # IP address of this machine in the *tunnel network*
+      address = [
+        "10.8.0.2/32"
+      ];
+
+      # To match firewall allowedUDPPorts (without this wg
+      # uses random port numbers).
+      listenPort = 52820;
+
+      # Path to the private key file.
+      privateKeyFile = "/home/mike/.wireguard/private-key";
+
+      peers = [{
+        publicKey = "Uj/Mnp8xqpnLMRUAwexG1p2PF8CKLz4K6MhOOqscBxE=";
+        allowedIPs = [ "10.8.0.1/32" "172.16.0.135/32"];
+        endpoint = "${server_ip}:52820";
+        persistentKeepalive = 25;
+      }];
+    };
   };
 }

@@ -7,6 +7,20 @@
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
+    nixpkgs = {
+    overlays = [
+      (self: super: {
+        basedpyright = super.basedpyright.overrideAttrs (old: {
+          postInstall =
+            old.postInstall
+            + ''
+              # Remove dangling symlinks created during installation (remove -delete to just see the files, or -print '%l\n' to see the target
+              find -L $out -type l -print -delete
+            '';
+        });
+      })
+    ];
+  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mike";
@@ -57,7 +71,6 @@ in {
     mongodb-compass
 
     # encryption / passwords
-    # gnupg
     pass
     pinentry-gtk2
     libsecret
@@ -70,7 +83,7 @@ in {
     fd
 
     # git
-    gh
+    gh   # github command line 
 
     # hyprland
     hypridle
@@ -83,13 +96,14 @@ in {
     grim
     slurp
     swappy
-    nwg-displays
+    # nwg-displays
     pywal
     matugen
     swww
     brightnessctl
     gnome-bluetooth
     pavucontrol
+    upower
 
     # lsp
     markdown-oxide
@@ -103,7 +117,6 @@ in {
 
     # messaging / email
     thunderbird
-    gajim
     dino
     whatsapp-for-linux
     discord

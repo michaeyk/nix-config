@@ -65,19 +65,18 @@
       };
 
       keys = {
-        # insert = {
-        #   k = {
-        #     j = "normal_mode";
-        #   };
-        # };
+        insert = {
+          k = {
+            j = "normal_mode";
+          };
+        };
         normal = {
-          ret = [
-            "move_line_down"
-            "goto_first_nonwhitespace"
-          ]; # Maps the enter key to move to start of next line
+          ret = "goto_word";
           space = {
             w = ":write";
           };
+          H = ":bp";
+          L = ":bn";
           D = ["ensure_selections_forward" "extend_to_line_end"];
           C-y = ":sh zellij run -f -x 10% -y 10% --width 80% --height 80% -- bash ~/.config/helix/yazi-picker.sh";
           Z = {
