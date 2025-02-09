@@ -66,9 +66,11 @@ in {
     rustup
     gcc
     just
+    gnumake
     dart-sass
     postman
     mongodb-compass
+    postgresql
 
     # encryption / passwords
     pass
@@ -355,6 +357,7 @@ in {
     ];
     defaultCacheTtl = 1800;
   };
+
 
   services.syncthing.enable = true;
 
