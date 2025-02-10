@@ -30,14 +30,13 @@
       inherit (config.users.users.mike) group;
       path = "/home/mike/.config/Yubico/u2f_keys";
     };
-  };
 
-  # Larger font for bootloader
-  # console = {
-  #   earlySetup = true;
-  #   font = "${pkgs.tamzen}/share/consolefonts/Tamzen8x16.psf";
-  #   packages = with pkgs; [ tamzen ];
-  # };
+    "nextcloud" = {
+      # owner = config.users.users.mike.name;
+      owner = "root";
+      path = "/etc/davfs2/secrets";
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -53,7 +52,6 @@
   };
 
   networking.hostName = "babysnacks"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   environment.shells = with pkgs; [zsh bash];
   users.defaultUserShell = pkgs.zsh;
@@ -99,22 +97,6 @@
   services.xserver.xkb = {
     layout = "us";
     variant = "";
-  };
-
-  services.postgresql = {
-    enable = true;
-    ensureDatabases = [ "mydatabase" ];
-    enableTCPIP = true;
-    # port = 5432;
-    authentication = pkgs.lib.mkOverride 10 ''
-      #...
-      #type database DBuser origin-address auth-method
-      local all       all     trust
-      # ipv4
-      host  all      all     127.0.0.1/32   trust
-      # ipv6
-      host all       all     ::1/128        trust
-    '';
   };
 
   services.power-profiles-daemon.enable = true;
@@ -182,11 +164,11 @@
 
   # Ledger Nano X
   hardware.ledger.enable = true;
-  
-  # yubikey and ledger live udev rules 
+
+  # yubikey and ledger live udev rules
   services = {
-    udev.packages = with pkgs; [ 
-        yubikey-personalization
+    udev.packages = with pkgs; [
+      yubikey-personalization
     ];
   };
 
@@ -199,7 +181,7 @@
         settings = {
           # interactive = true;
           cue = true;
-          authFile = "/home/mike/.config/Yubico/u2f_keys";          
+          authFile = "/home/mike/.config/Yubico/u2f_keys";
         };
       };
       services = {
@@ -215,12 +197,13 @@
 
   # Groups
   users.groups.plugdev = {};
-  
+  users.groups.davfs2 = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel" "plugdev"];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2"];
     packages = with pkgs; [
       #  thunderbird
     ];
@@ -280,23 +263,33 @@
     yubikey-personalization-gui
     yubikey-manager
     pam_u2f
+    davfs2
   ];
 
   fonts.packages = with pkgs; [
-  nerd-fonts.fira-code
-  nerd-fonts.droid-sans-mono
-];
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+  ];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   boot.supportedFilesystems = ["nfs"];
   services.rpcbind.enable = true;
 
-  fileSystems."/mnt/mike" = {
-    device = "10.253.0.1:/mnt/user/mike";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+  fileSystems = {
+    "/mnt/mike" = {
+      device = "10.253.0.1:/mnt/user/mike";
+      fsType = "nfs";
+      options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+    };
+
+    # "/home/mike/nextcloud" = {
+    #   device = "https://nextcloud.michaelkim.net/remote.php/dav/files/mike";
+    #   fsType = "davfs";
+    #   options = ["uid=1000" "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+    # }; 
   };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   networking.firewall.allowedUDPPorts = [51820];

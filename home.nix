@@ -70,7 +70,6 @@ in {
     dart-sass
     postman
     mongodb-compass
-    postgresql
 
     # encryption / passwords
     pass
@@ -209,7 +208,7 @@ in {
       # docker alias
       dp = "docker ps";
       dl = "docker logs --tail 10 --follow";
-      dc = "docker-compose up -d";
+      dc = "docker compose up -d";
       ds = "docker stop";
     };
 
@@ -358,7 +357,6 @@ in {
     defaultCacheTtl = 1800;
   };
 
-
   services.syncthing.enable = true;
 
   xdg.mimeApps = {
@@ -473,7 +471,6 @@ in {
     };
   };
 
-  # Define the systemd timer to run on boot
   systemd.user.timers.restic = {
     Unit = {
       Description = "Back up home directory";
@@ -488,7 +485,6 @@ in {
       WantedBy = ["timers.target"];
     };
   };
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
