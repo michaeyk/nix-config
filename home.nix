@@ -70,6 +70,8 @@ in {
     dart-sass
     postman
     mongodb-compass
+    cargo-lambda
+    openssl
 
     # encryption / passwords
     pass
