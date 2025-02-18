@@ -8,18 +8,18 @@
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
     nixpkgs = {
-    overlays = [
-      (self: super: {
-        basedpyright = super.basedpyright.overrideAttrs (old: {
-          postInstall =
-            old.postInstall
-            + ''
-              # Remove dangling symlinks created during installation (remove -delete to just see the files, or -print '%l\n' to see the target
-              find -L $out -type l -print -delete
-            '';
-        });
-      })
-    ];
+    # overlays = [
+    #   (self: super: {
+    #     basedpyright = super.basedpyright.overrideAttrs (old: {
+    #       postInstall =
+    #         old.postInstall
+    #         + ''
+    #           # Remove dangling symlinks created during installation (remove -delete to just see the files, or -print '%l\n' to see the target
+    #           find -L $out -type l -print -delete
+    #         '';
+    #     });
+    #   })
+    # ];
   };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -72,6 +72,7 @@ in {
     mongodb-compass
     cargo-lambda
     openssl
+    foundry
 
     # encryption / passwords
     pass

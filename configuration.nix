@@ -283,7 +283,7 @@
       options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
     };
 
-    "/home/mike/nextcloud" = {
+    "/mnt/nextcloud" = {
       device = "https://nextcloud.michaelkim.net/remote.php/dav/files/mike";
       fsType = "davfs";
       options = ["uid=1000" "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
