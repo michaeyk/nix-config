@@ -7,7 +7,7 @@
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
-    nixpkgs = {
+  nixpkgs = {
     # overlays = [
     #   (self: super: {
     #     basedpyright = super.basedpyright.overrideAttrs (old: {
@@ -73,6 +73,7 @@ in {
     cargo-lambda
     openssl
     foundry
+    postgresql
 
     # encryption / passwords
     pass
@@ -82,12 +83,11 @@ in {
     ledger-live-desktop
 
     # files and directories
-    yazi
     fzf
     fd
 
     # git
-    gh   # github command line 
+    gh # github command line
 
     # hyprland
     hypridle
@@ -100,7 +100,7 @@ in {
     grim
     slurp
     swappy
-    # nwg-displays
+    nwg-displays
     pywal
     matugen
     swww
@@ -159,6 +159,7 @@ in {
     dust
     libgtop
     ffmpeg
+    ripdrag
 
     spaceship-prompt
 
@@ -294,13 +295,13 @@ in {
       bastion = {
         port = 22;
         hostname = "34.197.186.111";
-        user = "ubuntu";
+        user = "mike";
         forwardAgent = true;
       };
       jbastion = {
         port = 22;
         hostname = "3.208.183.51";
-        user = "ubuntu";
+        user = "mike";
         forwardAgent = true;
       };
     };
@@ -309,7 +310,7 @@ in {
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
   # services.gnome-keyring.enable = true;
-  
+
   services.hypridle = {
     enable = true;
     settings = {
@@ -378,8 +379,18 @@ in {
       "x-scheme-handler/unknown" = ["firefox.desktop"];
     };
   };
-  
+
   programs.tmux.enable = true;
+
+  programs.yazi = {
+    enable = true;
+    keymap = {
+      manager.prepend_keymap = [
+        { run = "plugin diff"; on = ["<C-d>"]; }
+        { run = "shell -- for path in \"$@\"; do echo \"file://\$path\"; done | wl-copy -t text/uri-list"; on = ["y"]; mode = ["normal"]; }
+      ];
+    };
+  };
 
   programs.zathura.enable = true;
 
@@ -448,13 +459,6 @@ in {
       source = ./waybar;
       recursive = true;
     };
-
-    ".config/yazi/keymap.toml".text = ''
-      [[manager.prepend_keymap]]
-      on   = "<C-d>"
-      run  = "plugin diff"
-      desc = "Diff the selected with the hovered file"    
-    '';
   };
 
   home.sessionPath = ["$HOME/bin"];
@@ -481,7 +485,7 @@ in {
     Timer = {
       OnBootSec = "5m";
       OnUnitInactiveSec = "1d";
-      Persistent=true;
+      Persistent = true;
       Unit = "restic.service";
     };
     Install = {
