@@ -57,7 +57,7 @@
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect
           # sops-nix.nixosModules.sops
-          stylix.homeManagerModules.stylix
+          # stylix.homeManagerModules.stylix
           ./home.nix
         ];
       };

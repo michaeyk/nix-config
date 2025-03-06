@@ -36,7 +36,7 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
-    ./email
+    # ./email
     ./helix
   ];
 
@@ -387,7 +387,7 @@ in {
     keymap = {
       manager.prepend_keymap = [
         { run = "plugin diff"; on = ["<C-d>"]; }
-        { run = "shell -- for path in \"$@\"; do echo \"file://\$path\"; done | wl-copy -t text/uri-list"; on = ["y"]; mode = ["normal"]; }
+        { run = "shell -- for path in \"$@\"; do echo \"file://\$path\"; done | wl-copy -t text/uri-list"; on = ["Y"]; mode = ["normal"]; }
       ];
     };
   };
