@@ -14,6 +14,8 @@
     taplo
     dprint
     black
+    typescript-language-server
+    nodePackages.prettier
   ];
 
   programs.helix = {
@@ -134,6 +136,40 @@
       [[language]]
       name = "markdown"
       formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--stdin", "md"] }
+      auto-format = true
+
+      [[language]]
+      name = "html"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "html"] }
+
+      [[language]]
+      name = "json"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "json"] }
+
+      [[language]]
+      name = "css"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "css"] }
+
+      [[language]]
+      name = "javascript"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      language-servers = ["typescript-language-server", "gpt"]
+      auto-format = true
+
+      [[language]]
+      name = "typescript"
+      auto-format = true
+      language-servers = ["typescript-language-server", "gpt"]
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+
+      [[language]]
+      name = "tsx"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      auto-format = true
+
+      [[language]]
+      name = "jsx"
+      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
       auto-format = true
 
       [language-server.basedpyright]
