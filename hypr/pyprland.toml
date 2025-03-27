@@ -6,3 +6,9 @@ animation = "fromTop"
 command = "kitty --class kitty-dropterm"
 class = "kitty-dropterm"
 size = "75% 60%"
+
+[scratchpads.volume]
+command = "pavucontrol"
+animation = "fromBottom"
+lazy = true
+size = "15% 25%"
