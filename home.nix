@@ -252,7 +252,7 @@ in {
         editor = "${pkgs.helix}/bin/hx";
       };
       commit = {
-        template = "./.gitmessage";
+        template = "~/.gitmessage";
       };
     };
   };
@@ -445,6 +445,10 @@ in {
     ".config/aerc" = {
       source = ./email/aerc;
       recursive = true;
+    };
+
+    ".gitmessage" = {
+      source = ./git/gitmessage;
     };
 
     ".config/hypr" = {
