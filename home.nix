@@ -252,7 +252,7 @@ in {
         editor = "${pkgs.helix}/bin/hx";
       };
       commit = {
-        template = "~/.gitmessage";
+        template = "./.gitmessage";
       };
     };
   };
