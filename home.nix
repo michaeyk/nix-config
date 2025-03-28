@@ -36,7 +36,7 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
-    # ./email
+    ./email
     ./helix
   ];
 
@@ -160,6 +160,7 @@ in {
     libgtop
     ffmpeg
     ripdrag
+    mailutils
 
     spaceship-prompt
 
@@ -256,8 +257,6 @@ in {
     };
   };
 
-  programs.lazygit.enable = true;
-
   programs.hyprlock.enable = true;
   programs.hyprlock.settings = {
     general = {
@@ -291,6 +290,8 @@ in {
       }
     ];
   };
+
+  programs.lazygit.enable = true;
 
   programs.ssh = {
     enable = true;
@@ -389,8 +390,15 @@ in {
     enable = true;
     keymap = {
       manager.prepend_keymap = [
-        { run = "plugin diff"; on = ["<C-d>"]; }
-        { run = "shell -- for path in \"$@\"; do echo \"file://\$path\"; done | wl-copy -t text/uri-list"; on = ["Y"]; mode = ["normal"]; }
+        {
+          run = "plugin diff";
+          on = ["<C-d>"];
+        }
+        {
+          run = "shell -- for path in \"$@\"; do echo \"file://\$path\"; done | wl-copy -t text/uri-list";
+          on = ["Y"];
+          mode = ["normal"];
+        }
       ];
     };
   };
