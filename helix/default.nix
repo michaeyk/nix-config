@@ -65,11 +65,6 @@
       };
 
       keys = {
-        insert = {
-          k = {
-            j = "normal_mode";
-          };
-        };
         normal = {
           ret = "goto_word";
           space = {

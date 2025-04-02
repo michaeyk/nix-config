@@ -74,6 +74,7 @@ in {
     openssl
     foundry
     postgresql
+    # direnv
 
     # encryption / passwords
     pass
@@ -240,6 +241,8 @@ in {
     browsers = ["firefox" "chrome" "brave"];
   };
 
+  programs.direnv.enable = true;
+  
   programs.git = {
     enable = true;
     userName = "Michael Kim";
