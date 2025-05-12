@@ -63,6 +63,7 @@ in {
 
     # dev
     python313
+    uv
     rustup
     gcc
     just
@@ -74,7 +75,7 @@ in {
     openssl
     foundry
     postgresql
-    # direnv
+    awscli2
 
     # encryption / passwords
     pass
@@ -162,8 +163,9 @@ in {
     ffmpeg
     ripdrag
     mailutils
-
+    glow
     spaceship-prompt
+    killall
 
     # It is sometimes useful to fine-tune packages, for example, by applying
     # overrides. You can do that directly here, just don't forget the
@@ -218,7 +220,7 @@ in {
       ds = "docker stop";
     };
 
-    initExtra = ''
+    initContent = ''
       function y() {
       	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
       	yazi "$@" --cwd-file="$tmp"
@@ -229,6 +231,8 @@ in {
       }
 
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
+      export LESS="-XR"
+      export UV_PYTHON_DOWNLOADS=never
 
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
     '';
@@ -241,12 +245,18 @@ in {
     browsers = ["firefox" "chrome" "brave"];
   };
 
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
   
   programs.git = {
     enable = true;
     userName = "Michael Kim";
     userEmail = "mike@michaelkim.net";
+
+    diff-so-fancy.enable = true;
 
     extraConfig = {
       init.defaultBranch = "main";
@@ -293,6 +303,20 @@ in {
       }
     ];
   };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        email = "mike@michaelkim.net";
+        name = "Michael Kim";
+      };
+      ui = {
+        default-command = "log";
+      };
+      git.auto-local-bookmark= true;
+    };
+   };
 
   programs.lazygit.enable = true;
 
@@ -359,7 +383,7 @@ in {
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-gtk2;
+    pinentry.package = pkgs.pinentry-gtk2;
     enableSshSupport = true;
     enableScDaemon = true;
     sshKeys = [
@@ -476,6 +500,11 @@ in {
 
     ".config/waybar" = {
       source = ./waybar;
+      recursive = true;
+    };
+
+    ".config/yazi" = {
+      source = ./yazi;
       recursive = true;
     };
   };
