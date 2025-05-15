@@ -11,7 +11,7 @@
     # Include the results of the hardware scan.
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     ./hardware-configuration.nix
-    ./modules/wireguard.nix
+    ./wireguard.nix
     inputs.sops-nix.nixosModules.sops
   ];
 

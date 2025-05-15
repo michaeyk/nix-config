@@ -58,7 +58,7 @@
           # so the old configuration file still takes effect
           # sops-nix.nixosModules.sops
           # stylix.homeManagerModules.stylix
-          ./home.nix
+          ./users/mike/home.nix
         ];
       };
     };
