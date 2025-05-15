@@ -34,8 +34,8 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
-    ./email
-    ./helix
+    ../../home/programs/email
+    ../../home/programs/helix
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -468,26 +468,26 @@ in {
     #   org.gradle.daemon.idletimeout=3600000
     # '';
     ".config/aerc" = {
-      source = ./email/aerc;
+      source = ../../home/programs/email/aerc;
       recursive = true;
     };
 
     ".gitmessage" = {
-      source = ./git/gitmessage;
+      source = ../../home/programs/git/gitmessage;
     };
 
     ".config/hypr" = {
-      source = ./hypr;
+      source = ../../home/programs/hypr;
       recursive = true;
     };
 
     ".config/kitty" = {
-      source = ./kitty;
+      source = ../../home/programs/kitty;
       recursive = true;
     };
 
     ".config/restic" = {
-      source = ./restic;
+      source = ../../home/programs/restic;
       recursive = true;
     };
 
@@ -497,12 +497,12 @@ in {
     '';
 
     ".config/waybar" = {
-      source = ./waybar;
+      source = ../../home/programs/waybar;
       recursive = true;
     };
 
     ".config/yazi" = {
-      source = ./yazi;
+      source = ../../home/programs/yazi;
       recursive = true;
     };
   };
