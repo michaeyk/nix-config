@@ -5,20 +5,6 @@
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
-  nixpkgs = {
-    # overlays = [
-    #   (self: super: {
-    #     basedpyright = super.basedpyright.overrideAttrs (old: {
-    #       postInstall =
-    #         old.postInstall
-    #         + ''
-    #           # Remove dangling symlinks created during installation (remove -delete to just see the files, or -print '%l\n' to see the target
-    #           find -L $out -type l -print -delete
-    #         '';
-    #     });
-    #   })
-    # ];
-  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mike";
@@ -34,6 +20,7 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
+    ../../home/core.nix
     ../../home/programs/email
     ../../home/programs/helix
   ];
@@ -44,50 +31,6 @@ in {
     # Adds the 'hello' command to your environment. It prints a friendly
     # "Hello, world!" when run.
     # pkgs.hello
-
-    # archive
-    zip
-    unzip
-
-    # backup
-    rsync
-    restic
-
-    # browser and webdriver
-    chromium
-    chromedriver
-    geckodriver
-    w3m
-
-    # dev
-    python313
-    uv
-    rustup
-    gcc
-    just
-    gnumake
-    dart-sass
-    postman
-    mongodb-compass
-    cargo-lambda
-    openssl
-    foundry
-    postgresql
-    awscli2
-
-    # encryption / passwords
-    pass
-    pinentry-gtk2
-    libsecret
-    sops
-    ledger-live-desktop
-
-    # files and directories
-    fzf
-    fd
-
-    # git
-    gh # github command line
 
     # hyprland
     hypridle
@@ -109,10 +52,6 @@ in {
     pavucontrol
     upower
 
-    # lsp
-    markdown-oxide
-    marksman
-
     # media
     mpv
     vlc
@@ -125,11 +64,6 @@ in {
     whatsapp-for-linux
     discord
 
-    # pdf
-    poppler_utils
-    pandoc
-    evince
-
     # photo editing
     gimp
     krita
@@ -138,32 +72,11 @@ in {
     # productivity
     obsidian
     libreoffice
-    smartcat
-    tealdeer
     # glabels
-
-    # remote connections
-    lftp
-    sshfs
-    dante
 
     # Raspberry Pi
     rpi-imager
 
-    # utils
-    ripgrep
-    jq
-    eza
-    bat
-    btop
-    dust
-    libgtop
-    ffmpeg
-    ripdrag
-    mailutils
-    glow
-    spaceship-prompt
-    killall
 
     # It is sometimes useful to fine-tune packages, for example, by applying
     # overrides. You can do that directly here, just don't forget the

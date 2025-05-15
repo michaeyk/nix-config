@@ -1,20 +1,80 @@
-{username, ...}: {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    # archive
+    zip
+    unzip
 
-    # This value determines the Home Manager release that your
-    # configuration is compatible with. This helps avoid breakage
-    # when a new Home Manager release introduces backwards
-    # incompatible changes.
-    #
-    # You can update Home Manager without changing this value. See
-    # the Home Manager release notes for a list of state version
-    # changes in each release.
-    stateVersion = "24.05";
-  };
+    # backup
+    rsync
+    restic
+
+    # browser and webdriver
+    chromium
+    chromedriver
+    geckodriver
+    w3m
+
+    # dev
+    python313
+    uv
+    rustup
+    gcc
+    just
+    gnumake
+    dart-sass
+    postman
+    mongodb-compass
+    cargo-lambda
+    openssl
+    foundry
+    postgresql
+    awscli2
+    smartcat
+    tealdeer
+
+    # encryption / passwords
+    pass
+    pinentry-gtk2
+    libsecret
+    sops
+    ledger-live-desktop
+
+    # files and directories
+    fzf
+    fd
+
+    # git
+    gh # github command line
+
+    # lsp
+    markdown-oxide
+    marksman
+
+    # pdf
+    poppler_utils
+    pandoc
+    evince
+    
+    # remote connections
+    lftp
+    sshfs
+    dante
+
+    # utils
+    ripgrep
+    jq
+    eza
+    bat
+    btop
+    dust
+    libgtop
+    ffmpeg
+    ripdrag
+    mailutils
+    glow
+    spaceship-prompt
+    killall
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

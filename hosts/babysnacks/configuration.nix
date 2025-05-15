@@ -10,9 +10,9 @@
   imports = [
     # Include the results of the hardware scan.
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    inputs.sops-nix.nixosModules.sops
     ./hardware-configuration.nix
     ./wireguard.nix
-    inputs.sops-nix.nixosModules.sops
   ];
 
   sops.defaultSopsFile = ../../home/programs/secrets/secrets.yaml;
@@ -84,15 +84,8 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  # services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.desktopManager.xfce.enable = true;
-
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -161,8 +154,6 @@
 
   services.upower.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
   services.pcscd.enable = true;
 
   # FUSE mount filesystem on /bin for $PATH
