@@ -115,7 +115,6 @@
       [[language]]
       name = "rust"
       language-servers = ["rust-analyzer", "gpt"]
-      formatter = { command = "${pkgs.rustfmt}/bin/rustfmt" }
       auto-format = true
 
       [[language]]
