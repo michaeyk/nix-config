@@ -1,12 +1,11 @@
 [general]
-status_path = ~/.local/share/vdirsyncer/status/
+status_path = "~/.local/share/vdirsyncer/status/"
 
 [pair my_contacts]
 a = "contacts_local"
 b = "contacts_remote"
-
-[collections]
-my_contacts.metadata = ["displayname"]
+collections = ["from a", "from b"]
+metadata = ["displayname"]
 
 [storage contacts_local]
 type = "filesystem"
@@ -15,6 +14,7 @@ fileext = ".vcf"
 
 [storage contacts_remote]
 type = "carddav"
+auth = "basic"
 url = "https://nextcloud.michaelkim.net/remote.php/dav/addressbooks/users/mike/contacts/"
 username = "mike"
-password.fetch = ["command", "${pkgs.pass}/bin/pass", "show"]
+password.fetch = ["command", "pass", "show", "hosting/vdirsyncer"]

@@ -11,6 +11,8 @@
 
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
+  programs.vdirsyncer.enable = true;
+  programs.khard.enable = true;
   programs.aerc = {
     enable = true;
     extraConfig = {
@@ -19,7 +21,8 @@
       compose = {
         file-picker-cmd = "fzf --multi --query=%s";
         header-layout = "To|From,Cc|Bcc,Subject";
-        address-book-cmd = "carddav-query -S personal -u mike %s";
+        # address-book-cmd = "carddav-query -S personal -u mike %s";
+        address-book-cmd = "khard email -a personal --parsable --remove-first-line %s";
       };
       filters = {
         "text/plain" = "wrap -w 100 | colorize";
@@ -72,8 +75,8 @@
         aerc = {
           enable = true;
           extraAccounts = {
-            carddav-source = "https://nextcloud.michaelkim.net/remote.php/dav/addressbooks/users/mike/contacts/";
-            carddav-source-cred-cmd = "pass show hosting/nextcloud | head -n1";
+            # carddav-source = "https://nextcloud.michaelkim.net/remote.php/dav/addressbooks/users/mike/contacts/";
+            # carddav-source-cred-cmd = "pass show hosting/vdirsyncer | head -n1";
             signature-file = "/home/mike/.signature";
           };
         };
@@ -135,6 +138,7 @@
     };
   };
 
+  home.homeDirectory = "/home/mike";
   home.file = {
     ".config/aerc" = {
       source = ./aerc;
@@ -142,7 +146,13 @@
     };
 
     ".config/vdirsyncer" = {
-      source = ./vdirsyncer/config;
+      source = ./vdirsyncer;
+      recursive = true;
+    };
+
+    ".config/khard" = {
+      source = ./khard;
+      recursive = true;
     };
   };
 
