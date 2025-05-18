@@ -51,12 +51,6 @@
         address = "mike@michaelkim.net";
         userName = "mike@michaelkim.net";
         realName = "Michael Kim";
-        signature = {
-          text = ''
-            Michael Kim
-          '';
-          showSignature = "append";
-        };
         passwordCommand = "${pkgs.pass}/bin/pass show email/mike@michaelkim.net | head -n1";
         imap.host = "imap.fastmail.com";
         smtp.host = "smtp.fastmail.com";
@@ -80,6 +74,7 @@
           extraAccounts = {
             carddav-source = "https://nextcloud.michaelkim.net/remote.php/dav/addressbooks/users/mike/contacts/";
             carddav-source-cred-cmd = "pass show hosting/nextcloud | head -n1";
+            signature-file = "/home/mike/.signature";
           };
         };
         msmtp.enable = true;
@@ -109,7 +104,12 @@
             };
           };
         };
-        aerc.enable = true;
+        aerc = {
+          enable = true;
+          extraAccounts = {
+            signature-file = "/home/mike/.tsbot_signature";
+          };
+        };
         msmtp.enable = true;
         notmuch.enable = true;
       };
@@ -132,6 +132,17 @@
         msmtp.enable = true;
         notmuch.enable = true;
       };
+    };
+  };
+
+  home.file = {
+    ".config/aerc" = {
+      source = ./aerc;
+      recursive = true;
+    };
+
+    ".config/vdirsyncer" = {
+      source = ./vdirsyncer/config;
     };
   };
 

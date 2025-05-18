@@ -467,6 +467,4 @@ in {
   #
   #  /etc/profiles/per-user/mike/etc/profile.d/hm-session-vars.sh
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
