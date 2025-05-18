@@ -1,0 +1,6 @@
+[calendars]
+  [[my_calendar]]
+    path = ~/.calendars/nextcloud/
+    color = dark green
+    priority = 20
+

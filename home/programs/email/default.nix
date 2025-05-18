@@ -13,21 +13,23 @@
   programs.msmtp.enable = true;
   programs.vdirsyncer.enable = true;
   programs.khard.enable = true;
+  programs.khal.enable = true;
   programs.aerc = {
     enable = true;
     extraConfig = {
-      # Allow accounts.conf to have permissions other than 600
-      general.unsafe-accounts-conf = true;
+      general = {
+        # Allow accounts.conf to have permissions other than 600
+        unsafe-accounts-conf = true;
+        pgp-provider = "gpg";
+      };
       compose = {
         file-picker-cmd = "fzf --multi --query=%s";
         header-layout = "To|From,Cc|Bcc,Subject";
-        # address-book-cmd = "carddav-query -S personal -u mike %s";
-        address-book-cmd = "khard email -a personal --parsable --remove-first-line %s";
+        address-book-cmd = "khard email -a my_contacts --parsable --remove-first-line %s";
       };
       filters = {
         "text/plain" = "wrap -w 100 | colorize";
         "text/html" = "html | colorize";
-        # "text/html" = "pandoc -f html -t plain";
         "message/delivery-status" = "colorize";
         "message/rfc822" = "colorize";
         "text/calendar" = "calendar";
@@ -75,8 +77,6 @@
         aerc = {
           enable = true;
           extraAccounts = {
-            # carddav-source = "https://nextcloud.michaelkim.net/remote.php/dav/addressbooks/users/mike/contacts/";
-            # carddav-source-cred-cmd = "pass show hosting/vdirsyncer | head -n1";
             signature-file = "/home/mike/.signature";
           };
         };
@@ -150,6 +150,11 @@
       recursive = true;
     };
 
+    ".config/khal" = {
+      source = ./khal;
+      recursive = true;
+    };
+
     ".config/khard" = {
       source = ./khard;
       recursive = true;
@@ -178,6 +183,34 @@
     };
     Timer = {
       Unit = "notmuch-index.service";
+      OnCalendar = "*:0/5"; # Every 5 minutes
+      Persistent = true; # Ensures it runs if missed (e.g., after suspend)
+    };
+    Install = {
+      WantedBy = ["timers.target"];
+    };
+  };
+
+  systemd.user.services.vdirsyncer = {
+    Unit = {
+      Description = "Run vdirsyncer sync";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync"; # Command to run
+      Restart = "on-failure"; # Optional: restart on failure
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
+  };
+
+  systemd.user.timers.vdirsyncer = {
+    Unit = {
+      Description = "Run vdirsyncer sync every 5 minutes";
+    };
+    Timer = {
+      Unit = "vdirsyncer.service";
       OnCalendar = "*:0/5"; # Every 5 minutes
       Persistent = true; # Ensures it runs if missed (e.g., after suspend)
     };
