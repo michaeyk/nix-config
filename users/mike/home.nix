@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
@@ -22,6 +21,7 @@ in {
   imports = [
     ../../home/core.nix
     ../../home/programs/email
+    ../../home/programs/git
     ../../home/programs/helix
     ../../home/programs/hypr
   ];
@@ -32,26 +32,6 @@ in {
     # Adds the 'hello' command to your environment. It prints a friendly
     # "Hello, world!" when run.
     # pkgs.hello
-
-    # hyprland
-    hypridle
-    hyprlock
-    hyprpanel
-    pyprland
-    wl-clipboard-rs
-    fuzzel
-    bemoji
-    grim
-    slurp
-    swappy
-    nwg-displays
-    pywal
-    matugen
-    swww
-    brightnessctl
-    gnome-bluetooth
-    pavucontrol
-    upower
 
     # media
     mpv
@@ -163,75 +143,6 @@ in {
     nix-direnv.enable = true;
   };
   
-  programs.git = {
-    enable = true;
-    userName = "Michael Kim";
-    userEmail = "mike@michaelkim.net";
-
-    diff-so-fancy.enable = true;
-
-    extraConfig = {
-      init.defaultBranch = "main";
-      advice.addEmbeddedRepo = false;
-      core = {
-        editor = "${pkgs.helix}/bin/hx";
-      };
-      commit = {
-        template = "~/.gitmessage";
-      };
-    };
-  };
-
-  programs.hyprlock.enable = true;
-  programs.hyprlock.settings = {
-    general = {
-      disable_loading_bar = true;
-      grace = 300;
-      hide_cursor = true;
-      no_fade_in = false;
-    };
-
-    background = [
-      {
-        path = "screenshot";
-        blur_passes = 3;
-        blur_size = 8;
-      }
-    ];
-
-    input-field = [
-      {
-        size = "200, 50";
-        position = "0, -80";
-        monitor = "";
-        dots_center = true;
-        fade_on_empty = false;
-        font_color = "rgb(202, 211, 245)";
-        inner_color = "rgb(91, 96, 120)";
-        outer_color = "rgb(24, 25, 38)";
-        outline_thickness = 5;
-        # placeholder_text = '\'<span foreground="##cad3f5">Password...</span>'\';
-        shadow_passes = 2;
-      }
-    ];
-  };
-
-  programs.jujutsu = {
-    enable = true;
-    settings = {
-      user = {
-        email = "mike@michaelkim.net";
-        name = "Michael Kim";
-      };
-      ui = {
-        default-command = "log";
-      };
-      git.auto-local-bookmark= true;
-    };
-   };
-
-  programs.lazygit.enable = true;
-
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -247,33 +158,6 @@ in {
         user = "mike";
         forwardAgent = true;
       };
-    };
-  };
-
-  # interferes with gpg-agent, force it off
-  services.gnome-keyring.enable = lib.mkForce false;
-  # services.gnome-keyring.enable = true;
-
-  services.hypridle = {
-    enable = true;
-    settings = {
-      general = {
-        after_sleep_cmd = "hyprctl dispatch dpms on";
-        ignore_dbus_inhibit = false;
-        lock_cmd = "hyprlock";
-      };
-
-      listener = [
-        {
-          timeout = 900;
-          on-timeout = "hyprlock";
-        }
-        {
-          timeout = 1200;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-      ];
     };
   };
 
@@ -371,15 +255,6 @@ in {
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".gitmessage" = {
-      source = ../../home/programs/git/gitmessage;
-    };
-
-    ".config/hypr" = {
-      source = ../../home/programs/hypr;
-      recursive = true;
-    };
-
     ".config/kitty" = {
       source = ../../home/programs/kitty;
       recursive = true;
@@ -394,11 +269,6 @@ in {
       [updates]
       auto_update = true
     '';
-
-    ".config/waybar" = {
-      source = ../../home/programs/waybar;
-      recursive = true;
-    };
 
     ".config/yazi" = {
       source = ../../home/programs/yazi;
