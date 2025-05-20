@@ -23,6 +23,7 @@ in {
     ../../home/core.nix
     ../../home/programs/email
     ../../home/programs/helix
+    ../../home/programs/hypr
   ];
 
   # The home.packages option allows you to install Nix packages into your
