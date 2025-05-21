@@ -3,31 +3,19 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # hyprland.url = "github:hyprwm/Hyprland";
-    
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
     stylix.url = "github:danth/stylix";
-
     yazi.url = "github:sxyazi/yazi";
   };
 
   outputs = {
-    self,
     nixpkgs,
     home-manager,
-    nixos-hardware,
-    stylix,
-    sops-nix,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
