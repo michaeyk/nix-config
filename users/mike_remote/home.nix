@@ -20,8 +20,6 @@
   imports = [
     ../../home/core.nix
     ../../home/shell
-    ../../home/programs/hypr
-    ../../home/programs/email
     ../../home/programs/helix
     ../../home/programs/git
   ];
@@ -29,43 +27,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # browser and webdriver
-    chromium
-    chromedriver
-    geckodriver
-    w3m
-
-    # media
-    mpv
-    vlc
-    spotify
-    imv
-
-    # messaging / email
-    dino
-    whatsapp-for-linux
-    discord
-
-    # encryption / passwords
-    pass
-    pinentry-gtk2
-    libsecret
-    sops
-    ledger-live-desktop
-
-    # photo editing
-    gimp
-    krita
-    photocollage
-
-    # productivity
-    obsidian
-    libreoffice
-    # glabels
-
-    # Raspberry Pi
-    rpi-imager
-
     # It is sometimes useful to fine-tune packages, for example, by applying
     # overrides. You can do that directly here, just don't forget the
     # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -80,68 +41,13 @@
     # '')
   ];
 
-  programs.browserpass = {
-    enable = true;
-    browsers = ["firefox" "chrome" "brave"];
-  };
-
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
-  
-  services.syncthing.enable = true;
 
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
-      "default-web-browser" = ["firefox.desktop"];
-      "text/html" = ["firefox.desktop"];
-      # "image/png" = "imv-folder.desktop";
-      "image/png" = "imv.desktop";
-      "image/jpeg" = "imv.desktop";
-      "video/*" = "umpv.desktop";
-      "audio/*" = "org.gnome.Lollypop.desktop";
-      "x-scheme-handler/https" = ["firefox.desktop"];
-      "x-scheme-handler/about" = ["firefox.desktop"];
-      "x-scheme-handler/unknown" = ["firefox.desktop"];
-    };
-  };
-
-  programs.zathura.enable = true;
-
-  # Define systemd service to back up home directory
-  systemd.user.services.restic = {
-    Unit = {
-      Description = "Back up home directory";
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "/home/mike/bin/backup.sh"; # Command to run
-      Restart = "on-failure"; # Optional: restart on failure
-    };
-    Install = {
-      WantedBy = ["default.target"];
-    };
-  };
-
-  systemd.user.timers.restic = {
-    Unit = {
-      Description = "Back up home directory";
-    };
-    Timer = {
-      OnBootSec = "5m";
-      OnUnitInactiveSec = "1d";
-      Persistent = true;
-      Unit = "restic.service";
-    };
-    Install = {
-      WantedBy = ["timers.target"];
-    };
-  };
-  # Home Manager can also manage your environment variables through
+   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
   # through Home Manager then you have to manually source 'hm-session-vars.sh'
