@@ -150,6 +150,10 @@ in {
   };
   
   home.file = {
+    "bin" = {
+      source = ./bin;
+    };
+
     ".config/kitty" = {
       source = ../programs/kitty;
       recursive = true;

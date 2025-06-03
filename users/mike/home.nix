@@ -119,7 +119,7 @@
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "/home/mike/.config/restic/bin/backup.sh"; # Command to run
+      ExecStart = "/home/mike/bin/backup.sh"; # Command to run
       Restart = "on-failure"; # Optional: restart on failure
     };
     Install = {
