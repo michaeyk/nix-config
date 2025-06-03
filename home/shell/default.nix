@@ -152,6 +152,7 @@ in {
   home.file = {
     "bin" = {
       source = ./bin;
+      recursive = true;
     };
 
     ".config/kitty" = {
