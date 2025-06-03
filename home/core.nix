@@ -22,7 +22,7 @@
     just
     gnumake
     dart-sass
-    postman
+    #postman
     mongodb-compass
     cargo-lambda
     openssl

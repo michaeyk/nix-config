@@ -32,7 +32,6 @@
     };
 
     "nextcloud" = {
-      # owner = config.users.users.mike.name;
       owner = "root";
       path = "/etc/davfs2/secrets";
     };
@@ -56,10 +55,6 @@
   environment.shells = with pkgs; [zsh bash];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
