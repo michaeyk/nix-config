@@ -43,6 +43,9 @@
     fzf
     fd
 
+    # gaming
+    heroic
+
     # git
     gh # github command line
 
