@@ -28,10 +28,10 @@
       path = "/home/mike/.config/Yubico/u2f_keys";
     };
 
-    # "nextcloud" = {
-    #   owner = "root";
-    #   path = "/etc/davfs2/secrets";
-    # };
+    "nextcloud" = {
+      owner = "root";
+      path = "/etc/davfs2/secrets";
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
