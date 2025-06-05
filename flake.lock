@@ -524,11 +524,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1749053445,
-        "narHash": "sha256-tf4MNRwJ5ikyg4+UfGuC1+GwMBQYh4dK4sdow1MEGVk=",
+        "lastModified": 1749147539,
+        "narHash": "sha256-RkcNfKytYh1tq81Myax39sgOWJ6TOYf2wkUbhdW0p9o=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "a057acc112856352e77d42ac4685134b2213a810",
+        "rev": "937a154dc30ebcf6d2b74fe74c930dd892a127d9",
         "type": "github"
       },
       "original": {
@@ -677,11 +677,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1749125497,
-        "narHash": "sha256-9rIwEAQO3OPwJEf3Xz+JNHEUvujkVhYPXhEuu1JfWDI=",
+        "lastModified": 1749135826,
+        "narHash": "sha256-3VhH5g7oriczeTD/+zT056eLUDF1MGiZf2Hxdw7eQ5A=",
         "owner": "sxyazi",
         "repo": "yazi",
-        "rev": "d55e002d5a82ad7eeb816f78512cdbee576c2d31",
+        "rev": "b637c32ef755813c1b1f6f611132c1feb4bb459f",
         "type": "github"
       },
       "original": {
