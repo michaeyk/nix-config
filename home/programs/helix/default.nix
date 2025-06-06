@@ -9,13 +9,13 @@
 
   home.packages = with pkgs; [
     basedpyright
-    # helix-gpt
+    helix-gpt
     ruff
     taplo
     dprint
     black
     typescript-language-server
-    nodePackages.prettier
+    (lib.hiPrio nodePackages.prettier)
   ];
 
   programs.helix = {
