@@ -103,7 +103,7 @@ in {
   programs.yazi = {
     enable = true;
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {
           run = "plugin diff";
           on = ["<C-d>"];
