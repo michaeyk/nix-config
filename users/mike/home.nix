@@ -40,6 +40,7 @@
     vlc
     spotify
     imv
+    ncspot
 
     # messaging / email
     dino
