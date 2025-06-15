@@ -1,0 +1,4 @@
+url = "https://api.openai.com/v1/audio/transcriptions"
+recording_command = "arecord -f S16_LE --quiet <audio_file_path_placeholder>"
+model = "whisper-1"
+api = "openai"

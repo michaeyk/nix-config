@@ -54,6 +54,7 @@ in {
       }
 
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
+      export ANTHROPIC_API_KEY=$(cat /run/secrets/ANTHROPIC_API_KEY)
       export LESS="-XR"
       export UV_PYTHON_DOWNLOADS=never
 
@@ -122,12 +123,6 @@ in {
     matchBlocks = {
       bastion = {
         port = 22;
-        hostname = "34.197.186.111";
-        user = "mike";
-        forwardAgent = true;
-      };
-      jbastion = {
-        port = 22;
         hostname = "3.208.183.51";
         user = "mike";
         forwardAgent = true;
@@ -162,6 +157,11 @@ in {
 
     ".config/restic" = {
       source = ../programs/restic;
+      recursive = true;
+    };
+
+    ".config/smartcat" = {
+      source = ../programs/smartcat;
       recursive = true;
     };
 

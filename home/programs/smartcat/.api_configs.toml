@@ -1,0 +1,10 @@
+[anthropic]
+api_key_command = "echo $ANTHROPIC_API_KEY"
+url = "https://api.anthropic.com/v1/messages"
+default_model = "claude-3-opus-20240229"
+version = "2023-06-01"
+
+[ollama] # local API, no key required
+url = "http://ai-workstation.local:11434/api/chat"
+default_model = "qwen2.5-coder:32b"
+timeout_seconds = 180                              # default timeout if not specified
