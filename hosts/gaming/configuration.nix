@@ -259,7 +259,6 @@
     yubioath-flutter
     yubikey-touch-detector
     yubikey-personalization
-    yubikey-personalization-gui
     yubikey-manager
     pam_u2f
     davfs2
