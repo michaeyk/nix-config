@@ -38,6 +38,7 @@
     libsecret
     sops
     ledger-live-desktop
+    qrencode
 
     # files and directories
     fzf
