@@ -25,6 +25,10 @@
       owner = config.users.users.mike.name;
     };
 
+    ANTHROPIC_API_KEY = {
+      owner = config.users.users.mike.name;
+    };
+
     "yubico/u2f_keys" = {
       owner = config.users.users.mike.name;
       inherit (config.users.users.mike) group;
