@@ -8,10 +8,6 @@
         "10.253.0.5/32"
       ];
 
-      # To match firewall allowedUDPPorts (without this wg
-      # uses random port numbers).
-      listenPort = 51820;
-
       # Path to the private key file.
       privateKeyFile = "/home/mike/.wireguard/private-key";
 
@@ -28,10 +24,6 @@
       address = [
         "10.8.0.2/32"
       ];
-
-      # To match firewall allowedUDPPorts (without this wg
-      # uses random port numbers).
-      listenPort = 52820;
 
       # Path to the private key file.
       privateKeyFile = "/home/mike/.wireguard/private-key";
