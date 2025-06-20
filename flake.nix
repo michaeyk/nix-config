@@ -22,7 +22,8 @@
     pkgs = import nixpkgs {
       inherit system;
        overlays = [
-         inputs.hyprpanel.overlay
+         # inputs.hyprpanel.overlay
+         inputs.hyprpanel.packages.${system}.wrapper
       ];
   };
   in {
