@@ -30,6 +30,8 @@
   # environment.
   home.packages = with pkgs; [
     # browser and webdriver
+    google-chrome
+    firefox
     chromium
     chromedriver
     geckodriver
@@ -98,16 +100,16 @@
     enable = true;
     defaultApplications = {
       "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
-      "default-web-browser" = ["firefox.desktop"];
-      "text/html" = ["firefox.desktop"];
+      "default-web-browser" = ["google-chrome.desktop"];
+      "text/html" = ["google-chrome.desktop"];
       # "image/png" = "imv-folder.desktop";
       "image/png" = "imv.desktop";
       "image/jpeg" = "imv.desktop";
       "video/*" = "umpv.desktop";
       "audio/*" = "org.gnome.Lollypop.desktop";
-      "x-scheme-handler/https" = ["firefox.desktop"];
-      "x-scheme-handler/about" = ["firefox.desktop"];
-      "x-scheme-handler/unknown" = ["firefox.desktop"];
+      "x-scheme-handler/https" = ["google-chrome.desktop"];
+      "x-scheme-handler/about" = ["google-chrome.desktop"];
+      "x-scheme-handler/unknown" = ["google-chrome.desktop"];
     };
   };
 
