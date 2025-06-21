@@ -17,8 +17,6 @@
     pavucontrol
     upower
     waybar
-    cliphist
-    networkmanager_dmenu
     wttrbar
     crypto-tracker
   ];
