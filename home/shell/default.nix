@@ -96,7 +96,7 @@ in {
     settings = {
       enable_audio_bell = false;
       background = "#282828";
-      background_opacity = 0.85;
+      background_opacity = 0.75;
     };
     themeFile = "Catppuccin-Mocha";
   };
