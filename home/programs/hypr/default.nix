@@ -17,6 +17,7 @@
     gnome-bluetooth
     pavucontrol
     upower
+    waybar
   ];
 
   programs.hyprlock.enable = true;
@@ -96,7 +97,7 @@
       recursive = true;
     };
     ".config/waybar" = {
-      source = ../waybar;
+      source = ../waybar-minimal/src;
       recursive = true;
     };
  };
