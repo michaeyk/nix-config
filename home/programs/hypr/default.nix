@@ -19,6 +19,8 @@
     waybar
     cliphist
     networkmanager_dmenu
+    wttrbar
+    crypto-tracker
   ];
 
   programs.hyprlock.enable = true;
@@ -97,9 +99,9 @@
       source = ./config;
       recursive = true;
     };
-    ".config/waybar" = {
-      source = ../waybar;
-      recursive = true;
-    };
+    # ".config/waybar" = {
+    #   source = ../waybar;
+    #   recursive = true;
+    # };
  };
 }

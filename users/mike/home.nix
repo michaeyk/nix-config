@@ -42,6 +42,7 @@
     mpv
     vlc
     spotify
+    playerctl
     imv
     ncspot
     nsxiv
