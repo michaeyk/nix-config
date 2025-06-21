@@ -1,4 +1,4 @@
-{pkgs,lib,inputs, ...}: {
+{pkgs,lib, ...}: {
   home.packages = with pkgs; [
     hypridle
     hyprlock
@@ -17,7 +17,8 @@
     pavucontrol
     upower
     waybar
-    rofi-bluetooth
+    cliphist
+    networkmanager_dmenu
   ];
 
   programs.hyprlock.enable = true;

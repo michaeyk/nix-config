@@ -1,0 +1,1 @@
+/nix/store/njppdlk6j9lb4r5rzy21ljyy5qasgqng-home-manager-files/.config/waybar/scripts/weather.py
