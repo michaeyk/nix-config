@@ -1,2 +1,5 @@
 [plugin]
 prepend_previewers = [{ name = "*.md", run = "glow" }]
+[preview]
+max_width = 5120
+max_height = 1440

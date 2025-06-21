@@ -43,6 +43,7 @@
     spotify
     imv
     ncspot
+    nsxiv
 
     # messaging / email
     dino

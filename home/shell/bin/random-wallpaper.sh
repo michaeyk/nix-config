@@ -1,32 +1,11 @@
 #!/bin/env bash
 
-# This script will randomly go through the files of a directory, setting it
-# up as the wallpaper at regular intervals
-#
-# NOTE: this script is in bash (not posix shell), because the RANDOM variable
-# we use is not defined in posix
+WALLPAPER_DIR="$HOME/Pictures/Wallpaper/"
+CURRENT_WALL=$(hyprctl hyprpaper listloaded)
+# Get the name of the focused monitor with hyprctl
+FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+# Get a random wallpaper that is not the current one
+WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
 
-if [[ $# -lt 1 ]] || [[ ! -d $1   ]]; then
-	echo "Usage:
-	$0 <dir containg images>"
-	exit 1
-fi
-
-# Edit bellow to control the images transition
-export SWWW_TRANSITION_FPS=60
-export SWWW_TRANSITION_STEP=2
-
-# This controls (in seconds) when to switch to the next image
-INTERVAL=300
-
-while true; do
-	find "$1" \
-		| while read -r img; do
-			echo "$((RANDOM % 1000)):$img"
-		done \
-		| sort -n | cut -d':' -f2- \
-		| while read -r img; do
-			swww img "$img"
-			sleep $INTERVAL
-		done
-done
+# Apply the selected wallpaper
+hyprctl hyprpaper reload "$FOCUSED_MONITOR","$WALLPAPER"

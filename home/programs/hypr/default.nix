@@ -1,9 +1,9 @@
-{pkgs,lib, ...}: {
+{pkgs,lib,inputs, ...}: {
   home.packages = with pkgs; [
-    # hyprland
     hypridle
     hyprlock
-    hyprpanel
+    inputs.hyprpanel.packages.${pkgs.system}.wrapper
+    hyprpaper
     pyprland
     wl-clipboard-rs
     fuzzel
@@ -14,7 +14,6 @@
     nwg-displays
     pywal
     matugen
-    swww
     brightnessctl
     gnome-bluetooth
     pavucontrol
@@ -78,6 +77,13 @@
           on-resume = "hyprctl dispatch dpms on";
         }
       ];
+    };
+  };
+
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = true;
     };
   };
 
