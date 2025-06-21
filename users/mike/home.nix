@@ -32,7 +32,6 @@
     # browser and webdriver
     google-chrome
     firefox
-    chromium
     chromedriver
     geckodriver
     w3m

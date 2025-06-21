@@ -9,7 +9,6 @@
     restic
 
     # browser and webdriver
-    chromium
     chromedriver
     geckodriver
     w3m

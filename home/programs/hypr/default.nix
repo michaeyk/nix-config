@@ -3,7 +3,6 @@
     hypridle
     hyprlock
     inputs.hyprpanel.packages.${pkgs.system}.wrapper
-    hyprpaper
     pyprland
     wl-clipboard-rs
     fuzzel
@@ -80,10 +79,14 @@
     };
   };
 
-  services.hyprpaper = {
+  services.wpaperd = {
     enable = true;
     settings = {
-      ipc = true;
+      default = {
+        path = "/home/mike/Pictures/wallpaper";
+        duration = "10m";
+        queue-size = 1000;
+      };
     };
   };
 
