@@ -80,7 +80,6 @@ window#waybar.hidden {
 #custom-weather.default {
   padding: 0 10px;
   color: #e5e5e5;
-  /* color: #bf616a; */
   border-radius: 9.5px;
   background-color: #1f2530;
 }
@@ -148,12 +147,12 @@ window#waybar.hidden {
 }
 
 #custom-cryptotracking {
-  background: #98bb6c;
-  color: #1f1f28;
+  background-color: #1f2530;
+  color: #e5e5e5;
   border-radius: 7.5px;
   padding: 0 10px;
   margin-right: 10px;
-  opacity: 1;
+  opacity: 0.5;
   transition-property: opacity;
   transition-duration: 0.25s;
 }

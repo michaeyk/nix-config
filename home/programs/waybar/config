@@ -68,7 +68,7 @@
     },
     "mpris": {
     	"format": "{player_icon} {dynamic}",
-    	"format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
+    	"format-paused": "{status_icon} <i>{dynamic}</i>",
     	"player-icons": {
     		"default": "🎵",
     		"mpv": "🎵"
@@ -125,12 +125,12 @@
     "custom/cryptotracking": {
         "format": "{}",
         "return-type": "json",
-        "exec": "crypto-tracker -k 6e9824ef-2926-4ab3-8f70-70768ad6a1ce -s BTC,ETH,XRP -m ETH",
+        "exec": "crypto-tracker -k $(pass crypto/coinmarketcap_api) -s BTC,ETH,XRP -m ETH",
         "restart-interval": 600
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
-        # "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
+        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
     }, 
     "custom/launcher": {
         "format": " <span color='#6a92d7'> </span>",
