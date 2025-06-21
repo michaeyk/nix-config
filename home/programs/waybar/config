@@ -1,139 +1,217 @@
 {
-    "height": 30, // Waybar height (to be removed for auto height)
-    "layer": "top", // Waybar at top layer
-    "margin-top": 6,
-    "margin-left": 10,
-    "margin-bottom": 0,
-    "margin-right": 10,
-    "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory", "wlr/workspaces", "custom/weather", "custom/crypto"],
-    "modules-center": ["custom/spotify"],
-    "modules-right": ["tray", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
-    "wlr/workspaces": {
-      "format": "{icon}",
-      "on-click": "activate",
-      "format-icons": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "urgent": "",
-        "active": "",
-        "default": ""
-      }
-    },
-    "hyprland/window": {
-        "format": "{}"
-    },
-    "tray": {
-        "spacing": 10
-    },
-    "clock": {
-        "format": "<span color='#bf616a'> </span>{:%a %b %d}",
-        "format-alt": "<span color='#bf616a'> </span>{:%I:%M %p}",
-        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    },
-    "idle_inhibitor": {
-      "format": "{icon} ",
-      "format-icons":{
-        "activated": "",
-        "deactivated": ""
-      }
-    },
-    "cpu": {
-      "interval": 10,
-      "format": " {}%",
-      "max-length": 10,
-      "on-click": "",
-    },
-    "memory": {
-        "interval": 30,
-        "format": " {}%",
-        "format-alt":" {used:0.1f}G",
-        "max-length": 10,
-    },
-    "backlight": {
-        "device": "DP-1",
-        "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-click": "",
-    },
-    "network": {
-        "format-wifi": "直 {signalStrength}%",
-        "format-ethernet": " wired",
-        "format-disconnected": "睊",
-        "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
-        "format-disconnected": "Disconnected  ",
-    },
+  "layer": "top", "position": "top",
+  "modules-left": ["custom/logo", "clock",  "custom/weather", "disk", "memory", "cpu", "temperature", "custom/powerDraw", "hyprland/window" ],
+  "modules-center": [  "hyprland/workspaces"],
+  "modules-right": ["tray",  "custom/clipboard", "backlight", "idle_inhibitor", "custom/colorpicker", "bluetooth", "pulseaudio", "network",  "battery" ],
+  "reload_style_on_change":true,
 
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "  {volume}%",
-        "format-bluetooth-muted": " ",
-        "format-muted": "婢",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
+  "custom/logo": {
+    "format": "",
+    "tooltip": false
+  },
 
-    "bluetooth": {
-        "on-click": "~/.config/waybar/scripts/rofi-bluetooth &",
-        "format": " {status}",
-    },
+  "hyprland/workspaces": {
+	"format": "{icon}",
+	"format-icons": {
+		"1": "",
+		"2": "",
+		"3": "",
+		"4": "",
+		"5": "",
+		"6": "",
+		"active": "",
+		"default": "" 
+	},
+       "persistent-workspaces": {
+         "*": [ 2, 3, 4, 5, 6 ]
+       }
+},
 
-    "battery": {
-      "bat": "BAT1",
-      "adapter": "ACAD",
-      "interval": 60,
-      "states": {
-          "warning": 30,
-          "critical": 15
+"idle_inhibitor":{
+  "format": "<span font='12'>{icon} </span>",
+  "format-icons": {
+    "activated":"󰈈",
+    "deactivated":"󰈉"
+  }
+},
+
+"custom/weather": {
+  "format": "{}",
+  "return-type": "json",
+  "exec": "~/.config/waybar/scripts/weather.sh",
+  "interval": 10,
+  "on-click": "google-chrome https://wttr.in"
+},
+
+"custom/clipboard":{
+  "format":"",
+  "on-click": "cliphist list | rofi -dmenu | cliphist decode | wl-copy",
+  "interval":86400
+},
+
+
+"clock": {
+      "format": "{:%I:%M:%S %p}",
+      "interval":1,
+      "tooltip-format": "\n<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+      "calendar-weeks-pos": "right",
+      "today-format": "<span color='#7645AD'><b><u>{}</u></b></span>",
+      "format-calendar": "<span color='#aeaeae'><b>{}</b></span>",
+      "format-calendar-weeks": "<span color='#aeaeae'><b>W{:%V}</b></span>",
+      "format-calendar-weekdays": "<span color='#aeaeae'><b>{}</b></span>"
       },
-      "max-length": 20,
-      "format": "{icon} {capacity}%",
-      "format-warning": "{icon} {capacity}%",
-      "format-critical": "{icon} {capacity}%",
-      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
-      "format-plugged": "  {capacity}%",
-      "format-alt": "{icon} {time}",
-      "format-full": "  {capacity}%",
-      "format-icons": [" ", " ", " ", " ", " "],
+
+  "bluetooth": {
+  "format-on": "",
+  "format-off": "",
+  "format-disabled": "󰂲",
+  "format-connected": "󰂴",
+  "format-connected-battery": "{device_battery_percentage}% 󰂴",
+  "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+  "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+  "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+  "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+  "on-click": "rofi-bluetooth",
+ }, 
+
+"network": {
+      "format-wifi": " ",
+      "format-ethernet":" ",
+      "format-disconnected": "",
+      "tooltip-format": "{ipaddr}",
+      "tooltip-format-wifi": "{essid} ({signalStrength}%)  | {ipaddr}",
+      "tooltip-format-ethernet": "{ifname} 🖧 | {ipaddr}",
+      "on-click": "networkmanager_dmenu"
     },
-    "custom/weather": {
-      "exec": "python3 ~/.config/waybar/scripts/weather.py",
-      "restart-interval": 300,
-      "return-type": "json",
-      "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/41508211bbd872da400e22821281f7b5e49b7d55579f61cce91db82dabd15e38"
-    },   
-    "custom/crypto": {
-      "format": "{}",
-      "interval": 600,
-      "return-type": "json",
-      "exec": "waybar-crypto", // change this if you installed manually
-      "exec-if": "ping pro-api.coinmarketcap.com -c1"
+
+"battery": {
+    "interval":1,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{capacity}%  {icon} ",
+        "format-charging": "{capacity}% 󰂄 ",
+        "format-plugged": "{capacity}% 󰂄 ",
+        "format-alt": "{time} {icon}",
+            "format-icons": [
+          "󰁻",
+          "󰁼",
+          "󰁾",
+          "󰂀",
+          "󰂂",
+          "󰁹"
+        ],
     },
-   "custom/spotify": {
-    "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotifyd",
-    "format": "{}  ",
+"backlight": {
+  "device": "intel_backlight",
+  "format": "<span font='12'>{icon}</span>",
+  "format-icons": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ],
+  "on-scroll-down": "light -A 10",
+  "on-scroll-up": "light -U 10",
+  "smooth-scrolling-threshold": 1
+  },
+
+ "disk": {
+    "interval": 30,
+    "format": "  {percentage_used}%",
+    "path": "/"
+  },
+
+  "custom/colorpicker": {
+    "format": "{}",
     "return-type": "json",
-    "on-click": "playerctl play-pause",
-    "on-scroll-up": "playerctl previous",
-    "on-scroll-down": "playerctl next",
-    },
-    "custom/power-menu": {
-        "format": " <span color='#6a92d7'>⏻ </span>",
-        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
-    }, 
-    "custom/launcher": {
-        "format": " <span color='#6a92d7'> </span>",
-        "on-click": "rofi -show drun",
-    },
+    "interval": "once",
+    "exec": "~/.config/waybar/scripts/colorpicker.sh -j",
+    "on-click": "sleep 1 && ~/.config/waybar/scripts/colorpicker.sh",
+    "signal": 1
+  },
+
+  "cpu": {
+      "interval": 1,
+      "format": " {usage}%",
+      "min-length": 6,
+      "max-length": 6,
+      "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+ },
+
+"memory": {
+  "format": " {percentage}%"
+},
+
+ "hyprland/window": {
+    "format": "( {class} )",
+    "rewrite": {
+         "(.*) - Mozilla Firefox": "🌎 $1",
+         "(.*) - zsh": "> [$1]"
+    }
+},
+
+"temperature": {
+  "format": " {temperatureC}°C",            
+  "format-critical": " {temperatureC}°C",
+  "interval": 1,
+  "critical-threshold": 80,
+  "on-click": "foot btop",
+ },
+
+"pulseaudio": {
+  "format": "{volume}% {icon}",
+  "format-bluetooth":"󰂰",
+  "format-muted": "<span font='12'></span>",
+  "format-icons": {
+    "headphones": "",
+    "bluetooth": "󰥰",
+    "handsfree": "",
+    "headset": "󱡬",
+    "phone": "",
+    "portable": "",
+    "car": "",
+    "default": ["🕨","🕩","🕪"]
+  },
+  "justify": "center",
+  "on-click": "amixer sset Master toggle",
+  "on-click-right": "pavucontrol",
+  "tooltip-format": "{icon}  {volume}%"
+},
+
+"jack": {
+    "format": "{} 󱎔",
+    "format-xrun": "{xruns} xruns",
+    "format-disconnected": "DSP off",
+    "realtime": true
+},
+
+"tray": {
+    "icon-size": 14,
+    "spacing": 10
+},
+
+"upower": {
+    "show-icon": false,
+    "hide-if-empty": true,
+    "tooltip": true,
+    "tooltip-spacing": 20
+},
+
+  "custom/powerDraw": {
+    "format": "{}",
+    "interval": 1,
+    "exec": "~/.config/waybar/scripts/powerdraw.sh",
+    "return-type": "json"
+  }
+
 }
+

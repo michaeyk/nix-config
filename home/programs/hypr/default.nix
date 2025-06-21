@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     hypridle
     hyprlock
-    inputs.hyprpanel.packages.${pkgs.system}.wrapper
     pyprland
     wl-clipboard-rs
     fuzzel
@@ -18,6 +17,7 @@
     pavucontrol
     upower
     waybar
+    rofi-bluetooth
   ];
 
   programs.hyprlock.enable = true;
@@ -97,7 +97,7 @@
       recursive = true;
     };
     ".config/waybar" = {
-      source = ../waybar-minimal/src;
+      source = ../waybar;
       recursive = true;
     };
  };

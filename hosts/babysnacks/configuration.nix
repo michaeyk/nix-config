@@ -200,9 +200,6 @@
     isNormalUser = true;
     description = "Michael Kim";
     extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2"];
-    packages = with pkgs; [
-      #  thunderbird
-    ];
   };
 
   programs.git.enable = true;
@@ -261,11 +258,6 @@
     yubikey-manager
     pam_u2f
     davfs2
-  ];
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
   ];
 
   # Enable the OpenSSH daemon.
