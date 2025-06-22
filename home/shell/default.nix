@@ -89,10 +89,15 @@ in {
   programs.kitty = {
     enable = true;
     font = {
-      name = "Fira Code";
-      package = pkgs.fira-code;
+      name = "Jetbrains Mono";
+      package = pkgs.jetbrains-mono;
       size = 10;
     };
+    # font = {
+    #   name = "Fira Code";
+    #   package = pkgs.fira-code;
+    #   size = 10;
+    # };
     settings = {
       enable_audio_bell = false;
       background = "#282828";
