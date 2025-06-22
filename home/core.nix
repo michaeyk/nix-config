@@ -78,6 +78,7 @@
     glow
     spaceship-prompt
     killall
+    fastfetch
   ];
 
   # Allow unfree packages
