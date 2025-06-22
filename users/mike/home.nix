@@ -146,20 +146,6 @@
       WantedBy = ["timers.target"];
     };
   };
-
-  systemd.user.services.clipse = {
-    Unit = {
-      Description = "Start clipse on login";
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.clipse}/bin/clipse -listen";
-      Restart = "on-failure"; # Optional: restart on failure
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-  };
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell

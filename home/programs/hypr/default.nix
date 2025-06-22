@@ -4,7 +4,7 @@
     hyprlock
     pyprland
     wl-clipboard
-    clipse
+    cliphist
     fuzzel
     bemoji
     grim
