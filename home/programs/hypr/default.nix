@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     hypridle
     hyprlock
+    hyprpicker
     pyprland
     wl-clipboard
     cliphist

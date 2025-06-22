@@ -147,12 +147,12 @@ window#waybar.hidden {
 }
 
 #custom-cryptotracking {
+  padding: 0 10px;
+  color: #a6e3a1;
+  border-radius: 9.5px;
   background-color: #1f2530;
-  color: #e5e5e5;
-  border-radius: 7.5px;
   padding: 0 10px;
   margin-right: 10px;
-  opacity: 0.5;
   transition-property: opacity;
   transition-duration: 0.25s;
 }
