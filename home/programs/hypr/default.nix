@@ -6,7 +6,6 @@
     pyprland
     wl-clipboard
     cliphist
-    fuzzel
     bemoji
     grim
     slurp
@@ -58,9 +57,6 @@
     ];
   };
 
-  # interferes with gpg-agent, force it off
-  services.gnome-keyring.enable = lib.mkForce false;
-  # services.gnome-keyring.enable = true;
   services.hypridle = {
     enable = true;
     settings = {
@@ -83,6 +79,28 @@
       ];
     };
   };
+
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      colors = {
+        background="24273add";
+        text="cad3f5ff";
+        prompt="b8c0e0ff";
+        placeholder="8087a2ff";
+        input="cad3f5ff";
+        match="8bd5caff";
+        selection="5b6078ff";
+        selection-text="cad3f5ff";
+        selection-match="8bd5caff";
+        counter="8087a2ff";
+        border="8bd5caff";
+      };
+    }; 
+  };
+
+  # interferes with gpg-agent, force it off
+  services.gnome-keyring.enable = lib.mkForce false;
 
   services.wpaperd = {
     enable = true;
