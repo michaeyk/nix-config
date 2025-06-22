@@ -30,7 +30,7 @@
     awscli2
     smartcat
     tealdeer
-    tabview
+    visidata
 
     # encryption / passwords
     pass
