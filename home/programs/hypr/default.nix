@@ -3,7 +3,8 @@
     hypridle
     hyprlock
     pyprland
-    wl-clipboard-rs
+    wl-clipboard
+    clipse
     fuzzel
     bemoji
     grim
@@ -19,6 +20,7 @@
     waybar
     wttrbar
     crypto-tracker
+    dunst
   ];
 
   programs.hyprlock.enable = true;

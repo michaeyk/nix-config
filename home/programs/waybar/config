@@ -63,7 +63,7 @@
         "format-wifi": "直 {signalStrength}%",
         "format-ethernet": " wired",
         "format-disconnected": "睊",
-        "on-click": "kitty -e nmtui",
+        "on-click": "kitty --class nmtui -e nmtui",
         "format-disconnected": "Disconnected  ",
     },
     "mpris": {

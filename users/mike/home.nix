@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mike";
@@ -80,7 +76,7 @@
     nerd-fonts.jetbrains-mono
     font-awesome
     jetbrains-mono
-        
+
     # You can also create simple shell scripts directly inside your
     # configuration. For example, this adds a command 'my-hello' to your
     # environment:
@@ -88,7 +84,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
-
 
   programs.browserpass = {
     enable = true;
@@ -100,7 +95,7 @@
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
-  
+
   services.syncthing.enable = true;
 
   xdg.mimeApps = {
@@ -149,6 +144,20 @@
     };
     Install = {
       WantedBy = ["timers.target"];
+    };
+  };
+
+  systemd.user.services.clipse = {
+    Unit = {
+      Description = "Start clipse on login";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.clipse}/bin/clipse -listen";
+      Restart = "on-failure"; # Optional: restart on failure
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
     };
   };
   # Home Manager can also manage your environment variables through
