@@ -1,8 +1,13 @@
-{pkgs,lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     hypridle
     hyprlock
     hyprpicker
+    hyprpaper
     pyprland
     wl-clipboard
     cliphist
@@ -84,32 +89,39 @@
     enable = true;
     settings = {
       colors = {
-        background="24273add";
-        text="cad3f5ff";
-        prompt="b8c0e0ff";
-        placeholder="8087a2ff";
-        input="cad3f5ff";
-        match="8bd5caff";
-        selection="5b6078ff";
-        selection-text="cad3f5ff";
-        selection-match="8bd5caff";
-        counter="8087a2ff";
-        border="8bd5caff";
+        background = "24273add";
+        text = "cad3f5ff";
+        prompt = "b8c0e0ff";
+        placeholder = "8087a2ff";
+        input = "cad3f5ff";
+        match = "8bd5caff";
+        selection = "5b6078ff";
+        selection-text = "cad3f5ff";
+        selection-match = "8bd5caff";
+        counter = "8087a2ff";
+        border = "8bd5caff";
       };
-    }; 
+    };
   };
 
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
 
   services.wpaperd = {
-    enable = true;
+    enable = false;
     settings = {
       default = {
         path = "/home/mike/Pictures/wallpaper";
         duration = "10m";
         queue-size = 1000;
       };
+    };
+  };
+
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "on";
     };
   };
 
@@ -122,5 +134,5 @@
       source = ../waybar;
       recursive = true;
     };
- };
+  };
 }
