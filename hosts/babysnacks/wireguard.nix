@@ -19,6 +19,7 @@
       }];
     };
 
+    # ai-workstation
     wg1 = {
       # IP address of this machine in the *tunnel network*
       address = [
