@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
   programs.zsh = {
@@ -61,6 +58,8 @@ in {
       source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
     '';
   };
+
+  programs.fzf.enableZshIntegration = true;
 
   home.sessionPath = ["$HOME/bin"];
 
@@ -148,7 +147,7 @@ in {
     enableZshIntegration = true;
     options = ["--cmd cd"];
   };
-  
+
   home.file = {
     "bin" = {
       source = ./bin;

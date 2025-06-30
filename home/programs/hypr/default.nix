@@ -84,6 +84,15 @@
     };
   };
 
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "on";
+      preload = [ "/home/mike/Pictures/wallpaper/wallpaper.jpeg" ];
+      wallpaper = [ "/home/mike/Pictures/wallpaper/wallpaper.jpeg" ];
+    };
+  };
+
   programs.fuzzel = {
     enable = true;
     settings = {
@@ -105,24 +114,6 @@
 
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
-
-  services.wpaperd = {
-    enable = false;
-    settings = {
-      default = {
-        path = "/home/mike/Pictures/wallpaper";
-        duration = "10m";
-        queue-size = 1000;
-      };
-    };
-  };
-
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-    };
-  };
 
   home.file = {
     ".config/hypr" = {

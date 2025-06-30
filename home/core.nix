@@ -31,6 +31,7 @@
     smartcat
     tealdeer
     visidata
+    claude-code
 
     # encryption / passwords
     pass

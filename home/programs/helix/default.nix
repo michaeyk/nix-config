@@ -56,6 +56,9 @@
         };
         file-picker = {
           hidden = false;
+          git-ignore = true;
+          git-global = true;
+          git-exclude = true;
         };
         cursor-shape = {
           insert = "bar";
