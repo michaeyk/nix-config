@@ -28,7 +28,7 @@
       ui = {
         default-command = "log";
       };
-      git.auto-local-bookmark= true;
+      # git.auto-local-bookmark= true;
     };
    };
 
