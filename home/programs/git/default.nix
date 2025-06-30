@@ -26,9 +26,10 @@
         name = "Michael Kim";
       };
       ui = {
-        default-command = "log";
+        default-command = "l";
       };
-      # git.auto-local-bookmark= true;
+      git.auto-local-bookmark= true;
+      aliases.l = ["log" "-r" "all()" ];
     };
    };
 
