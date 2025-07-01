@@ -6,7 +6,7 @@
     "margin-bottom": 0,
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications"],
+    "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications", "custom/email"],
     "modules-center": ["mpris"],
     "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","bluetooth","network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
@@ -134,11 +134,19 @@
             "dnd": "🔕"
         },
         "return-type": "json",
-        "exec": "~/.config/waybar/scripts/dunst-waybar.sh",
-        "on-click": "dunstctl history | jq -r '.data[0][] | \"\\(.summary.data): \\(.message.data)\"' | fuzzel --dmenu --prompt='Notifications: ' && dunstctl history-clear",
+        "exec": "~/.config/waybar/scripts/notification-tracker.sh --get",
+        "on-click": "dunstctl close-all",
         "on-click-right": "dunstctl set-paused toggle",
         "interval": 1,
         "tooltip": true
+    },
+    "custom/email": {
+        "format": "📧 {text}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/email-checker.sh",
+        "interval": 60,
+        "tooltip": true,
+        "on-click": "thunderbird"
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
