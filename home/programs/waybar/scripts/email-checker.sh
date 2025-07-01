@@ -4,8 +4,8 @@
 
 count_unread() {
     local maildir="$1"
-    if [[ -d "$maildir/new" ]]; then
-        find "$maildir/new" -type f | wc -l
+    if [[ -d "$maildir/Inbox/cur" ]]; then
+        find "$maildir/Inbox/cur" -type f | wc -l
     else
         echo 0
     fi
