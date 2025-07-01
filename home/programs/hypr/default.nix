@@ -116,6 +116,10 @@
         min_icon_size = 24;
         max_icon_size = 64;
         icon_position = "left";
+        script = "~/.config/waybar/scripts/notification-tracker.sh --increment";
+        mouse_left_click = "do_action, exec ~/.config/waybar/scripts/notification-tracker.sh --decrement; close_current";
+        mouse_middle_click = "do_action, exec ~/.config/waybar/scripts/notification-tracker.sh --decrement; close_current";
+        mouse_right_click = "exec ~/.config/waybar/scripts/notification-tracker.sh --clear; close_all";
         scale = 0;
       };
 

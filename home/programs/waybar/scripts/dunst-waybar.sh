@@ -2,7 +2,12 @@
 
 # Get dunst status
 paused=$(dunstctl is-paused)
-count=$(dunstctl count history)
+history=$(dunstctl count history 2>/dev/null || echo "0")
+displayed=$(dunstctl count displayed 2>/dev/null || echo "0")
+waiting=$(dunstctl count waiting 2>/dev/null || echo "0")
+
+# Use displayed count for currently visible notifications
+count=$displayed
 
 # Set icon based on status
 if [ "$paused" = "true" ]; then
@@ -11,9 +16,9 @@ if [ "$paused" = "true" ]; then
 else
     icon="default"
     if [ "$count" -gt 0 ]; then
-        tooltip="$count unread notification(s)"
+        tooltip="$count active notification(s)"
     else
-        tooltip="No unread notifications"
+        tooltip="No active notifications"
     fi
 fi
 
