@@ -77,7 +77,8 @@ window#waybar.hidden {
 #custom-weather.rainyNight,
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight,
-#custom-weather.default {
+#custom-weather.default,
+#custom-notifications {
   padding: 0 10px;
   color: #e5e5e5;
   border-radius: 9.5px;

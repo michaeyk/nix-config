@@ -9,7 +9,7 @@
     hyprpicker
     hyprpaper
     pyprland
-    wl-clipboard
+    wl-clipboard-rs
     cliphist
     bemoji
     grim
@@ -25,7 +25,6 @@
     waybar
     wttrbar
     crypto-tracker
-    dunst
   ];
 
   programs.hyprlock.enable = true;
@@ -88,8 +87,134 @@
     enable = true;
     settings = {
       ipc = "on";
-      preload = [ "/home/mike/Pictures/wallpaper/wallpaper.jpeg" ];
-      wallpaper = [ "/home/mike/Pictures/wallpaper/wallpaper.jpeg" ];
+      preload = ["/home/mike/Pictures/wallpaper/wallpaper.jpeg"];
+      wallpaper = ["/home/mike/Pictures/wallpaper/wallpaper.jpeg"];
+    };
+  };
+
+  services.dunst = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus";
+      size = "32x32";
+    };
+
+    settings = {
+      global = {
+        width = 300;
+        height = 300;
+        offset = "30x50";
+        origin = "top-left";
+        transparency = 10;
+        font = "Jetbrains Mono";
+        frame_color = "#8aadf4";
+        separator_color = "frame";
+        highlight = "#8aadf4";
+        enable_recursive_icon_lookup = true;
+        icon_theme = "Papirus";
+        min_icon_size = 24;
+        max_icon_size = 64;
+        icon_position = "left";
+        scale = 0;
+      };
+
+      urgency_low = {
+        background = "#24273a";
+        foreground = "#cad3f5";
+        default_icon = "dialog-information";
+      };
+
+      urgency_normal = {
+        background = "#24273a";
+        foreground = "#cad3f5";
+        default_icon = "dialog-information";
+      };
+
+      urgency_critical = {
+        background = "#24273a";
+        foreground = "#cad3f5";
+        frame_color = "#f5a97f";
+        default_icon = "dialog-error";
+      };
+
+      shortcuts = {
+        close = "ctrl+space";
+        close_all = "ctrl+shift+space";
+        history = "ctrl+grave";
+        context = "ctrl+shift+period";
+      };
+
+      firefox = {
+        appname = "Firefox";
+        desktop_entry = "firefox";
+        icon = "firefox";
+      };
+
+      spotify = {
+        appname = "Spotify";
+        desktop_entry = "spotify";
+        icon = "spotify";
+      };
+
+      thunderbird = {
+        appname = "Thunderbird";
+        desktop_entry = "thunderbird";
+        icon = "thunderbird";
+      };
+
+      error_notifications = {
+        summary = "*error*";
+        icon = "dialog-error";
+        urgency = "critical";
+      };
+
+      warning_notifications = {
+        summary = "*warning*";
+        icon = "dialog-warning";
+        urgency = "normal";
+      };
+
+      success_notifications = {
+        summary = "*success*";
+        icon = "dialog-ok";
+        urgency = "low";
+      };
+
+      battery_notifications = {
+        summary = "*battery*";
+        icon = "battery";
+      };
+
+      volume_notifications = {
+        summary = "*volume*";
+        icon = "audio-volume-high";
+      };
+
+      network_notifications = {
+        summary = "*network*";
+        icon = "network-wireless";
+      };
+
+      bluetooth_notifications = {
+        summary = "*bluetooth*";
+        icon = "bluetooth";
+      };
+
+      screenshot_notifications = {
+        summary = "*screenshot*";
+        icon = "camera-photo";
+      };
+
+      download_notifications = {
+        summary = "*download*";
+        icon = "folder-download";
+      };
+
+      update_notifications = {
+        summary = "*update*";
+        icon = "system-software-update";
+      };
     };
   };
 
