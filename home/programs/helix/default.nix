@@ -72,6 +72,7 @@
           ret = "goto_word";
           space = {
             w = ":write";
+            r = ":reload-all";
           };
           H = ":bp";
           L = ":bn";
