@@ -134,19 +134,19 @@
             "dnd": "🔕"
         },
         "return-type": "json",
-        "exec": "~/.config/waybar/scripts/notification-tracker.sh --get",
-        "on-click": "dunstctl close-all",
+        "exec": "~/.config/waybar/scripts/dunst-waybar.sh",
+        "on-click": "dunstctl history-pop",
         "on-click-right": "dunstctl set-paused toggle",
         "interval": 1,
         "tooltip": true
     },
     "custom/email": {
-        "format": "📧 {text}",
+        "format": "󰇮 {text}",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/email-checker.sh",
         "interval": 60,
         "tooltip": true,
-        "on-click": "thunderbird"
+        "on-click": "kitty -e aerc"
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",

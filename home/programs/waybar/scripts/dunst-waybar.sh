@@ -6,15 +6,18 @@ history=$(dunstctl count history 2>/dev/null || echo "0")
 displayed=$(dunstctl count displayed 2>/dev/null || echo "0")
 waiting=$(dunstctl count waiting 2>/dev/null || echo "0")
 
-# Use displayed count for currently visible notifications
-count=$displayed
-
-# Set icon based on status
+# Set count and icon based on status
 if [ "$paused" = "true" ]; then
     icon="dnd"
-    tooltip="Do Not Disturb enabled"
+    count=$waiting
+    if [ "$count" -gt 0 ]; then
+        tooltip="Do Not Disturb enabled - $count message(s)"
+    else
+        tooltip="Do Not Disturb enabled - No messages"
+    fi
 else
     icon="default"
+    count=$displayed
     if [ "$count" -gt 0 ]; then
         tooltip="$count active notification(s)"
     else
