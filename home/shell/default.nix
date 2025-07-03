@@ -199,5 +199,13 @@ in {
       source = ../programs/yazi;
       recursive = true;
     };
+
+    ".signature" = {
+      source = ./signature;
+    };
+
+    ".tsbot_signature" = {
+      source = ./tsbot_signature;
+    };
   };
 }
