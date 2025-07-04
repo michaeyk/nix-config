@@ -117,7 +117,7 @@
     "custom/weather": {
         "format": "{}°",
         "tooltip": true,
-        "interval": 3600,
+        "interval": 600,
         "exec": "wttrbar --fahrenheit",
         "return-type": "json"
      },

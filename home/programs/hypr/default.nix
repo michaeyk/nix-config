@@ -9,7 +9,7 @@
     hyprpicker
     hyprpaper
     pyprland
-    wl-clipboard-rs
+    wl-clipboard
     cliphist
     bemoji
     grim

@@ -32,6 +32,7 @@
     tealdeer
     visidata
     claude-code
+    eslint
 
     # encryption / passwords
     pass
