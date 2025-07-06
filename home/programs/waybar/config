@@ -107,7 +107,6 @@
           "warning": 30,
           "critical": 15
       },
-      "max-length": 20,
       "format": "{icon} {capacity}%",
       "format-warning": "{icon} {capacity}%",
       "format-critical": "{icon} {capacity}%",
