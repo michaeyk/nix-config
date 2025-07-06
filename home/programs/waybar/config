@@ -7,7 +7,7 @@
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications", "custom/email"],
-    "modules-center": ["mpris"],
+    "modules-center": [],
     "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","bluetooth","network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
@@ -90,7 +90,10 @@
             "car": "󰄋",
             "default": ["󰕿", "󰖀", "󰕾"]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     },
     "bluetooth": {
         "on-click": "blueman-manager",
@@ -112,7 +115,7 @@
       "format-plugged": "  {capacity}%",
       "format-alt": "{icon} {time}",
       "format-full": "  {capacity}%",
-      "format-icons": [" ", " ", " ", " ", " "],
+      "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     },
     "custom/weather": {
         "format": "{}°",
@@ -150,10 +153,10 @@
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
-        "on-click": "~/.config/waybar/scripts/fuzzel-powermenu.sh",
+        "on-click": "~/.config/waybar/scripts/fuzzel-powermenu.sh"
     }, 
     "custom/launcher": {
         "format": " <span color='#6a92d7'>󰀻 </span>",
-        "on-click": "fuzzel",
-    },
+        "on-click": "fuzzel"
+    }
 }
