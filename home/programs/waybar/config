@@ -54,10 +54,11 @@
         "max-length": 10,
     },
     "backlight": {
-        "device": "DP-1",
         "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-click": "",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "smooth-scrolling-threshold": 1
     },
     "network": {
         "format-wifi": "󰤨 {signalStrength}%",
