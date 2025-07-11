@@ -36,7 +36,7 @@ in {
       # docker alias
       dp = "docker ps";
       dl = "docker logs --tail 10 --follow";
-      dc = "docker compose up -d";
+      dc = "docker-compose up -d";
       ds = "docker stop";
     };
 
@@ -145,6 +145,8 @@ in {
 
   programs.ssh = {
     enable = true;
+    serverAliveInterval = 60;
+    serverAliveCountMax = 3;
     matchBlocks = {
       bastion = {
         port = 22;

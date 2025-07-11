@@ -81,6 +81,7 @@
     spaceship-prompt
     killall
     fastfetch
+    bc
   ];
 
   # Allow unfree packages
