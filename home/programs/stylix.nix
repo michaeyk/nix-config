@@ -8,7 +8,8 @@
     
     # Base16 color scheme - you can change this to any base16 scheme
     # Popular options: catppuccin-mocha.yaml, gruvbox-dark-hard.yaml, dracula.yaml, nord.yaml
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";
@@ -29,7 +30,7 @@
       };
       sizes = {
         applications = 11;
-        terminal = 12;
+        terminal = 10;
         desktop = 11;
         popups = 11;
       };

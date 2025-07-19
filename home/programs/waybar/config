@@ -66,17 +66,6 @@
         "format-disconnected": "󰤭 Disconnected",
         "on-click": "kitty --class nmtui -e nmtui",
     },
-    "mpris": {
-    	"format": "{player_icon} {dynamic}",
-    	"format-paused": "{status_icon} <i>{dynamic}</i>",
-    	"player-icons": {
-    		"default": "🎵",
-    		"mpv": "🎵"
-    	},
-    	"status-icons": {
-    		"paused": "⏸"
-    	},
-    },
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-bluetooth": "󰂰 {volume}%",

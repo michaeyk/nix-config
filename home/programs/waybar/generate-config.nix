@@ -3,11 +3,11 @@
 let
   baseConfig = builtins.fromJSON (builtins.readFile ./config.jsonc);
   
-  # Add mpris to modules-right for gaming machine
-  modulesRight = if hostname == "gaming"
-    then ["mpris"] ++ baseConfig.modules-right
-    else baseConfig.modules-right;
+  # Add mpris to modules-center for gaming machine
+  modulesCenter = if hostname == "gaming"
+    then ["mpris"]
+    else baseConfig.modules-center;
 in
   builtins.toJSON (baseConfig // {
-    modules-right = modulesRight;
+    modules-center = modulesCenter;
   })
