@@ -52,7 +52,7 @@
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect
           # sops-nix.nixosModules.sops
-          inputs.stylix.homeManagerModules.stylix
+          inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
         ];
       };
@@ -63,7 +63,7 @@
           hostname = "gaming";
         };
         modules = [
-          inputs.stylix.homeManagerModules.stylix
+          inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
         ];
       };
@@ -74,7 +74,7 @@
           hostname = "babysnacks";
         };
         modules = [
-          inputs.stylix.homeManagerModules.stylix
+          inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
         ];
       };

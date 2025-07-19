@@ -251,9 +251,6 @@
       source = ./config;
       recursive = true;
     };
-    ".config/waybar/style.css" = {
-      source = ../waybar/style.css;
-    };
     ".config/waybar/scripts" = {
       source = ../waybar/scripts;
       recursive = true;
@@ -262,6 +259,25 @@
       text = import ../waybar/generate-config.nix {
         inherit lib hostname;
       };
+    };
+    ".config/waybar/style.css" = {
+      text = 
+        let
+          waybarCSS = builtins.readFile ../waybar/style.css;
+          # Replace CSS variables with actual stylix colors
+          processedCSS = builtins.replaceStrings [
+            "var(--stylix-base00)" "var(--stylix-base01)" "var(--stylix-base02)" "var(--stylix-base03)"
+            "var(--stylix-base04)" "var(--stylix-base05)" "var(--stylix-base06)" "var(--stylix-base07)"
+            "var(--stylix-base08)" "var(--stylix-base09)" "var(--stylix-base0A)" "var(--stylix-base0B)"
+            "var(--stylix-base0C)" "var(--stylix-base0D)" "var(--stylix-base0E)" "var(--stylix-base0F)"
+          ] [
+            "#${config.lib.stylix.colors.base00}" "#${config.lib.stylix.colors.base01}" "#${config.lib.stylix.colors.base02}" "#${config.lib.stylix.colors.base03}"
+            "#${config.lib.stylix.colors.base04}" "#${config.lib.stylix.colors.base05}" "#${config.lib.stylix.colors.base06}" "#${config.lib.stylix.colors.base07}"
+            "#${config.lib.stylix.colors.base08}" "#${config.lib.stylix.colors.base09}" "#${config.lib.stylix.colors.base0A}" "#${config.lib.stylix.colors.base0B}"
+            "#${config.lib.stylix.colors.base0C}" "#${config.lib.stylix.colors.base0D}" "#${config.lib.stylix.colors.base0E}" "#${config.lib.stylix.colors.base0F}"
+          ] waybarCSS;
+        in
+        processedCSS;
     };
   };
 }

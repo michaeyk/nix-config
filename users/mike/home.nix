@@ -21,6 +21,7 @@
     ../../home/programs/helix
     ../../home/programs/git
     ../../home/programs/stylix.nix
+    ../../home/programs/obsidian
   ];
 
   fonts.fontconfig.enable = true;
@@ -104,16 +105,16 @@
     enable = true;
     defaultApplications = {
       "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
-      "default-web-browser" = ["google-chrome.desktop"];
-      "text/html" = ["google-chrome.desktop"];
+      "default-web-browser" = ["firefox.desktop"];
+      "text/html" = ["firefox.desktop"];
       # "image/png" = "imv-folder.desktop";
       "image/png" = "imv.desktop";
       "image/jpeg" = "imv.desktop";
       "video/*" = "umpv.desktop";
       "audio/*" = "org.gnome.Lollypop.desktop";
-      "x-scheme-handler/https" = ["google-chrome.desktop"];
-      "x-scheme-handler/about" = ["google-chrome.desktop"];
-      "x-scheme-handler/unknown" = ["google-chrome.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop"];
+      "x-scheme-handler/about" = ["firefox.desktop"];
+      "x-scheme-handler/unknown" = ["firefox.desktop"];
     };
   };
 

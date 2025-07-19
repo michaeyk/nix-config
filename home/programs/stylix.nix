@@ -8,7 +8,7 @@
     
     # Base16 color scheme - you can change this to any base16 scheme
     # Popular options: catppuccin-mocha.yaml, gruvbox-dark-hard.yaml, dracula.yaml, nord.yaml
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";
@@ -55,7 +55,7 @@
       # All applications successfully themed with Stylix
       gtk.enable = true;        # GTK applications
       hyprland.enable = true;   # Hyprland window manager
-      waybar.enable = true;     # Status bar
+      waybar.enable = false;    # Disable - use custom CSS with stylix colors
       kitty.enable = true;      # Terminal emulator
       helix.enable = true;      # Text editor
       fuzzel.enable = true;     # Application launcher
@@ -63,6 +63,8 @@
       dunst.enable = true;      # Notification daemon
     };
   };
+
+  # Waybar styling with stylix colors is now managed in hypr/default.nix
 
   # Custom Brave browser theming using Stylix colors
   # Since Stylix doesn't have a built-in Brave target, we create custom configs
