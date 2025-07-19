@@ -37,7 +37,7 @@
         "application/pdf" = "pdftotext - -l 10 -nopgbrk -q  - | fmt -w 100";
       };
       ui = {
-        styleset-name = "dracula";
+        styleset-name = "nord";
       };
     };
   };
@@ -77,7 +77,7 @@
         aerc = {
           enable = true;
           extraAccounts = {
-            signature-file = "/home/mike/.signature";
+            signature-file = "/home/mike/.config/aerc/signature";
           };
         };
         msmtp.enable = true;
@@ -110,7 +110,7 @@
         aerc = {
           enable = true;
           extraAccounts = {
-            signature-file = "/home/mike/.tsbot_signature";
+            signature-file = "/home/mike/.config/aerc/tsbot_signature";
           };
         };
         msmtp.enable = true;
@@ -139,6 +139,7 @@
   };
 
   home.homeDirectory = "/home/mike";
+
   home.file = {
     ".config/aerc" = {
       source = ./aerc;
