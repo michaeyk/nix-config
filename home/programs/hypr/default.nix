@@ -107,7 +107,7 @@
         width = 300;
         height = 300;
         offset = "30x50";
-        origin = "top-left";
+        origin = "bottom-right";
         transparency = 10;
         font = lib.mkDefault "Jetbrains Mono";
         frame_color = lib.mkDefault "#8aadf4";
