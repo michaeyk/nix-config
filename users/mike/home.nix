@@ -28,6 +28,7 @@
   # environment.
   home.packages = with pkgs; [
     # browser and webdriver
+    brave
     google-chrome
     firefox
     chromedriver
