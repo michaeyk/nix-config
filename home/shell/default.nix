@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
   programs.zsh = {
@@ -88,9 +88,9 @@ in {
   programs.kitty = {
     enable = true;
     font = {
-      name = "Jetbrains Mono";
-      package = pkgs.jetbrains-mono;
-      size = 10;
+      name = lib.mkDefault "Jetbrains Mono";
+      package = lib.mkDefault pkgs.jetbrains-mono;
+      size = lib.mkDefault 10;
     };
     # font = {
     #   name = "Fira Code";
@@ -99,10 +99,10 @@ in {
     # };
     settings = {
       enable_audio_bell = false;
-      background = "#282828";
-      background_opacity = 0.5;
+      background = lib.mkDefault "#282828";
+      background_opacity = lib.mkDefault 0.5;
     };
-    themeFile = "Catppuccin-Mocha";
+    themeFile = lib.mkDefault "Catppuccin-Mocha";
   };
 
   programs.cava = {

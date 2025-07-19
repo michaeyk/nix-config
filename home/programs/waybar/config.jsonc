@@ -1,0 +1,162 @@
+{
+    "height": 30,
+    "layer": "top",
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-bottom": 0,
+    "margin-right": 10,
+    "spacing": 5,
+    "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications", "custom/email"],
+    "modules-center": [],
+    "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","bluetooth","network", "battery", "clock", "custom/power-menu"],
+    "wlr/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      }
+    },
+    "hyprland/window": {
+        "format": "{}"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "format": "<span color='#bf616a'> </span>{:%I:%M %p}",
+        "format-alt": "<span color='#bf616a'> </span>{:%a %b %d}",
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "idle_inhibitor": {
+      "format": "{icon} ",
+      "format-icons":{
+        "activated": "󰈈",
+        "deactivated": "󰈉"
+      }
+    },
+    "cpu": {
+      "interval": 10,
+      "format": "󰻠 {}%",
+      "max-length": 10,
+      "on-click": "kitty --class btop -e btop"
+    },
+    "memory": {
+        "interval": 30,
+        "format": "󰍛 {}%",
+        "format-alt": "󰍛 {used:0.1f}G",
+        "max-length": 10
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "smooth-scrolling-threshold": 1
+    },
+    "network": {
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-ethernet": "󰈀 wired",
+        "format-disconnected": "󰤭 Disconnected",
+        "on-click": "kitty --class nmtui -e nmtui"
+    },
+    "mpris": {
+    	"format": "{player_icon} {dynamic}",
+    	"format-paused": "{status_icon} <i>{dynamic}</i>",
+    	"player-icons": {
+    		"default": "🎵",
+    		"mpv": "🎵"
+    	},
+    	"status-icons": {
+    		"paused": "⏸"
+    	}
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "󰂰 {volume}%",
+        "format-bluetooth-muted": "󰂲",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰦢",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    },
+    "bluetooth": {
+        "on-click": "blueman-manager",
+        "format": "󰂯 {status}"
+    },
+    "battery": {
+      "bat": "BAT1",
+      "adapter": "ACAD",
+      "interval": 60,
+      "states": {
+          "warning": 30,
+          "critical": 15
+      },
+      "format": "{icon} {capacity}%",
+      "format-warning": "{icon} {capacity}%",
+      "format-critical": "{icon} {capacity}%",
+      "format-charging": "󰂄 {capacity}%",
+      "format-plugged": "  {capacity}%",
+      "format-alt": "{icon} {time}",
+      "format-full": "󰁹 {capacity}%",
+      "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "custom/weather": {
+        "format": "{}°",
+        "tooltip": true,
+        "interval": 600,
+        "exec": "wttrbar --fahrenheit",
+        "return-type": "json"
+     },
+    "custom/cryptotracking": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "crypto-tracker -k $(pass crypto/coinmarketcap_api) -s BTC,ETH,XRP -m ETH",
+        "restart-interval": 600
+    },
+    "custom/notifications": {
+        "format": "{icon} {text}",
+        "format-icons": {
+            "default": "🔔",
+            "dnd": "🔕"
+        },
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/dunst-waybar.sh",
+        "on-click": "dunstctl history-pop",
+        "on-click-right": "dunstctl set-paused toggle",
+        "interval": 1,
+        "tooltip": true
+    },
+    "custom/email": {
+        "format": "󰇮 {text}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/email-checker.sh",
+        "interval": 60,
+        "tooltip": true,
+        "on-click": "kitty -e aerc"
+    },
+    "custom/power-menu": {
+        "format": " <span color='#6a92d7'>⏻ </span>",
+        "on-click": "~/.config/waybar/scripts/fuzzel-powermenu.sh"
+    }, 
+    "custom/launcher": {
+        "format": " <span color='#6a92d7'>󰀻 </span>",
+        "on-click": "fuzzel"
+    }
+}

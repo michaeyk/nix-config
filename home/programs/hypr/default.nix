@@ -1,6 +1,8 @@
 {
+  config,
   pkgs,
   lib,
+  hostname ? "unknown",
   ...
 }: {
   home.packages = with pkgs; [
@@ -107,10 +109,10 @@
         offset = "30x50";
         origin = "top-left";
         transparency = 10;
-        font = "Jetbrains Mono";
-        frame_color = "#8aadf4";
-        separator_color = "frame";
-        highlight = "#8aadf4";
+        font = lib.mkDefault "Jetbrains Mono";
+        frame_color = lib.mkDefault "#8aadf4";
+        separator_color = lib.mkDefault "frame";
+        highlight = lib.mkDefault "#8aadf4";
         enable_recursive_icon_lookup = true;
         icon_theme = "Papirus";
         min_icon_size = 24;
@@ -124,22 +126,22 @@
       };
 
       urgency_low = {
-        background = "#24273a";
-        foreground = "#cad3f5";
-        default_icon = "dialog-information";
+        background = lib.mkDefault "#24273a";
+        foreground = lib.mkDefault "#cad3f5";
+        default_icon = lib.mkDefault "dialog-information";
       };
 
       urgency_normal = {
-        background = "#24273a";
-        foreground = "#cad3f5";
-        default_icon = "dialog-information";
+        background = lib.mkDefault "#24273a";
+        foreground = lib.mkDefault "#cad3f5";
+        default_icon = lib.mkDefault "dialog-information";
       };
 
       urgency_critical = {
-        background = "#24273a";
-        foreground = "#cad3f5";
-        frame_color = "#f5a97f";
-        default_icon = "dialog-error";
+        background = lib.mkDefault "#24273a";
+        foreground = lib.mkDefault "#cad3f5";
+        frame_color = lib.mkDefault "#f5a97f";
+        default_icon = lib.mkDefault "dialog-error";
       };
 
       shortcuts = {
@@ -226,17 +228,17 @@
     enable = true;
     settings = {
       colors = {
-        background = "24273add";
-        text = "cad3f5ff";
-        prompt = "b8c0e0ff";
-        placeholder = "8087a2ff";
-        input = "cad3f5ff";
-        match = "8bd5caff";
-        selection = "5b6078ff";
-        selection-text = "cad3f5ff";
-        selection-match = "8bd5caff";
-        counter = "8087a2ff";
-        border = "8bd5caff";
+        background = lib.mkDefault "24273add";
+        text = lib.mkDefault "cad3f5ff";
+        prompt = lib.mkDefault "b8c0e0ff";
+        placeholder = lib.mkDefault "8087a2ff";
+        input = lib.mkDefault "cad3f5ff";
+        match = lib.mkDefault "8bd5caff";
+        selection = lib.mkDefault "5b6078ff";
+        selection-text = lib.mkDefault "cad3f5ff";
+        selection-match = lib.mkDefault "8bd5caff";
+        counter = lib.mkDefault "8087a2ff";
+        border = lib.mkDefault "8bd5caff";
       };
     };
   };
@@ -249,9 +251,17 @@
       source = ./config;
       recursive = true;
     };
-    ".config/waybar" = {
-      source = ../waybar;
+    ".config/waybar/style.css" = {
+      source = ../waybar/style.css;
+    };
+    ".config/waybar/scripts" = {
+      source = ../waybar/scripts;
       recursive = true;
+    };
+    ".config/waybar/config" = {
+      text = import ../waybar/generate-config.nix {
+        inherit lib hostname;
+      };
     };
   };
 }

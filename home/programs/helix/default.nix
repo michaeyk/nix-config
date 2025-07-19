@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }: {
   home.sessionVariables = {
@@ -22,7 +23,7 @@
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "catppuccin_mocha";
+      theme = lib.mkDefault "catppuccin_mocha";
       editor = {
         line-number = "relative";
         mouse = true;

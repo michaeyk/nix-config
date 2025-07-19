@@ -46,12 +46,35 @@
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs;
+          hostname = "unknown"; # Default hostname
         };
         modules = [
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect
           # sops-nix.nixosModules.sops
-          # stylix.homeManagerModules.stylix
+          inputs.stylix.homeManagerModules.stylix
+          ./users/mike/home.nix
+        ];
+      };
+      mike-gaming = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          hostname = "gaming";
+        };
+        modules = [
+          inputs.stylix.homeManagerModules.stylix
+          ./users/mike/home.nix
+        ];
+      };
+      mike-babysnacks = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          hostname = "babysnacks";
+        };
+        modules = [
+          inputs.stylix.homeManagerModules.stylix
           ./users/mike/home.nix
         ];
       };

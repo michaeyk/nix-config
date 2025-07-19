@@ -20,6 +20,7 @@
     ../../home/programs/email
     ../../home/programs/helix
     ../../home/programs/git
+    ../../home/programs/stylix.nix
   ];
 
   fonts.fontconfig.enable = true;
