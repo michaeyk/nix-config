@@ -179,6 +179,7 @@ in {
       show_preview = true;
       max_preview_height = 4;
       sync_address = "http://michaelkim.net:8888";
+      sync_frequency = "5m";
       history_filter = [
         "^secret-tool"
         "^pass"
