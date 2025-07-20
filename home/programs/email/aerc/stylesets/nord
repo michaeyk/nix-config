@@ -26,6 +26,7 @@ selector_chooser.bold=true
 # Colors: Nord
 
 *.selected.bg=#394353
+*.selected.fg=#eceff4
 
 msglist_marked.bg=#81a1c1
 msglist_flagged.fg=#a3be8c
