@@ -22,6 +22,7 @@
     ../../home/programs/git
     ../../home/programs/stylix.nix
     ../../home/programs/obsidian
+    ../../home/programs/zellij
   ];
 
   fonts.fontconfig.enable = true;

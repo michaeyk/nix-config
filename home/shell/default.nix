@@ -161,33 +161,29 @@ in {
     };
   };
 
-  programs.zellij = {
-    enable = true;
-    settings = {
-      theme = "stylix";
-      show_startup_tips = false;
-      themes = {
-        stylix = {
-          bg = "#${config.lib.stylix.colors.base00}";
-          fg = "#${config.lib.stylix.colors.base05}";
-          black = "#${config.lib.stylix.colors.base01}";
-          red = "#${config.lib.stylix.colors.base08}";
-          green = "#${config.lib.stylix.colors.base0B}";
-          yellow = "#${config.lib.stylix.colors.base0A}";
-          blue = "#${config.lib.stylix.colors.base0D}";
-          magenta = "#${config.lib.stylix.colors.base0E}";
-          cyan = "#${config.lib.stylix.colors.base0C}";
-          white = "#${config.lib.stylix.colors.base06}";
-          orange = "#${config.lib.stylix.colors.base09}";
-        };
-      };
-    };
-  };
 
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
     options = ["--cmd cd"];
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      update_check = false;
+      search_mode = "fuzzy";
+      filter_mode_shell_up_key_binding = "session";
+      style = "compact";
+      show_preview = true;
+      max_preview_height = 4;
+      sync_address = "https://michaelkim.net:8888";
+      history_filter = [
+        "^secret-tool"
+        "^pass"
+      ];
+    };
   };
 
   home.file = {
