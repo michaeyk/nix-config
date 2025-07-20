@@ -145,10 +145,14 @@ in {
 
   programs.ssh = {
     enable = true;
-    serverAliveInterval = 60;
-    serverAliveCountMax = 3;
     matchBlocks = {
       bastion = {
+        port = 22;
+        hostname = "34.197.186.111";
+        user = "mike";
+        forwardAgent = true;
+      };
+      jbastion = {
         port = 22;
         hostname = "3.208.183.51";
         user = "mike";
