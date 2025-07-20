@@ -178,7 +178,7 @@ in {
       style = "compact";
       show_preview = true;
       max_preview_height = 4;
-      sync_address = "https://michaelkim.net:8888";
+      sync_address = "http://michaelkim.net:8888";
       history_filter = [
         "^secret-tool"
         "^pass"
