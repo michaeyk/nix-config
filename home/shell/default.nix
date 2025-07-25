@@ -74,7 +74,7 @@ in {
     enableSshSupport = true;
     enableScDaemon = true;
     sshKeys = [
-      "534D47E4DE15638C320F1DF916AD55A5D6B92A63"
+      "49E43BE49828EA153BD936C8115CB619D9542E25"
     ];
     defaultCacheTtl = 1800;
   };
