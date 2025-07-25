@@ -124,13 +124,13 @@
       .markdown-source-view,
       .markdown-preview-view {
         font-family: var(--font-text-override);
-        font-size: ${toString (config.stylix.fonts.sizes.applications + 3)}px;
+        font-size: ${toString (config.stylix.fonts.sizes.applications + 5)}px;
       }
       
       .cm-s-obsidian .CodeMirror-code,
       code {
         font-family: var(--font-monospace-override);
-        font-size: ${toString (config.stylix.fonts.sizes.terminal + 1)}px;
+        font-size: ${toString (config.stylix.fonts.sizes.terminal + 4)}px;
       }
       
       /* UI elements use sans-serif */
