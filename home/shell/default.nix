@@ -181,7 +181,6 @@ in {
       sync_frequency = "5m";
       history_filter = [
         "^secret-tool"
-        "^pass"
       ];
       history_file = "~/.zsh_history";
     };
