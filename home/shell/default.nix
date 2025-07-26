@@ -11,7 +11,6 @@ in {
       ignoreAllDups = true;
       extended = true;
       expireDuplicatesFirst = true;
-      path = "$HOME/.zsh_history";
       size = 10000;
     };
     shellAliases = {
@@ -50,6 +49,7 @@ in {
       	rm -f -- "$tmp"
       }
 
+      export HISTFILE="$HOME/.zsh_history"
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
       export ANTHROPIC_API_KEY=$(cat /run/secrets/ANTHROPIC_API_KEY)
       export LESS="-XR"
@@ -161,7 +161,6 @@ in {
     };
   };
 
-
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
@@ -184,6 +183,7 @@ in {
         "^secret-tool"
         "^pass"
       ];
+      history_file = "~/.zsh_history";
     };
   };
 

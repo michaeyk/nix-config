@@ -1,6 +1,0 @@
-: 1753501351:0;pass edit general/yubikey
-: 1753501398:0;pass git push
-: 1753501724:0;cd 
-: 1753501726:0;cd .dotfiles
-: 1753501729:0;git status
-: 1753501743:0;git add .
