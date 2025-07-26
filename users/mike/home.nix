@@ -28,6 +28,12 @@
 
   fonts.fontconfig.enable = true;
 
+  # Environment variables for Qt theming
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "gtk3";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [

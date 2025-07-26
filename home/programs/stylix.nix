@@ -1,7 +1,7 @@
 {pkgs, lib, config, ...}: {
   stylix = {
     enable = true;
-    autoEnable = false;
+    autoEnable = true;
     
     # Set the wallpaper image - use fetchurl or copy to the dotfiles
     image = ./stylix-wallpaper.jpeg;
@@ -61,10 +61,27 @@
       helix.enable = true;      # Text editor
       fuzzel.enable = true;     # Application launcher
       firefox = {
-        enable = true;    # Web browser
-        profileNames = [ "default" ];  # Profile to apply theme to
+        enable = true;
+        profileNames = [ "default" ];  # Match the profile name from firefox.nix
       };
       dunst.enable = true;      # Notification daemon
+      btop.enable = true;       # System monitor
+      cava.enable = true;       # Audio visualizer
+      fzf.enable = true;        # Fuzzy finder
+      hyprlock.enable = false;  # Screen locker - disabled due to custom config
+      hyprpaper.enable = true;  # Wallpaper daemon
+      ncspot.enable = true;     # Spotify TUI client
+      zathura.enable = true;    # Document viewer
+    };
+  };
+
+  # Qt theme configuration for Qt-based applications (Discord, VLC, Spotify, LibreOffice)
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk3";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
     };
   };
 
