@@ -60,7 +60,10 @@
       kitty.enable = true;      # Terminal emulator
       helix.enable = true;      # Text editor
       fuzzel.enable = true;     # Application launcher
-      firefox.enable = true;    # Web browser
+      firefox = {
+        enable = true;    # Web browser
+        profileNames = [ "default" ];  # Profile to apply theme to
+      };
       dunst.enable = true;      # Notification daemon
     };
   };

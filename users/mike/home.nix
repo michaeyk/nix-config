@@ -23,6 +23,7 @@
     ../../home/programs/stylix.nix
     ../../home/programs/obsidian
     ../../home/programs/zellij
+    ../../home/programs/firefox.nix
   ];
 
   fonts.fontconfig.enable = true;
@@ -33,7 +34,6 @@
     # browser and webdriver
     brave
     google-chrome
-    firefox
     chromedriver
     geckodriver
     w3m

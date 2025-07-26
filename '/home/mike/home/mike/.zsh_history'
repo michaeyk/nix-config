@@ -1,0 +1,12 @@
+: 1753469296:0;ssh dellbro00.local
+: 1753469313:0;ssh root@dellbro00.local
+: 1753469351:0;ssh-add -L
+: 1753469363:0;ssh dellbro00.local
+: 1753469377:0;cd 
+: 1753469415:0;ssh 10.8.0.1
+: 1753469478:0;ssh pi@pihole.local
+: 1753469492:0;pass hosting/pihole
+: 1753469499:0;ssh pi@pihole.local
+: 1753469253:649;claude 
+: 1753469905:0;home-manager switch --flake .#mike-gaming
+: 1753469910:0;git add .

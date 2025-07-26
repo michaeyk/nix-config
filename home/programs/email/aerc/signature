@@ -1,7 +1,2 @@
-pub   rsa4096/0x340E296FD0FD81C9 2015-11-18 [SC]
-      Key fingerprint = 9605 A1DE 3AB1 9F7F 34B5  F003 340E 296F D0FD 81C9
-uid   [ultimate] Michael Kim <mike@michaelkim.net>
-sub   rsa4096/0x1B95150FD771186B 2015-11-18 [E]
-      Key fingerprint = 35D4 C65E 21E8 BC27 1E46  D71F 1B95 150F D771 186B
-sub   rsa4096/0xC91A48E07C6F5BB9 2015-11-18 [S]
-      Key fingerprint = 9B14 0685 C5C0 28EE 5AFF  4915 C91A 48E0 7C6F 5BB9
+--
+Michael Kim
