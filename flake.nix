@@ -56,28 +56,17 @@
           ./users/mike/home.nix
         ];
       };
-      mike-gaming = home-manager.lib.homeManagerConfiguration {
+
+      mike-remote = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs;
-          hostname = "gaming";
         };
         modules = [
-          inputs.stylix.homeModules.stylix
-          ./users/mike/home.nix
+          ./users/mike_remote/home.nix
         ];
       };
-      mike-babysnacks = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-          hostname = "babysnacks";
-        };
-        modules = [
-          inputs.stylix.homeModules.stylix
-          ./users/mike/home.nix
-        ];
-      };
+
       ubuntu = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
