@@ -32,6 +32,7 @@
     tealdeer
     visidata
     claude-code
+    gemini-cli
     eslint
 
     # encryption / passwords
