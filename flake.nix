@@ -18,7 +18,7 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+    pkgs = import nixpkgs {inherit system;};
   in {
     # Please replace my-nixos with your hostname
     nixosConfigurations.babysnacks = lib.nixosSystem {
@@ -52,6 +52,30 @@
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect
           # sops-nix.nixosModules.sops
+          inputs.stylix.homeModules.stylix
+          ./users/mike/home.nix
+        ];
+      };
+
+      mike-gaming = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          hostname = "gaming";
+        };
+        modules = [
+          inputs.stylix.homeModules.stylix
+          ./users/mike/home.nix
+        ];
+      };
+
+      mike-babysnacks = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          hostname = "babysnacks";
+        };
+        modules = [
           inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
         ];
