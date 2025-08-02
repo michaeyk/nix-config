@@ -4,18 +4,24 @@
 #
 #  Nix commands related to the local machine
 #
+# To specify a host, run `just <recipe> host=<hostname>`
+# For example: `just deploy-all host=babysnacks`
+# The default host is "gaming".
+# 
 ############################################################################
+host := "gaming"
+
 default: update deploy-all
 
 deploy-home:
-  home-manager switch --flake . 
+  home-manager switch --flake .#{{host}}
 
 deploy-all:
-  nixos-rebuild switch --flake . --sudo
-  home-manager switch --flake . 
+  nixos-rebuild switch --flake .#{{host}} --sudo
+  home-manager switch --flake .#{{host}}
 
 debug:
-  nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
+  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo --show-trace --verbose
 
 update: 
   nix flake update
