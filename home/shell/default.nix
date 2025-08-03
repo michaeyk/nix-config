@@ -41,7 +41,13 @@ in {
 
     initExtra = ''
       # Source home-manager session variables
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      elif [ -f "$HOME/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh" ]; then
+        . "$HOME/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh"
+      elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
+        . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+      fi
       
       function y() {
       	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -70,7 +76,13 @@ in {
     enable = true;
     initExtra = ''
       # Source home-manager session variables
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      elif [ -f "$HOME/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh" ]; then
+        . "$HOME/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh"
+      elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
+        . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+      fi
     '';
   };
 
