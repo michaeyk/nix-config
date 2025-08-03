@@ -24,6 +24,7 @@
     ../../home/programs/obsidian
     ../../home/programs/zellij
     ../../home/programs/firefox.nix
+    ../../home/programs/rustdesk
   ];
 
   fonts.fontconfig.enable = true;
@@ -78,7 +79,6 @@
     # Raspberry Pi
     rpi-imager
 
-    rustdesk
     # It is sometimes useful to fine-tune packages, for example, by applying
     # overrides. You can do that directly here, just don't forget the
     # parentheses. Maybe you want to install Nerd Fonts with a limited number of
