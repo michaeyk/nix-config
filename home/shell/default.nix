@@ -40,6 +40,9 @@ in {
     };
 
     initContent = ''
+      # Add nix-profile bin to PATH
+      export PATH="$HOME/.nix-profile/bin:$PATH"
+      
       # Source home-manager session variables
       if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
@@ -75,6 +78,9 @@ in {
   programs.bash = {
     enable = true;
     initExtra = ''
+      # Add nix-profile bin to PATH
+      export PATH="$HOME/.nix-profile/bin:$PATH"
+      
       # Source home-manager session variables
       if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
