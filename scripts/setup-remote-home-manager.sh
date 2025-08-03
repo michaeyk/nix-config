@@ -39,7 +39,7 @@ echo "Building home-manager configuration from flake..."
 echo "This will build the configuration locally with correct Nix store paths for this system."
 
 # Use the existing home configuration from the flake
-nix run home-manager/master -- switch --flake .#mike
+nix run home-manager/master -- switch --flake .#mike-remote
 
 echo ""
 echo "Home-manager setup complete!"
@@ -50,4 +50,4 @@ echo ""
 echo "To update in the future, run from the dotfiles directory:"
 echo "  cd $DOTFILES_DIR"
 echo "  git pull"
-echo "  nix run home-manager/master -- switch --flake .#mike"
+echo "  nix run home-manager/master -- switch --flake .#mike-remote"
