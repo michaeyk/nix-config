@@ -39,7 +39,10 @@ in {
       ds = "docker stop";
     };
 
-    initContent = ''
+    initExtra = ''
+      # Source home-manager session variables
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      
       function y() {
       	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
       	yazi "$@" --cwd-file="$tmp"
@@ -63,7 +66,13 @@ in {
 
   home.sessionPath = ["$HOME/bin"];
 
-  programs.bash.enable = true;
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      # Source home-manager session variables
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    '';
+  };
 
   programs.tmux.enable = true;
 
