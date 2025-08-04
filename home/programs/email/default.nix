@@ -37,7 +37,7 @@
         "application/pdf" = "pdftotext - -l 10 -nopgbrk -q  - | fmt -w 100";
       };
       ui = {
-        styleset-name = "nord";
+        styleset-name = "stylix";
       };
     };
   };
@@ -144,6 +144,59 @@
     ".config/aerc" = {
       source = ./aerc;
       recursive = true;
+    };
+    
+    # Create Stylix-based styleset for aerc
+    ".config/aerc/stylesets/stylix" = {
+      text = ''
+        #
+        # aerc stylix styleset - auto-generated from Stylix colors
+        #
+        
+        *.default=true
+        
+        title.reverse=true
+        header.bold=true
+        
+        *error.bold=true
+        error.fg=#${config.lib.stylix.colors.base08}
+        warning.fg=#${config.lib.stylix.colors.base0A}
+        success.fg=#${config.lib.stylix.colors.base0B}
+        
+        statusline*.default=true
+        statusline_default.reverse=true
+        statusline_error.reverse=true
+        
+        completion_pill.reverse=true
+        
+        border.reverse = true
+        
+        selector_focused.reverse=true
+        selector_chooser.bold=true
+        
+        # Stylix color scheme
+        
+        *.selected.bg=#${config.lib.stylix.colors.base02}
+        *.selected.fg=#${config.lib.stylix.colors.base07}
+        
+        msglist_marked.bg=#${config.lib.stylix.colors.base0D}
+        msglist_flagged.fg=#${config.lib.stylix.colors.base0B}
+        msglist_flagged.bold=true
+        
+        msglist_unread.fg=#${config.lib.stylix.colors.base0C}
+        msglist_unread.selected.bg=#${config.lib.stylix.colors.base0D}
+        
+        statusline_default.fg=#${config.lib.stylix.colors.base03}
+        statusline_error.fg=#${config.lib.stylix.colors.base08}
+        
+        tab.fg=#${config.lib.stylix.colors.base05}
+        tab.bg=#${config.lib.stylix.colors.base01}
+        tab.selected.bg=#${config.lib.stylix.colors.base0D}
+        tab.selected.fg=#${config.lib.stylix.colors.base00}
+        
+        dirlist_unread.fg=#${config.lib.stylix.colors.base0D}
+        dirlist_recent.fg=#${config.lib.stylix.colors.base0D}
+      '';
     };
 
     ".config/vdirsyncer" = {
