@@ -158,6 +158,19 @@ in {
         }
       ];
     };
+    settings = {
+      plugin = {
+        prepend_previewers = [
+          {
+            name = "*.md";
+            run = "code";
+          }
+        ];
+      };
+      preview = {
+        image_bound = [ 10000 10000 ];
+      };
+    };
   };
 
   programs.ssh = {
@@ -229,10 +242,6 @@ in {
       auto_update = true
     '';
 
-    ".config/yazi" = {
-      source = ../programs/yazi;
-      recursive = true;
-    };
   };
 }
 
