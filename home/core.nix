@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, nurPkgs, ...}: {
   home.packages = with pkgs; [
     # archive
     zip
@@ -33,7 +33,9 @@
     visidata
     claude-code
     gemini-cli
+    nurPkgs.repos.charmbracelet.crush
     eslint
+    nodejs
 
     # encryption / passwords
     pass

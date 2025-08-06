@@ -21,6 +21,7 @@
     ../../home/core.nix
     ../../home/shell
     ../../home/programs/helix
+    ../../home/programs/zellij
     ../../home/programs/git
   ];
 

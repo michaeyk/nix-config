@@ -17,6 +17,7 @@
     black
     typescript-language-server
     (lib.hiPrio nodePackages.prettier)
+    lsp-ai
   ];
 
   programs.helix = {

@@ -55,6 +55,14 @@ in {
         . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
       fi
       
+      # Source fzf key bindings
+      if [ -f "$HOME/.nix-profile/share/fzf/key-bindings.zsh" ]; then
+        source "$HOME/.nix-profile/share/fzf/key-bindings.zsh"
+      fi
+      if [ -f "$HOME/.nix-profile/share/fzf/completion.zsh" ]; then
+        source "$HOME/.nix-profile/share/fzf/completion.zsh"
+      fi
+      
       function y() {
       	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
       	yazi "$@" --cwd-file="$tmp"
@@ -94,6 +102,14 @@ in {
         . "$HOME/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh"
       elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
         . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+      fi
+      
+      # Source fzf key bindings for bash
+      if [ -f "$HOME/.nix-profile/share/fzf/key-bindings.bash" ]; then
+        source "$HOME/.nix-profile/share/fzf/key-bindings.bash"
+      fi
+      if [ -f "$HOME/.nix-profile/share/fzf/completion.bash" ]; then
+        source "$HOME/.nix-profile/share/fzf/completion.bash"
       fi
     '';
   };

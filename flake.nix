@@ -10,6 +10,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     yazi.url = "github:sxyazi/yazi";
+    nur.url = "github:nix-community/NUR";
   };
   outputs = {
     nixpkgs,
@@ -18,7 +19,17 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
-    pkgs = import nixpkgs {inherit system;};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    nurPkgs = import inputs.nur {
+      inherit pkgs;
+      nurpkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
   in {
     # Please replace my-nixos with your hostname
     nixosConfigurations.babysnacks = lib.nixosSystem {
@@ -45,7 +56,7 @@
       mike = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs nurPkgs;
           hostname = "unknown"; # Default hostname
         };
         modules = [
@@ -60,7 +71,7 @@
       mike-gaming = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs nurPkgs;
           hostname = "gaming";
         };
         modules = [
@@ -72,7 +83,7 @@
       mike-babysnacks = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs nurPkgs;
           hostname = "babysnacks";
         };
         modules = [
