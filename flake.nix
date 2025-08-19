@@ -95,7 +95,7 @@
       mike-remote = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs nurPkgs;
         };
         modules = [
           ./users/mike_remote/home.nix
@@ -105,7 +105,7 @@
       ubuntu = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs nurPkgs;
         };
         modules = [
           ./users/ubuntu/home.nix
