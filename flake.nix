@@ -108,6 +108,7 @@
           inherit inputs nurPkgs;
         };
         modules = [
+          inputs.stylix.homeModules.stylix
           ./users/ubuntu/home.nix
         ];
       };
