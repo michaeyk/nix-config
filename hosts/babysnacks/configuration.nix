@@ -195,7 +195,14 @@
   users.groups.plugdev = {};
   users.groups.davfs2 = {};
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # System users
+  users.users.davfs2 = {
+    isSystemUser = true;
+    group = "davfs2";
+    description = "davfs2 system user";
+  };
+
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";

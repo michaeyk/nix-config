@@ -1,4 +1,9 @@
-{pkgs, lib, config, ...}: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
 in {
   programs.zsh = {
@@ -42,10 +47,10 @@ in {
     initContent = ''
       # Add nix-profile bin to PATH
       export PATH="$HOME/.nix-profile/bin:$PATH"
-      
+
       # Add npm global packages to PATH
       export PATH="$HOME/.npm-global/bin:$PATH"
-      
+
       # Source home-manager session variables
       if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
@@ -54,7 +59,7 @@ in {
       elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
         . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
       fi
-      
+
       # Source fzf key bindings
       if [ -f "$HOME/.nix-profile/share/fzf/key-bindings.zsh" ]; then
         source "$HOME/.nix-profile/share/fzf/key-bindings.zsh"
@@ -62,7 +67,7 @@ in {
       if [ -f "$HOME/.nix-profile/share/fzf/completion.zsh" ]; then
         source "$HOME/.nix-profile/share/fzf/completion.zsh"
       fi
-      
+
       function y() {
       	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
       	yazi "$@" --cwd-file="$tmp"
@@ -82,19 +87,15 @@ in {
     '';
   };
 
-  programs.fzf.enableZshIntegration = true;
-
-  home.sessionPath = ["$HOME/bin"];
-
   programs.bash = {
     enable = true;
     initExtra = ''
       # Add nix-profile bin to PATH
       export PATH="$HOME/.nix-profile/bin:$PATH"
-      
+
       # Add npm global packages to PATH
       export PATH="$HOME/.npm-global/bin:$PATH"
-      
+
       # Source home-manager session variables
       if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
@@ -103,7 +104,7 @@ in {
       elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
         . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
       fi
-      
+
       # Source fzf key bindings for bash
       if [ -f "$HOME/.nix-profile/share/fzf/key-bindings.bash" ]; then
         source "$HOME/.nix-profile/share/fzf/key-bindings.bash"
@@ -113,6 +114,63 @@ in {
       fi
     '';
   };
+
+  programs = {
+    nushell = {
+      enable = true;
+      # The config.nu can be anywhere you want if you like to edit your Nushell with Nu
+      # configFile.source = ./.../config.nu;
+      # for editing directly to config.nu
+      extraConfig = ''
+        let carapace_completer = {|spans|
+        carapace $spans.0 nushell ...$spans | from json
+        }
+        $env.config = {
+         show_banner: false,
+         completions: {
+         case_sensitive: false # case-sensitive completions
+         quick: true    # set to false to prevent auto-selecting completions
+         partial: true    # set to false to prevent partial filling of the prompt
+         algorithm: "fuzzy"    # prefix or fuzzy
+         external: {
+         # set to false to prevent nushell looking into $env.PATH to find more suggestions
+             enable: true
+         # set to lower can improve completion performance at the cost of omitting some options
+             max_results: 100
+             completer: $carapace_completer # check 'carapace_completer'
+           }
+         }
+        }
+        $env.PATH = ($env.PATH |
+        split row (char esep) |
+        prepend /home/myuser/.apps |
+        append /usr/bin/env
+        )
+      '';
+      shellAliases = {
+        # vi = "hx";
+        # vim = "hx";
+        # nano = "hx";
+      };
+    };
+    carapace.enable = true;
+    carapace.enableNushellIntegration = true;
+
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = true;
+        character = {
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[➜](bold red)";
+        };
+      };
+    };
+  };
+
+  home.sessionPath = ["$HOME/bin"];
+
+  programs.fzf.enableZshIntegration = true;
 
   programs.tmux.enable = true;
 
@@ -155,7 +213,6 @@ in {
       general.framerate = 60;
       # input.method = "alsa";
       smoothing.noise_reduction = 88;
-      
     };
   };
 
@@ -184,7 +241,7 @@ in {
         ];
       };
       preview = {
-        image_bound = [ 10000 10000 ];
+        image_bound = [10000 10000];
       };
     };
   };
@@ -257,7 +314,5 @@ in {
       [updates]
       auto_update = true
     '';
-
   };
 }
-

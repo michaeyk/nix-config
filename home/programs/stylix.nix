@@ -10,7 +10,9 @@
     # Popular options: catppuccin-mocha.yaml, gruvbox-dark-hard.yaml, dracula.yaml, nord.yaml
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";

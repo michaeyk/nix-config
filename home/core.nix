@@ -1,4 +1,8 @@
-{pkgs, nurPkgs, ...}: {
+{
+  pkgs,
+  nurPkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     # archive
     zip
@@ -63,7 +67,7 @@
     poppler_utils
     pandoc
     evince
-    
+
     # remote connections
     lftp
     sshfs
