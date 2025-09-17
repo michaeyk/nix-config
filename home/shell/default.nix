@@ -248,6 +248,7 @@ in {
 
   programs.ssh = {
     enable = true;
+    extraConfig = '''';
     matchBlocks = {
       bastion = {
         port = 22;
