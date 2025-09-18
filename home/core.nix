@@ -36,6 +36,7 @@
     tealdeer
     visidata
     claude-code
+    codex
     gemini-cli
     nurPkgs.repos.charmbracelet.crush
     eslint
