@@ -256,7 +256,6 @@ in {
         sendEnv = ["LANG" "LC_*"];
         extraOptions = {
           HashKnownHosts = "yes";
-          GSSAPIAuthentication = "no";
         };
       };
       bastion = {
