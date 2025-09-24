@@ -24,7 +24,6 @@
     ../../home/programs/obsidian
     ../../home/programs/zellij
     ../../home/programs/firefox.nix
-    ../../home/programs/rustdesk
   ];
 
   fonts.fontconfig.enable = true;
