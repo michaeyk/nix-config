@@ -248,8 +248,17 @@ in {
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     extraConfig = '''';
     matchBlocks = {
+      "*" = {
+        # Explicitly set default values we want to keep
+        sendEnv = ["LANG" "LC_*"];
+        extraOptions = {
+          HashKnownHosts = "yes";
+          GSSAPIAuthentication = "no";
+        };
+      };
       bastion = {
         port = 22;
         hostname = "34.197.186.111";

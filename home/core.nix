@@ -53,6 +53,7 @@
     # files and directories
     fzf
     fd
+    lsof
 
     # gaming
     heroic
