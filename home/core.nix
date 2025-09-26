@@ -68,6 +68,7 @@
     # pdf
     poppler_utils
     pandoc
+    texlive.combined.scheme-full
     evince
 
     # remote connections
@@ -99,4 +100,9 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Pandoc templates
+  programs.pandoc.templates = {
+    "default.latex" = /home/mike/.local/share/Eisvogel-3.2.1/eisvogel.latex;
+  };
 }
