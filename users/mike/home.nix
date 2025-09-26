@@ -24,6 +24,7 @@
     ../../home/programs/obsidian
     ../../home/programs/zellij
     ../../home/programs/firefox.nix
+    ../../home/programs/dprint.nix
   ];
 
   fonts.fontconfig.enable = true;
