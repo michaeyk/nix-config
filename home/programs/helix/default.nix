@@ -84,7 +84,7 @@
           Z = {
             Z = ":x";
           };
-          space.p = ["select_all" ":pipe-to pandoc -o %sh{echo \"$PWD/$(basename '%{buffer_name}' | sed 's/\\.[^.]*$/.pdf/')\"} --template=eisvogel.latex --pdf-engine=xelatex" "collapse_selection"];
+          space.P = ["select_all" ":pipe-to pandoc -o %sh{echo \"$PWD/$(basename '%{buffer_name}' | sed 's/\\.[^.]*$/.pdf/')\"} --template=eisvogel.latex --pdf-engine=xelatex" "collapse_selection"];
         };
       };
     };
@@ -136,7 +136,7 @@
 
       [[language]]
       name = "markdown"
-      formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--stdin", "md"] }
+      formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--config", "~/.config/dprint/dprint.json", "--stdin", "md"] }
       auto-format = true
 
       [[language]]
