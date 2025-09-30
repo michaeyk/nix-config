@@ -121,7 +121,12 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [pkgs.gutenprint];
+  services.printing.drivers = with pkgs; [
+    gutenprint
+    gutenprintBin
+    foomatic-db-ppds-withNonfreeDb
+    splix
+  ];
 
   services.printing.browsing = true;
   services.printing.browsedConf = ''
@@ -135,6 +140,7 @@
   services.avahi = {
     enable = true;
     nssmdns4 = true;
+    openFirewall = true;
   };
 
   # Enable sound with pipewire.
