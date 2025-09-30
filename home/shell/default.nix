@@ -27,6 +27,13 @@ in {
       gcob = "git branch | fzf | xargs git checkout";
       ssh = "TERM=tmux ssh";
 
+      # AI agent protection aliases
+      claude = "_ai_protected claude";
+      codex = "_ai_protected codex";
+      aider = "_ai_protected aider";
+      cursor = "_ai_protected cursor";
+      copilot = "_ai_protected copilot";
+
       # Add eza aliases
       ls = "eza ${ezaParams}";
       l = "eza --git-ignore ${ezaParams}";
@@ -45,6 +52,22 @@ in {
     };
 
     initContent = ''
+      # AI agent protection function
+      function _ai_protected() {
+        local current_dir=$(pwd)
+        local no_ai_dir="$HOME/no-ai"
+
+        # Check if current directory is within ~/no-ai
+        if [[ "$current_dir" == "$no_ai_dir"* ]]; then
+          echo "Error: AI coding agents are not allowed in the ~/no-ai directory tree"
+          echo "Current directory: $current_dir"
+          return 1
+        fi
+
+        # Run the actual command if not in restricted area
+        command "$@"
+      }
+
       # Add nix-profile bin to PATH
       export PATH="$HOME/.nix-profile/bin:$PATH"
 
@@ -89,7 +112,31 @@ in {
 
   programs.bash = {
     enable = true;
+    shellAliases = {
+      # AI agent protection aliases
+      claude = "_ai_protected claude";
+      codex = "_ai_protected codex";
+      aider = "_ai_protected aider";
+      cursor = "_ai_protected cursor";
+      copilot = "_ai_protected copilot";
+    };
     initExtra = ''
+      # AI agent protection function
+      function _ai_protected() {
+        local current_dir=$(pwd)
+        local no_ai_dir="$HOME/no-ai"
+
+        # Check if current directory is within ~/no-ai
+        if [[ "$current_dir" == "$no_ai_dir"* ]]; then
+          echo "Error: AI coding agents are not allowed in the ~/no-ai directory tree"
+          echo "Current directory: $current_dir"
+          return 1
+        fi
+
+        # Run the actual command if not in restricted area
+        command "$@"
+      }
+
       # Add nix-profile bin to PATH
       export PATH="$HOME/.nix-profile/bin:$PATH"
 
