@@ -1,12 +1,11 @@
 {pkgs, ...}: {
   programs.git = {
     enable = true;
-    userName = "Michael Kim";
-    userEmail = "mike@michaelkim.net";
-
-    diff-so-fancy.enable = true;
-
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Michael Kim";
+        email = "mike@michaelkim.net";
+      };
       init.defaultBranch = "main";
       advice.addEmbeddedRepo = false;
       core = {
@@ -16,6 +15,11 @@
         template = "~/.gitmessage";
       };
     };
+  };
+
+  programs.diff-so-fancy = {
+    enable = true;
+    enableGitIntegration = true;
   };
 
   programs.jujutsu = {
