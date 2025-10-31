@@ -86,7 +86,7 @@
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     },
     "bluetooth": {
-        "on-click": "blueman-manager",
+        "on-click": "kitty --class bluetuith -e bluetuith",
         "format": "󰂯 {status}",
     },
     "battery": {

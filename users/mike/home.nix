@@ -77,7 +77,10 @@
     # glabels
 
     # Raspberry Pi
-    rpi-imager
+    # rpi-imager
+
+    # bluetooth
+    bluetuith
 
 
     # It is sometimes useful to fine-tune packages, for example, by applying
