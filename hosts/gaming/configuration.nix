@@ -258,7 +258,7 @@
     wget
     lshw
     bolt
-    glxinfo
+    mesa-demos
     nfs-utils
     wireguard-tools
     gutenprint

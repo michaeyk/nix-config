@@ -66,7 +66,7 @@
     marksman
 
     # pdf
-    poppler_utils
+    poppler-utils
     pandoc
     texlive.combined.scheme-full
     evince
