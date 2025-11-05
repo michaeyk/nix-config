@@ -56,7 +56,7 @@
 
     # messaging / email
     dino
-    whatsapp-for-linux
+    wasistlos
     discord
 
     # encryption / passwords
