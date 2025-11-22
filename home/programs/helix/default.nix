@@ -18,13 +18,13 @@
     typescript-language-server
     (lib.hiPrio nodePackages.prettier)
     lsp-ai
+    marksman
   ];
 
   programs.helix = {
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = lib.mkDefault "catppuccin_mocha";
       editor = {
         line-number = "relative";
         mouse = true;
@@ -137,6 +137,7 @@
 
       [[language]]
       name = "markdown"
+      language-servers = ["marksman"]
       formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--config", "~/.config/dprint/dprint.json", "--stdin", "md"] }
       auto-format = true
 

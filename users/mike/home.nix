@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, hostname ? "unknown", ...}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mike";
@@ -98,7 +98,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ];
+  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21] else []);
 
   programs.browserpass = {
     enable = true;

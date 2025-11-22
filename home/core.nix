@@ -63,7 +63,6 @@
 
     # lsp
     markdown-oxide
-    marksman
 
     # pdf
     poppler-utils
