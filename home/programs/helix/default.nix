@@ -18,7 +18,7 @@
     typescript-language-server
     (lib.hiPrio nodePackages.prettier)
     lsp-ai
-    marksman
+    markdown-oxide
   ];
 
   programs.helix = {
@@ -137,7 +137,7 @@
 
       [[language]]
       name = "markdown"
-      language-servers = ["marksman"]
+      language-servers = ["markdown-oxide"]
       formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--config", "~/.config/dprint/dprint.json", "--stdin", "md"] }
       auto-format = true
 
