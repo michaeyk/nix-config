@@ -9,6 +9,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
     yazi.url = "github:sxyazi/yazi";
     nur.url = "github:nix-community/NUR";
   };
@@ -33,21 +34,17 @@
   in {
     # Please replace my-nixos with your hostname
     nixosConfigurations.babysnacks = lib.nixosSystem {
-      inherit system;
       specialArgs = {inherit inputs;};
       modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
+        {nixpkgs.hostPlatform = system;}
         ./hosts/babysnacks/configuration.nix
       ];
     };
 
     nixosConfigurations.gaming = lib.nixosSystem {
-      inherit system;
       specialArgs = {inherit inputs;};
       modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
+        {nixpkgs.hostPlatform = system;}
         ./hosts/gaming/configuration.nix
       ];
     };
