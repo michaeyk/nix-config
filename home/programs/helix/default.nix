@@ -75,7 +75,6 @@
           space = {
             w = ":write";
             r = ":reload-all";
-            p = ":pipe-to paste-helix.sh";
           };
           H = ":bp";
           L = ":bn";
