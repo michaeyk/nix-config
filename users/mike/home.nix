@@ -98,7 +98,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21] else []);
+  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player] else []);
 
   programs.browserpass = {
     enable = true;
