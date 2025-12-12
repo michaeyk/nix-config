@@ -2,6 +2,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
+    enableReleaseChecks = false;
     
     # Set the wallpaper image - use fetchurl or copy to the dotfiles
     image = ./stylix-wallpaper.jpeg;

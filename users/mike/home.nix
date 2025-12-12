@@ -117,16 +117,17 @@
     enable = true;
     defaultApplications = {
       "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
-      "default-web-browser" = ["google-chrome.desktop"];
-      "text/html" = ["google-chrome.desktop"];
+      "default-web-browser" = ["brave-browser.desktop"];
+      "text/html" = ["brave-browser.desktop"];
       # "image/png" = "imv-folder.desktop";
       "image/png" = "imv.desktop";
       "image/jpeg" = "imv.desktop";
       "video/*" = "umpv.desktop";
       "audio/*" = "org.gnome.Lollypop.desktop";
-      "x-scheme-handler/https" = ["google-chrome.desktop"];
-      "x-scheme-handler/about" = ["google-chrome.desktop"];
-      "x-scheme-handler/unknown" = ["google-chrome.desktop"];
+      "x-scheme-handler/https" = ["brave-browser.desktop"];
+      "x-scheme-handler/http" = ["brave-browser.desktop"];
+      "x-scheme-handler/about" = ["brave-browser.desktop"];
+      "x-scheme-handler/unknown" = ["brave-browser.desktop"];
     };
   };
 

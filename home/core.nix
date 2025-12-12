@@ -96,6 +96,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

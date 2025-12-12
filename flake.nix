@@ -19,24 +19,23 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
+    supportedSystems = [ "x86_64-linux" ];
+    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+    pkgsFor = system: import nixpkgs {
       inherit system;
       config.allowUnfree = true;
     };
+    pkgs = pkgsFor "x86_64-linux";
     nurPkgs = import inputs.nur {
       inherit pkgs;
-      nurpkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      nurpkgs = pkgs;
     };
   in {
     # Please replace my-nixos with your hostname
     nixosConfigurations.babysnacks = lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
-        {nixpkgs.hostPlatform = system;}
+        {nixpkgs.hostPlatform = "x86_64-linux";}
         ./hosts/babysnacks/configuration.nix
       ];
     };
@@ -44,7 +43,7 @@
     nixosConfigurations.gaming = lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
-        {nixpkgs.hostPlatform = system;}
+        {nixpkgs.hostPlatform = "x86_64-linux";}
         ./hosts/gaming/configuration.nix
       ];
     };
