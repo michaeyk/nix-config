@@ -19,13 +19,10 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
-    supportedSystems = [ "x86_64-linux" ];
-    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-    pkgsFor = system: import nixpkgs {
-      inherit system;
+    pkgs = import nixpkgs {
+      localSystem = "x86_64-linux";
       config.allowUnfree = true;
     };
-    pkgs = pkgsFor "x86_64-linux";
     nurPkgs = import inputs.nur {
       inherit pkgs;
       nurpkgs = pkgs;
