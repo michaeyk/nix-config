@@ -22,6 +22,18 @@
     pkgs = import nixpkgs {
       localSystem = "x86_64-linux";
       config.allowUnfree = true;
+      overlays = [
+        (final: prev: {
+          pyprland = prev.pyprland.overridePythonAttrs (old: rec {
+            version = "2.6.1";
+            src = prev.fetchPypi {
+              pname = "pyprland";
+              inherit version;
+              hash = "sha256-9QsC3Kq4QShkWuZDchRe+/8LfembBedgnPMpirviKNM=";
+            };
+          });
+        })
+      ];
     };
     nurPkgs = import inputs.nur {
       inherit pkgs;

@@ -17,7 +17,7 @@
     black
     typescript-language-server
     (lib.hiPrio nodePackages.prettier)
-    lsp-ai
+    # lsp-ai
     markdown-oxide
   ];
 
