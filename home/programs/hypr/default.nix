@@ -74,11 +74,11 @@
       listener = [
         {
           timeout = 900;
-          on-timeout = "hyprlock";
+          on-timeout = "pidof hyprlock || hyprlock";
         }
         {
           timeout = 1200;
-          on-timeout = "hyprctl dispatch dpms off";
+          on-timeout = "pidof hyprlock || hyprlock && sleep 2 && hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on && random-wallpaper.sh";
         }
       ];

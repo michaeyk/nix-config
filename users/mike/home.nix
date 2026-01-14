@@ -29,10 +29,14 @@
 
   fonts.fontconfig.enable = true;
 
-  # Environment variables for Qt theming
+  # Environment variables for Qt theming and NVIDIA + Hyprland
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "gtk3";
     QT_STYLE_OVERRIDE = "adwaita-dark";
+    # NVIDIA + Hyprland stability
+    LIBVA_DRIVER_NAME = "nvidia";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   # The home.packages option allows you to install Nix packages into your
