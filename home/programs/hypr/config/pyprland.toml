@@ -9,6 +9,14 @@ size = "75% 60%"
 
 [scratchpads.volume]
 command = "pavucontrol"
+class = "org.pulseaudio.pavucontrol"
 animation = "fromBottom"
 lazy = true
-size = "15% 25%"
+size = "40% 50%"
+
+[scratchpads.bluetooth]
+command = "kitty --class bluetuith -e bluetuith"
+class = "bluetuith"
+animation = "fromBottom"
+lazy = true
+size = "40% 50%"
