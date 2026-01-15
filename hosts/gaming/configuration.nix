@@ -82,11 +82,9 @@
     # Modesetting is required.
     modesetting.enable = true;
 
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
-    # of just the bare essentials.
-    powerManagement.enable = false;
+    # Nvidia power management. Required for proper suspend/resume.
+    # Saves VRAM to disk before suspend and restores it on wake.
+    powerManagement.enable = true;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
@@ -217,6 +215,27 @@
 
   programs.hyprland = {
     enable = true;
+  };
+
+  # NVIDIA suspend fix: pause Hyprland before GPU suspends to prevent crash
+  systemd.services.hyprland-suspend = {
+    description = "Suspend Hyprland before sleep";
+    before = [ "systemd-suspend.service" "nvidia-suspend.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.procps}/bin/pkill -STOP Hyprland";
+    };
+  };
+
+  systemd.services.hyprland-resume = {
+    description = "Resume Hyprland after sleep";
+    after = [ "systemd-suspend.service" "nvidia-resume.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.procps}/bin/pkill -CONT Hyprland";
+    };
   };
 
   programs.seahorse.enable = true;
