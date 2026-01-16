@@ -230,11 +230,23 @@
 
   systemd.services.hyprland-resume = {
     description = "Resume Hyprland after sleep";
-    after = [ "systemd-suspend.service" "nvidia-resume.service" ];
+    after = [ "systemd-resume.service" "nvidia-resume.service" ];
     wantedBy = [ "suspend.target" ];
     serviceConfig = {
       Type = "oneshot";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
       ExecStart = "${pkgs.procps}/bin/pkill -CONT Hyprland";
+    };
+  };
+
+  # Restart NetworkManager after resume to restore connectivity
+  systemd.services.network-resume = {
+    description = "Restart NetworkManager after sleep";
+    after = [ "systemd-resume.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/systemctl restart NetworkManager.service";
     };
   };
 
