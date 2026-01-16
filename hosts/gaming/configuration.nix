@@ -250,6 +250,18 @@
     };
   };
 
+  # Restart Bluetooth after resume to fix device connection issues
+  systemd.services.bluetooth-resume = {
+    description = "Restart Bluetooth after sleep";
+    after = [ "systemd-resume.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+      ExecStart = "${pkgs.systemd}/bin/systemctl restart bluetooth.service";
+    };
+  };
+
   programs.seahorse.enable = true;
 
   programs.ssh.startAgent = false; # gpg-agent instead
