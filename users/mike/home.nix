@@ -102,6 +102,9 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    (pkgs.writeShellScriptBin "thinkorswim" ''
+      exec flatpak run com.tdameritrade.ThinkOrSwim "$@"
+    '')
   ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player] else []);
 
   programs.browserpass = {
