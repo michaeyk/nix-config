@@ -39,6 +39,10 @@
       owner = "root";
       path = "/etc/davfs2/secrets";
     };
+
+    "coinmarketcap_api" = {
+      owner = config.users.users.mike.name;
+    };
   };
 
   # Bootloader.

@@ -32,6 +32,10 @@
       path = "/home/mike/.config/Yubico/u2f_keys";
     };
 
+    "coinmarketcap_api" = {
+      owner = config.users.users.mike.name;
+    };
+
     "nextcloud" = {
       owner = "root";
       path = "/etc/davfs2/secrets";
