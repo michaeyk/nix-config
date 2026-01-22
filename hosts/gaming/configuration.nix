@@ -165,6 +165,7 @@
 
   # yubikey and ledger live udev rules
   services = {
+    pcscd.enable = true;
     udev.packages = with pkgs; [
       yubikey-personalization
     ];
@@ -179,6 +180,7 @@
         settings = {
           # interactive = true;
           cue = true;
+          pinAuth = true;
           authFile = "/home/mike/.config/Yubico/u2f_keys";
         };
       };
@@ -188,7 +190,7 @@
           u2fAuth = true;
           sshAgentAuth = true;
         };
-        hyprlock = {};
+        hyprlock.u2fAuth = true;
       };
     };
   };

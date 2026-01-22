@@ -182,6 +182,7 @@
         settings = {
           # interactive = true;
           cue = true;
+          pinAuth = true;
           authFile = "/home/mike/.config/Yubico/u2f_keys";
         };
       };
@@ -191,7 +192,7 @@
           u2fAuth = true;
           sshAgentAuth = true;
         };
-        hyprlock = {};
+        hyprlock.u2fAuth = true;
       };
     };
   };
