@@ -179,8 +179,14 @@
 
   security = {
     polkit.enable = true;
+    sudo.extraConfig = ''
+      Defaults env_keep += "SSH_AUTH_SOCK"
+    '';
     pam = {
-      sshAgentAuth.enable = true;
+      sshAgentAuth = {
+        enable = true;
+        authorizedKeysFiles = ["%h/.ssh/authorized_keys"];
+      };
       u2f = {
         enable = true;
         settings = {
