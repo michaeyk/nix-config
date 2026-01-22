@@ -227,6 +227,11 @@
         summary = "*update*";
         icon = "system-software-update";
       };
+
+      yubikey_notifications = {
+        appname = "yubikey-touch-detector";
+        timeout = 5000;
+      };
     };
   };
 

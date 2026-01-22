@@ -193,7 +193,7 @@
       services = {
         login.u2fAuth = true;
         sudo = {
-          u2fAuth = true;
+          u2fAuth = false;
           sshAgentAuth = true;
         };
         hyprlock.u2fAuth = true;
