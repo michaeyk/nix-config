@@ -20,3 +20,10 @@ class = "bluetuith"
 animation = "fromBottom"
 lazy = true
 size = "40% 50%"
+
+[scratchpads.yazi]
+command = "kitty --class yazi -e yazi"
+class = "yazi"
+animation = ""
+lazy = true
+size = "75% 75%"
