@@ -228,7 +228,10 @@
   programs.seahorse.enable = true;
 
   programs.ssh.startAgent = false; # gpg-agent instead
-  programs.yubikey-touch-detector.enable = true;
+  programs.yubikey-touch-detector = {
+    enable = true;
+    libnotify = true;
+  };
 
   programs.steam = {
     enable = true;

@@ -271,7 +271,10 @@
   programs.seahorse.enable = true;
 
   programs.ssh.startAgent = false; # gpg-agent instead
-  programs.yubikey-touch-detector.enable = true;
+  programs.yubikey-touch-detector = {
+    enable = true;
+    libnotify = true;
+  };
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
