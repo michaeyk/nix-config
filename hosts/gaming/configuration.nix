@@ -4,7 +4,16 @@
 
 { config, inputs, pkgs, ... }:
 
-{
+let
+  yubikey-gpg-refresh = pkgs.writeShellScript "yubikey-gpg-refresh-udev" ''
+    sleep 1
+    export XDG_RUNTIME_DIR=/run/user/1000
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --list-secret-keys --with-keygrip 2>/dev/null | \
+      ${pkgs.gawk}/bin/awk '/Keygrip/{print $3}' | \
+      ${pkgs.findutils}/bin/xargs -I{} ${pkgs.gnupg}/bin/gpg-connect-agent "DELETE_KEY {}" /bye &>/dev/null
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --card-status &>/dev/null &
+  '';
+in {
   imports =
     [ # Include the results of the hardware scan.
       inputs.sops-nix.nixosModules.sops
@@ -168,12 +177,14 @@
   hardware.ledger.enable = true;
 
   # yubikey and ledger live udev rules
-  services = {
-    pcscd.enable = true;
-    udev.packages = with pkgs; [
-      yubikey-personalization
-    ];
-  };
+  services.pcscd.enable = true;
+  services.udev.packages = with pkgs; [
+    yubikey-personalization
+  ];
+  services.udev.extraRules = ''
+    # Refresh GPG stubs when YubiKey is inserted
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", RUN+="${yubikey-gpg-refresh}"
+  '';
 
   security = {
     polkit.enable = true;

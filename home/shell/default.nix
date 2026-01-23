@@ -233,6 +233,7 @@ in {
     defaultCacheTtl = 1800;
   };
 
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
