@@ -66,7 +66,7 @@
 
     # pdf
     poppler-utils
-    pandoc
+    python312Packages.weasyprint
     texlive.combined.scheme-full
     evince
 
@@ -103,8 +103,12 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Pandoc templates
-  programs.pandoc.templates = {
-    "default.latex" = /home/mike/.local/share/Eisvogel-3.2.1/eisvogel.latex;
+  # Pandoc
+  programs.pandoc = {
+    enable = true;
+    defaults.pdf-engine = "weasyprint";
+    templates = {
+      "default.latex" = ./programs/eisvogel.latex;
+    };
   };
 }

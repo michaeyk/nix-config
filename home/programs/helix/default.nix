@@ -84,7 +84,7 @@
           Z = {
             Z = ":x";
           };
-          space.P = ["select_all" ":pipe-to pandoc -o %sh{echo \"$PWD/$(basename '%{buffer_name}' | sed 's/\\.[^.]*$/.pdf/')\"} --template=eisvogel.latex --pdf-engine=xelatex" "collapse_selection"];
+          space.P = ["select_all" ":pipe-to pandoc -o %sh{echo \"$PWD/$(basename '%{buffer_name}' | sed 's/\\.[^.]*$/.pdf/')\"} --pdf-engine=weasyprint" "collapse_selection"];
         };
       };
     };
