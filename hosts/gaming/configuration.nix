@@ -43,6 +43,7 @@ in {
 
     "coinmarketcap_api" = {
       owner = config.users.users.mike.name;
+      mode = "0400";
     };
 
     "nextcloud" = {
