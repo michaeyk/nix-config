@@ -233,6 +233,25 @@ in {
     defaultCacheTtl = 1800;
   };
 
+  # Refresh GPG YubiKey connection after resume from suspend
+  systemd.user.services.gpg-yubikey-resume = {
+    Unit = {
+      Description = "Refresh GPG YubiKey connection after resume";
+      After = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "gpg-yubikey-refresh" ''
+        ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+        sleep 1
+        ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1
+      ''}";
+    };
+    Install = {
+      WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+    };
+  };
+
 
   programs.direnv = {
     enable = true;
