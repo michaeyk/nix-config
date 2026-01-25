@@ -43,6 +43,7 @@
     nodejs
 
     # encryption / passwords
+    cryptsetup
     pass
     pinentry-gtk2
     libsecret
