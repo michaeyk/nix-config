@@ -252,6 +252,25 @@ in {
     };
   };
 
+  # Refresh GPG YubiKey connection at login
+  systemd.user.services.gpg-yubikey-login = {
+    Unit = {
+      Description = "Refresh GPG YubiKey connection at login";
+      After = [ "gpg-agent.service" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "gpg-yubikey-login" ''
+        ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+        sleep 1
+        ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1
+      ''}";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
+
 
   programs.direnv = {
     enable = true;
