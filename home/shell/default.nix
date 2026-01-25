@@ -262,8 +262,13 @@ in {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "gpg-yubikey-login" ''
         ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
-        sleep 1
-        ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1
+        # Wait for YubiKey to be available (up to 10 seconds)
+        for i in $(seq 1 20); do
+          if ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1; then
+            exit 0
+          fi
+          sleep 0.5
+        done
       ''}";
     };
     Install = {
