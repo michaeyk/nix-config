@@ -233,20 +233,6 @@ in {
     defaultCacheTtl = 1800;
   };
 
-  # Reset GPG scdaemon after resume from suspend
-  systemd.user.services.gpg-yubikey-resume = {
-    Unit = {
-      Description = "Reset GPG scdaemon after resume";
-      After = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.gnupg}/bin/gpgconf --kill scdaemon";
-    };
-    Install = {
-      WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-  };
 
   # Refresh GPG YubiKey connection at login
   systemd.user.services.gpg-yubikey-login = {

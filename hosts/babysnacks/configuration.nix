@@ -189,6 +189,17 @@ in {
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", RUN+="${yubikey-gpg-refresh}"
   '';
 
+  # Reset GPG scdaemon after resume so YubiKey is recognized
+  systemd.services.gpg-scdaemon-resume = {
+    description = "Reset GPG scdaemon after sleep";
+    after = [ "systemd-resume.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${yubikey-gpg-refresh}";
+    };
+  };
+
   security = {
     polkit.enable = true;
     sudo.extraConfig = ''

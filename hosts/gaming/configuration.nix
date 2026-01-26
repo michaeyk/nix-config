@@ -286,6 +286,17 @@ in {
     };
   };
 
+  # Reset GPG scdaemon after resume so YubiKey is recognized
+  systemd.services.gpg-scdaemon-resume = {
+    description = "Reset GPG scdaemon after sleep";
+    after = [ "systemd-resume.service" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${yubikey-gpg-refresh}";
+    };
+  };
+
   programs.seahorse.enable = true;
 
   programs.ssh.startAgent = false; # gpg-agent instead
