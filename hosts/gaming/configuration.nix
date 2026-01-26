@@ -18,10 +18,11 @@ let
       sleep 0.5
     done
 
-    # Kill scdaemon to clear any stale state
-    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+    # Kill all GPG daemons to clear stale state (gpg-agent caches card info)
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
 
-    # Give pcscd time to detect the reader after scdaemon restart
+    # Restart pcscd to ensure it re-detects the reader after suspend
+    ${pkgs.systemd}/bin/systemctl restart pcscd.service
     sleep 1
 
     # Verify card is accessible (with retry)
@@ -306,15 +307,12 @@ in {
   };
 
   # Reset GPG scdaemon after resume so YubiKey is recognized
-  systemd.services.gpg-scdaemon-resume = {
-    description = "Reset GPG scdaemon after sleep";
-    after = [ "systemd-resume.service" ];
-    wantedBy = [ "suspend.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${yubikey-gpg-refresh}";
-    };
-  };
+  powerManagement.resumeCommands = ''
+    # Kill scdaemon so it restarts fresh on next GPG operation
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+    # Restart pcscd to re-detect the card reader
+    ${pkgs.systemd}/bin/systemctl restart pcscd.service
+  '';
 
   programs.seahorse.enable = true;
 

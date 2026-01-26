@@ -221,7 +221,12 @@ in {
 
   programs.tmux.enable = true;
 
-  programs.gpg.enable = true;
+  programs.gpg = {
+    enable = true;
+    scdaemonSettings = {
+      disable-ccid = true;
+    };
+  };
   services.gpg-agent = {
     enable = true;
     pinentry.package = pkgs.pinentry-gtk2;
