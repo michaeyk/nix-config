@@ -243,8 +243,23 @@ in {
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "gpg-yubikey-login" ''
+        # Wait for YubiKey USB device (vendor 1050 = Yubico) to appear
+        for i in $(seq 1 30); do
+          if ${pkgs.coreutils}/bin/ls /sys/bus/usb/devices/*/idVendor 2>/dev/null | \
+             ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/cat {} 2>/dev/null | \
+             ${pkgs.gnugrep}/bin/grep -q "1050"; then
+            break
+          fi
+          sleep 0.5
+        done
+
+        # Kill scdaemon to clear any stale state
         ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
-        # Wait for YubiKey to be available (up to 10 seconds)
+
+        # Give pcscd time to detect the reader
+        sleep 1
+
+        # Wait for card to be accessible (up to 10 seconds)
         for i in $(seq 1 20); do
           if ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1; then
             exit 0

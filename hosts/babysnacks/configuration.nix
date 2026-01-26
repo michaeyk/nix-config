@@ -8,12 +8,31 @@
   ...
 }: let
   yubikey-gpg-refresh = pkgs.writeShellScript "yubikey-gpg-refresh-udev" ''
-    sleep 1
     export XDG_RUNTIME_DIR=/run/user/1000
-    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --list-secret-keys --with-keygrip 2>/dev/null | \
-      ${pkgs.gawk}/bin/awk '/Keygrip/{print $3}' | \
-      ${pkgs.findutils}/bin/xargs -I{} ${pkgs.gnupg}/bin/gpg-connect-agent "DELETE_KEY {}" /bye &>/dev/null
-    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --card-status &>/dev/null &
+
+    # Wait for YubiKey USB device to appear (vendor 1050 = Yubico)
+    for i in $(seq 1 30); do
+      if ${pkgs.coreutils}/bin/ls /sys/bus/usb/devices/*/idVendor 2>/dev/null | \
+         ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/cat {} 2>/dev/null | \
+         ${pkgs.gnugrep}/bin/grep -q "1050"; then
+        break
+      fi
+      sleep 0.5
+    done
+
+    # Kill scdaemon to clear any stale state
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+
+    # Give pcscd time to detect the reader after scdaemon restart
+    sleep 1
+
+    # Verify card is accessible (with retry)
+    for i in $(seq 1 10); do
+      if ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --card-status &>/dev/null; then
+        exit 0
+      fi
+      sleep 0.5
+    done
   '';
 in {
   imports = [
