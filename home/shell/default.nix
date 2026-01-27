@@ -221,7 +221,12 @@ in {
 
   programs.tmux.enable = true;
 
-  programs.gpg.enable = true;
+  programs.gpg = {
+    enable = true;
+    scdaemonSettings = {
+      disable-ccid = true;
+    };
+  };
   services.gpg-agent = {
     enable = true;
     pinentry.package = pkgs.pinentry-gtk2;
@@ -233,24 +238,6 @@ in {
     defaultCacheTtl = 1800;
   };
 
-  # Refresh GPG YubiKey connection after resume from suspend
-  systemd.user.services.gpg-yubikey-resume = {
-    Unit = {
-      Description = "Refresh GPG YubiKey connection after resume";
-      After = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScript "gpg-yubikey-refresh" ''
-        ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
-        sleep 1
-        ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1
-      ''}";
-    };
-    Install = {
-      WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-  };
 
   # Refresh GPG YubiKey connection at login
   systemd.user.services.gpg-yubikey-login = {
@@ -261,9 +248,29 @@ in {
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "gpg-yubikey-login" ''
+        # Wait for YubiKey USB device (vendor 1050 = Yubico) to appear
+        for i in $(seq 1 30); do
+          if ${pkgs.coreutils}/bin/ls /sys/bus/usb/devices/*/idVendor 2>/dev/null | \
+             ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/cat {} 2>/dev/null | \
+             ${pkgs.gnugrep}/bin/grep -q "1050"; then
+            break
+          fi
+          sleep 0.5
+        done
+
+        # Kill scdaemon to clear any stale state
         ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
+
+        # Give pcscd time to detect the reader
         sleep 1
-        ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1
+
+        # Wait for card to be accessible (up to 10 seconds)
+        for i in $(seq 1 20); do
+          if ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1; then
+            exit 0
+          fi
+          sleep 0.5
+        done
       ''}";
     };
     Install = {

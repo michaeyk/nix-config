@@ -7,7 +7,7 @@
     "margin-right": 10,
     "spacing": 5,
     "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications", "custom/email"],
-    "modules-center": [],
+    "modules-center": ["mpris"],
     "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","bluetooth","network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
