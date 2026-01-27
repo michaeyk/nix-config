@@ -209,11 +209,9 @@ in {
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", RUN+="${yubikey-gpg-refresh}"
   '';
 
-  # Reset GPG scdaemon after resume so YubiKey is recognized
+  # Reset GPG after resume so YubiKey is recognized
   powerManagement.resumeCommands = ''
-    # Kill scdaemon so it restarts fresh on next GPG operation
-    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill scdaemon
-    # Restart pcscd to re-detect the card reader
+    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
     ${pkgs.systemd}/bin/systemctl restart pcscd.service
   '';
 
