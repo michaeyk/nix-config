@@ -105,7 +105,7 @@
     (pkgs.writeShellScriptBin "thinkorswim" ''
       exec flatpak run com.tdameritrade.ThinkOrSwim "$@"
     '')
-  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player lutris protonup-qt protontricks] else []);
+  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player lutris protonup-qt protontricks tradingview] else []);
 
   programs.browserpass = {
     enable = true;
