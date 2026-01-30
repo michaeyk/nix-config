@@ -296,6 +296,13 @@ in {
       enable_audio_bell = false;
       background = lib.mkDefault "#282828";
       background_opacity = lib.mkDefault 0.5;
+      detect_urls = true;
+    };
+    keybindings = {
+      # Open hints mode to select URLs (works with wrapped/multi-line URLs)
+      "ctrl+shift+e" = "kitten hints";
+      # Hints for URLs only, opened in browser
+      "ctrl+shift+u" = "kitten hints --type url";
     };
     themeFile = lib.mkDefault "Catppuccin-Mocha";
   };

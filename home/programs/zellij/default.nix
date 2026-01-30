@@ -4,6 +4,7 @@
     settings = {
       theme = "stylix";
       show_startup_tips = false;
+      scrollback_editor = "hx";  # Open scrollback in helix to find/copy URLs
       themes = {
         stylix = {
           bg = "#${config.lib.stylix.colors.base00}";
