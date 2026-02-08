@@ -32,7 +32,7 @@
       ui = {
         default-command = "log";
       };
-      git.auto-local-bookmark= true;
+      remotes.origin.auto-track-bookmarks = "*";
       aliases.all = ["log" "-r" "all()" ];
     };
    };
