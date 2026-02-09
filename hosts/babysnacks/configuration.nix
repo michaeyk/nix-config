@@ -151,6 +151,14 @@ in {
     openFirewall = true;
   };
 
+  # Enable nix-ld for running non-NixOS binaries (e.g., Dell printer driver)
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      cups
+    ];
+  };
+
   services.fprintd.enable = true;
 
   services.fwupd.enable = true;

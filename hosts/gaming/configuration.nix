@@ -175,6 +175,14 @@ in {
     openFirewall = true;
   };
 
+  # Enable nix-ld for running non-NixOS binaries (e.g., Dell printer driver)
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      cups
+    ];
+  };
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
