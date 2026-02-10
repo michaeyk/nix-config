@@ -213,6 +213,9 @@ in {
   services.udev.extraRules = ''
     # Refresh GPG stubs when YubiKey is inserted
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", RUN+="${yubikey-gpg-refresh}"
+
+    # Allow input group to create virtual gamepads (for Sunshine)
+    KERNEL=="uinput", SUBSYSTEM=="misc", MODE="0660", GROUP="input"
   '';
 
   security = {
@@ -260,7 +263,7 @@ in {
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2"];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "video" "render" "input"];
   };
 
   programs.git.enable = true;
@@ -343,7 +346,7 @@ in {
   # Sunshine game streaming server (for Moonlight clients)
   services.sunshine = {
     enable = true;
-    autoStart = true;
+    autoStart = false; # Don't run as system service - needs user session for Wayland
     capSysAdmin = true; # Required for KMS capture on Wayland
     openFirewall = true;
   };
