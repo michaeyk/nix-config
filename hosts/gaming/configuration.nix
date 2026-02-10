@@ -340,6 +340,14 @@ in {
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
+  # Sunshine game streaming server (for Moonlight clients)
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # Required for KMS capture on Wayland
+    openFirewall = true;
+  };
+
   # Flatpak
   services.flatpak.enable = true;
 
