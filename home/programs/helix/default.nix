@@ -10,7 +10,6 @@
 
   home.packages = with pkgs; [
     basedpyright
-    helix-gpt
     ruff
     taplo
     dprint
@@ -114,14 +113,14 @@
     text = ''
       [[language]]
       name = "python"
-      language-servers = ["basedpyright", "ruff", "gpt"]
+      language-servers = ["basedpyright", "ruff"]
       # formatter = { command = "bash", args = ["-c", "ruff check --fix - | ruff format -"] }
       formatter = { command = "black", args = ["--quiet", "-"] }
       auto-format = true
 
       [[language]]
       name = "rust"
-      language-servers = ["rust-analyzer", "gpt"]
+      language-servers = ["rust-analyzer"]
       auto-format = true
 
       [[language]]
@@ -155,13 +154,13 @@
       [[language]]
       name = "javascript"
       formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
-      language-servers = ["typescript-language-server", "gpt"]
+      language-servers = ["typescript-language-server"]
       auto-format = true
 
       [[language]]
       name = "typescript"
       auto-format = true
-      language-servers = ["typescript-language-server", "gpt"]
+      language-servers = ["typescript-language-server"]
       formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
 
       [[language]]
@@ -190,10 +189,6 @@
       [language-server.nixd]
       command = "${pkgs.nixd}/bin/nixd"
 
-      [language-server.gpt]
-      command = "${pkgs.helix-gpt}/bin/helix-gpt"
-      config = {}
-      args = ["--handler", "copilot"]
     '';
   };
 }
