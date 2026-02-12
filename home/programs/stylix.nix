@@ -75,7 +75,7 @@
       cava.enable = true;       # Audio visualizer
       fzf.enable = true;        # Fuzzy finder
       hyprlock.enable = false;  # Screen locker - disabled due to custom config
-      hyprpaper.enable = true;  # Wallpaper daemon
+      hyprpaper.enable = false; # Replaced with swww
       ncspot.enable = true;     # Spotify TUI client
       zathura.enable = true;    # Document viewer
     };

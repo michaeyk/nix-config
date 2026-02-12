@@ -9,7 +9,7 @@
     hypridle
     hyprlock
     hyprpicker
-    hyprpaper
+    swww
     pyprland
     wl-clipboard
     cliphist
@@ -91,14 +91,6 @@
     };
   };
 
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      preload = ["/home/mike/Pictures/wallpaper/wallpaper.jpeg"];
-      wallpaper = ["/home/mike/Pictures/wallpaper/wallpaper.jpeg"];
-    };
-  };
 
   services.dunst = {
     enable = true;
