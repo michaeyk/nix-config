@@ -67,7 +67,7 @@
     settings = {
       general = {
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "sleep 3 && hyprctl dispatch dpms on";
+        after_sleep_cmd = "pkill -x hyprlock; loginctl lock-session; sleep 3; hyprctl dispatch dpms on";
         ignore_dbus_inhibit = false;
         lock_cmd = "pidof hyprlock || hyprlock";
       };
