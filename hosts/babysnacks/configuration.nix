@@ -127,6 +127,11 @@ in {
 
   services.power-profiles-daemon.enable = true;
 
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "suspend";
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
