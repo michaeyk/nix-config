@@ -216,6 +216,13 @@ in {
 
     # Allow input group to create virtual gamepads (for Sunshine)
     KERNEL=="uinput", SUBSYSTEM=="misc", MODE="0660", GROUP="input"
+
+    # Prevent Sunshine's virtual mouse passthrough from registering as a joystick
+    SUBSYSTEM=="input", ATTRS{name}=="Mouse passthrough (absolute)", ENV{ID_INPUT_JOYSTICK}="0"
+
+    # Disable 8BitDo's extra keyboard and mouse HID interfaces (keep only the gamepad)
+    SUBSYSTEM=="input", ATTRS{name}=="8BitDo 8BitDo Ultimate 2 Wireless Controller for PC Keyboard", ENV{LIBINPUT_IGNORE_DEVICE}="1", ENV{ID_INPUT}="0", ENV{ID_INPUT_KEY}="0", ENV{ID_INPUT_KEYBOARD}="0"
+    SUBSYSTEM=="input", ATTRS{name}=="8BitDo 8BitDo Ultimate 2 Wireless Controller for PC Mouse", ENV{LIBINPUT_IGNORE_DEVICE}="1", ENV{ID_INPUT}="0", ENV{ID_INPUT_MOUSE}="0"
   '';
 
   security = {
