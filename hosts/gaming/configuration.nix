@@ -103,6 +103,8 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
+  hardware.enableRedistributableFirmware = true;
+
    # Enable OpenGL
   hardware.graphics = {
     enable = true;
@@ -338,8 +340,14 @@ in {
     libnotify = true;
   };
 
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Experimental = true;
+      ClassicBondedOnly = false;
+    };
+  };
 
   hardware.steam-hardware.enable = true;
 
@@ -404,13 +412,13 @@ in {
 
   # Wake-on-LAN: enable magic packet wake on ethernet interface
   systemd.services.wol-enable = {
-    description = "Enable Wake-on-LAN on enp4s0";
+    description = "Enable Wake-on-LAN on enp14s0";
     after = [ "network-pre.target" ];
     wants = [ "network-pre.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp4s0 wol g";
+      ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp14s0 wol g";
       RemainAfterExit = true;
     };
   };
