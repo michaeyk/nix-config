@@ -15,7 +15,7 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/spaceduck.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";
