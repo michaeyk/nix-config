@@ -14,13 +14,6 @@ animation = "fromBottom"
 lazy = true
 size = "40% 50%"
 
-[scratchpads.bluetooth]
-command = "kitty --class bluetuith -e bluetuith"
-class = "bluetuith"
-animation = "fromBottom"
-lazy = true
-size = "40% 50%"
-
 [scratchpads.yazi]
 command = "kitty --class yazi -e yazi"
 class = "yazi"

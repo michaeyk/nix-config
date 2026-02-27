@@ -8,7 +8,7 @@
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": ["custom/launcher", "idle_inhibitor", "cpu", "memory","custom/weather", "custom/notifications", "custom/email"],
     "modules-center": [],
-    "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","bluetooth","network", "battery", "clock", "custom/power-menu"],
+    "modules-right": ["custom/cryptotracking", "tray", "backlight", "pulseaudio","network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
       "on-click": "activate",
@@ -84,10 +84,6 @@
         "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-    },
-    "bluetooth": {
-        "on-click": "kitty --class bluetuith -e bluetuith",
-        "format": "󰂯 {status}",
     },
     "battery": {
       "bat": "BAT1",

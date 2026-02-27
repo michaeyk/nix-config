@@ -345,9 +345,9 @@ in {
   hardware.bluetooth.settings = {
     General = {
       Experimental = true;
-      ClassicBondedOnly = false;
     };
   };
+  services.blueman.enable = true;
 
   hardware.steam-hardware.enable = true;
 
