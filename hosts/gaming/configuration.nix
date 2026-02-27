@@ -407,21 +407,8 @@ in {
     yubikey-manager
     pam_u2f
     davfs2
-    ethtool
   ];
 
-  # Wake-on-LAN: enable magic packet wake on ethernet interface
-  systemd.services.wol-enable = {
-    description = "Enable Wake-on-LAN on enp14s0";
-    after = [ "network-pre.target" ];
-    wants = [ "network-pre.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp14s0 wol g";
-      RemainAfterExit = true;
-    };
-  };
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
