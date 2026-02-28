@@ -103,6 +103,11 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   hardware.enableRedistributableFirmware = true;
 
    # Enable OpenGL
