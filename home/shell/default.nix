@@ -287,7 +287,14 @@ in {
     settings = {
       enable_audio_bell = false;
       detect_urls = true;
-      enabled_layouts = "splits";
+      enabled_layouts = "splits,stack";
+      scrollback_lines = 10000;
+      copy_on_select = "clipboard";
+      strip_trailing_spaces = "smart";
+      tab_bar_style = "powerline";
+      tab_powerline_style = "slanted";
+      allow_remote_control = "socket-only";
+      listen_on = "unix:/tmp/kitty-{kitty_pid}";
     };
     keybindings = {
       # Splits
@@ -326,12 +333,27 @@ in {
       # Hints
       "alt+e" = "kitten hints";
       "alt+u" = "kitten hints --type url";
+      "alt+p" = "kitten hints --type path";
+      "alt+g" = "kitten hints --type hash";
+      "alt+n" = "kitten hints --type linenum";
+      "alt+i" = "kitten hints --type ip";
+      "alt+o" = "kitten hints --type word --program @";
+      "alt+shift+o" = "kitten hints --type line --program @";
 
       # Scrollback
-      "alt+b" = "show_scrollback";
+      "alt+b" = "launch --stdin-source=@screen_scrollback --type=overlay hx -";
       "alt+up" = "scroll_line_up";
       "alt+down" = "scroll_line_down";
       "alt+/" = "launch --type=overlay sh -c \"grep '^map' ~/.config/kitty/kitty.conf | sed 's/^map //' | sort | less\"";
+
+      # Layout zoom (toggle between splits and stack)
+      "alt+z" = "toggle_layout stack";
+
+      # Marks
+      "alt+m" = "toggle_marker text 1 ERROR";
+
+      # Broadcast
+      "alt+shift+b" = "launch --allow-remote-control kitten broadcast";
     };
   };
 
