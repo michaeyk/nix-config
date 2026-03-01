@@ -15,7 +15,7 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/spaceduck.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/monokai.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";
@@ -45,7 +45,7 @@
     # Opacity settings
     opacity = {
       applications = 1.0;
-      terminal = 0.7;
+      terminal = 0.85;
       desktop = 0.5;
       popups = 0.8;
     };

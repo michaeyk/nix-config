@@ -23,6 +23,7 @@ in {
       zj = "zellij";
       cat = "bat";
       sxiv = "nsxiv";
+      y = "yazi";
       lg = "lazygit";
       gcob = "git branch | fzf | xargs git checkout";
       ssh = "TERM=tmux ssh";
@@ -90,15 +91,6 @@ in {
       if [ -f "$HOME/.nix-profile/share/fzf/completion.zsh" ]; then
         source "$HOME/.nix-profile/share/fzf/completion.zsh"
       fi
-
-      function y() {
-      	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-      	yazi "$@" --cwd-file="$tmp"
-      	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-      		builtin cd -- "$cwd"
-      	fi
-      	rm -f -- "$tmp"
-      }
 
       export HISTFILE="$HOME/.zsh_history"
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
@@ -294,17 +286,53 @@ in {
     };
     settings = {
       enable_audio_bell = false;
-      background = lib.mkDefault "#282828";
-      background_opacity = lib.mkDefault 0.5;
       detect_urls = true;
+      enabled_layouts = "splits";
     };
     keybindings = {
-      # Open hints mode to select URLs (works with wrapped/multi-line URLs)
-      "ctrl+shift+e" = "kitten hints";
-      # Hints for URLs only, opened in browser
-      "ctrl+shift+u" = "kitten hints --type url";
+      # Splits
+      "alt+enter" = "launch --location=vsplit";
+      "alt+v" = "launch --location=vsplit";
+      "alt+s" = "launch --location=hsplit";
+      "alt+w" = "close_window";
+
+      # Split navigation
+      "alt+h" = "neighboring_window left";
+      "alt+j" = "neighboring_window bottom";
+      "alt+k" = "neighboring_window top";
+      "alt+l" = "neighboring_window right";
+
+      # Split resizing
+      "alt+shift+h" = "resize_window narrower";
+      "alt+shift+j" = "resize_window shorter";
+      "alt+shift+k" = "resize_window taller";
+      "alt+shift+l" = "resize_window wider";
+
+      # Tabs
+      "alt+t" = "new_tab";
+      "alt+q" = "close_tab";
+      "alt+[" = "previous_tab";
+      "alt+]" = "next_tab";
+      "alt+1" = "goto_tab 1";
+      "alt+2" = "goto_tab 2";
+      "alt+3" = "goto_tab 3";
+      "alt+4" = "goto_tab 4";
+      "alt+5" = "goto_tab 5";
+      "alt+6" = "goto_tab 6";
+      "alt+7" = "goto_tab 7";
+      "alt+8" = "goto_tab 8";
+      "alt+9" = "goto_tab 9";
+
+      # Hints
+      "alt+e" = "kitten hints";
+      "alt+u" = "kitten hints --type url";
+
+      # Scrollback
+      "alt+b" = "show_scrollback";
+      "alt+up" = "scroll_line_up";
+      "alt+down" = "scroll_line_down";
+      "alt+/" = "launch --type=overlay sh -c \"grep '^map' ~/.config/kitty/kitty.conf | sed 's/^map //' | sort | less\"";
     };
-    themeFile = lib.mkDefault "Catppuccin-Mocha";
   };
 
   programs.cava = {
@@ -401,11 +429,6 @@ in {
   home.file = {
     "bin" = {
       source = ./bin;
-      recursive = true;
-    };
-
-    ".config/kitty" = {
-      source = ../programs/kitty;
       recursive = true;
     };
 
