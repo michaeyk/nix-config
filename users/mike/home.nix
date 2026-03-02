@@ -77,7 +77,7 @@
 
     # productivity
     obsidian
-    libreoffice
+    libreoffice-fresh
     # glabels
 
     # Raspberry Pi

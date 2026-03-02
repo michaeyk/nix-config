@@ -6,6 +6,7 @@
 .config/BraveSoftware
 .gradle
 .local/share/Steam
+.var/app/com.valvesoftware.Steam
 .local/share/lutris
 .local/share/mail
 .thunderbird

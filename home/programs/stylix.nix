@@ -216,6 +216,18 @@
     '';
   };
 
+  # Replace Nix store symlinks in ~/.themes with real copies so Flatpak's bwrap doesn't choke
+  home.activation.fixThemesForFlatpak = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    for theme in "$HOME/.themes"/*; do
+      if [ -L "$theme" ]; then
+        target=$(readlink -f "$theme")
+        rm "$theme"
+        cp -rL "$target" "$theme"
+        chmod -R u+w "$theme"
+      fi
+    done
+  '';
+
   # Create a script to help install the Brave theme
   home.file."bin/install-brave-stylix-theme" = {
     executable = true;
