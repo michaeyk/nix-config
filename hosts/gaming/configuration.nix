@@ -331,6 +331,18 @@ in {
     };
   };
 
+  # Auto-update Flatpak runtimes on boot to keep NVIDIA drivers in sync
+  systemd.services.flatpak-update = {
+    description = "Update Flatpak runtimes";
+    after = [ "network-online.target" "flatpak-system-helper.service" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.flatpak}/bin/flatpak update -y --noninteractive";
+    };
+  };
+
   # Reset GPG after resume so YubiKey is recognized
   powerManagement.resumeCommands = ''
     ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
