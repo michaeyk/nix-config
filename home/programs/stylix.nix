@@ -216,6 +216,17 @@
     '';
   };
 
+  # Remove real copies of themes before linkGeneration so Home Manager can place symlinks
+  home.activation.cleanThemesForHM = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
+    if [ -d "$HOME/.themes" ]; then
+      for theme in "$HOME/.themes"/*; do
+        if [ -d "$theme" ] && [ ! -L "$theme" ]; then
+          rm -rf "$theme"
+        fi
+      done
+    fi
+  '';
+
   # Replace Nix store symlinks in ~/.themes with real copies so Flatpak's bwrap doesn't choke
   home.activation.fixThemesForFlatpak = lib.hm.dag.entryAfter ["linkGeneration"] ''
     for theme in "$HOME/.themes"/*; do
