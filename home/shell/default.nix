@@ -285,6 +285,7 @@ in {
       size = lib.mkDefault 10;
     };
     settings = {
+      window_border_width = "2pt";
       enable_audio_bell = false;
       detect_urls = true;
       enabled_layouts = "splits,stack";
