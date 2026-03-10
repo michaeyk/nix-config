@@ -381,6 +381,10 @@ in {
     autoStart = false; # Don't run as system service - needs user session for Wayland
     capSysAdmin = true; # Required for KMS capture on Wayland
     openFirewall = true;
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+      cudaPackages = pkgs.cudaPackages;
+    };
   };
 
   # Flatpak
