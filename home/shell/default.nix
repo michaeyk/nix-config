@@ -336,7 +336,6 @@ in {
       "alt+u" = "kitten hints --type url";
       "alt+p" = "kitten hints --type path";
       "alt+g" = "kitten hints --type hash";
-      "alt+n" = "kitten hints --type linenum";
       "alt+i" = "kitten hints --type ip";
       "alt+o" = "kitten hints --type word --program @";
       "alt+shift+o" = "kitten hints --type line --program @";
