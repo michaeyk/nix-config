@@ -2,20 +2,26 @@
 let
   hyprDir = "/run/user/1000/hypr";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  monitor = "desc:Samsung Electric Company Odyssey G95SC";
 
-  sunshineResolutionScript = pkgs.writeShellScript "sunshine-resolution" ''
+  # HDMI dummy plug connector name (IDV AOC28E850.HDR)
+  dummyPlug = "HDMI-A-3";
+
+  setHyprInstance = ''
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 ${hyprDir}/ | head -1)
-    ${hyprctl} keyword monitor "${monitor}",2560x1440@120,0x0,1
   '';
 
-  sunshineResolutionRestore = pkgs.writeShellScript "sunshine-resolution-restore" ''
-    export HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 ${hyprDir}/ | head -1)
-    ${hyprctl} keyword monitor "${monitor}",5120x1440@240,0x0,1
+  mkResolutionScript = name: resolution: pkgs.writeShellScript "sunshine-res-${name}" ''
+    ${setHyprInstance}
+    ${hyprctl} keyword monitor "${dummyPlug},${resolution},auto,1"
+  '';
+
+  restoreScript = pkgs.writeShellScript "sunshine-res-restore" ''
+    ${setHyprInstance}
+    ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
   steamBigPicture = pkgs.writeShellScript "steam-bigpicture" ''
-    export HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 ${hyprDir}/ | head -1)
+    ${setHyprInstance}
     export WAYLAND_DISPLAY=wayland-1
     export XDG_RUNTIME_DIR=/run/user/1000
     export HOME=/home/mike
@@ -23,11 +29,12 @@ let
     # Launch Steam Flatpak with dropped capabilities (fixes bwrap error with Sunshine's capSysAdmin)
     ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam -bigpicture -steamos' &
 
-    # Wait for Steam window to appear and make it fullscreen
+    # Wait for Steam window, move to dummy plug, and fullscreen
     for i in {1..30}; do
       if ${hyprctl} clients | grep -q "steam"; then
         sleep 1
         ${hyprctl} dispatch focuswindow class:steam
+        ${hyprctl} dispatch movewindow "mon:${dummyPlug}"
         ${hyprctl} dispatch fullscreen 1
         break
       fi
@@ -39,29 +46,70 @@ let
   '';
 in
 {
-  xdg.configFile."sunshine/sunshine.conf".text = ''
-    gamepad = auto
-  '';
+  xdg.configFile."sunshine/sunshine.conf".text = builtins.concatStringsSep "\n" [
+    "gamepad = auto"
+    "capture = wlr"
+    "output_name = 1"
+  ];
 
   xdg.configFile."sunshine/apps.json".text = builtins.toJSON {
     env = {
       PATH = "$(PATH):$(HOME)/.local/bin";
     };
     apps = [
+      # Desktop profiles
       {
-        name = "Desktop";
+        name = "Desktop (4K TV)";
         image-path = "desktop.png";
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}";
+          undo = "${restoreScript}";
+        }];
       }
       {
-        name = "Steam Big Picture";
+        name = "Desktop (Fold 7)";
+        image-path = "desktop.png";
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}";
+          undo = "${restoreScript}";
+        }];
+      }
+      {
+        name = "Desktop (Steam Deck)";
+        image-path = "desktop.png";
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}";
+          undo = "${restoreScript}";
+        }];
+      }
+
+      # Steam Big Picture profiles
+      {
+        name = "Steam (4K TV)";
         cmd = "${steamBigPicture}";
         image-path = "steam.png";
-        prep-cmd = [
-          {
-            "do" = "${sunshineResolutionScript}";
-            undo = "${sunshineResolutionRestore}";
-          }
-        ];
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}";
+          undo = "${restoreScript}";
+        }];
+      }
+      {
+        name = "Steam (Fold 7)";
+        cmd = "${steamBigPicture}";
+        image-path = "steam.png";
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}";
+          undo = "${restoreScript}";
+        }];
+      }
+      {
+        name = "Steam (Steam Deck)";
+        cmd = "${steamBigPicture}";
+        image-path = "steam.png";
+        prep-cmd = [{
+          "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}";
+          undo = "${restoreScript}";
+        }];
       }
     ];
   };
