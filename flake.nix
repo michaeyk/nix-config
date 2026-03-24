@@ -103,6 +103,7 @@
           inherit inputs nurPkgs;
         };
         modules = [
+          inputs.stylix.homeModules.stylix
           ./users/mike_remote/home.nix
         ];
       };
