@@ -27,18 +27,18 @@ let
     export HOME=/home/mike
 
     # Launch Steam Flatpak with dropped capabilities (fixes bwrap error with Sunshine's capSysAdmin)
-    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam -bigpicture -steamos' &
+    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam -bigpicture' &
 
-    # Wait for Steam window, move to dummy plug, and fullscreen
+    # Wait for Steam Big Picture window, move to dummy plug, and fullscreen
     for i in {1..30}; do
-      if ${hyprctl} clients | grep -q "steam"; then
+      if ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -e '.[] | select(.class == "steam" and (.title | test("Steam Big Picture")))' > /dev/null 2>&1; then
         sleep 1
-        ${hyprctl} dispatch focuswindow class:steam
+        ${hyprctl} dispatch focuswindow "class:steam title:Steam Big Picture"
         ${hyprctl} dispatch movewindow "mon:${dummyPlug}"
         ${hyprctl} dispatch fullscreen 1
         break
       fi
-      sleep 0.5
+      sleep 1
     done
 
     # Keep running so Sunshine doesn't think app exited
@@ -47,7 +47,7 @@ let
 in
 {
   xdg.configFile."sunshine/sunshine.conf".text = builtins.concatStringsSep "\n" [
-    "gamepad = auto"
+    "gamepad = x360"
     "capture = wlr"
     "output_name = 1"
   ];
