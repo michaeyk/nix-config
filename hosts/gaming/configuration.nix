@@ -167,15 +167,25 @@ in {
     splix
   ];
 
-  services.printing.browsing = true;
-  services.printing.browsedConf = ''
-    BrowseDNSSDSubTypes _cups,_print
-    BrowseLocalProtocols all
-    BrowseRemoteProtocols all
-    CreateIPPPrinterQueues All
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Dell-H625cdw";
+        description = "Dell Color MFP H625cdw";
+        deviceUri = "ipp://172.16.0.120/ipp/print";
+        model = "everywhere";
+      }
+      {
+        name = "Zebra-ZP450";
+        description = "Zebra Technologies ZTC ZP 450-200dpi";
+        location = "Mike Office";
+        deviceUri = "ipp://172.16.0.54/ipp/print";
+        model = "everywhere";
+      }
+    ];
+    ensureDefaultPrinter = "Dell-H625cdw";
+  };
 
-    BrowseProtocols all
-  '';
   services.avahi = {
     enable = true;
     nssmdns4 = true;
