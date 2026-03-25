@@ -160,7 +160,7 @@ in {
         description = "Zebra Technologies ZTC ZP 450-200dpi";
         location = "Mike Office";
         deviceUri = "ipp://172.16.0.54/ipp/print";
-        model = "everywhere";
+        model = "drv:///sample.drv/zebra.ppd";
       }
     ];
     ensureDefaultPrinter = "Dell-H625cdw";
