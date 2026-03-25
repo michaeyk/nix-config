@@ -26,16 +26,17 @@ let
     export XDG_RUNTIME_DIR=/run/user/1000
     export HOME=/home/mike
 
-    # Launch Steam Flatpak with dropped capabilities (fixes bwrap error with Sunshine's capSysAdmin)
-    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam -bigpicture' &
+    # Open Big Picture via steam:// URL (works whether Steam is already running or not)
+    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam steam://open/bigpicture' &
 
-    # Wait for Steam Big Picture window, move to dummy plug, and fullscreen
+    # Wait for Steam window, move to dummy plug, and fullscreen
+    sleep 3
     for i in {1..30}; do
-      if ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -e '.[] | select(.class == "steam" and (.title | test("Steam Big Picture")))' > /dev/null 2>&1; then
-        sleep 1
-        ${hyprctl} dispatch focuswindow "class:steam title:Steam Big Picture"
+      if ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -e '.[] | select(.class == "steam")' > /dev/null 2>&1; then
+        ${hyprctl} dispatch focuswindow class:steam
         ${hyprctl} dispatch movewindow "mon:${dummyPlug}"
         ${hyprctl} dispatch fullscreen 1
+        ${hyprctl} dispatch focusmonitor "${dummyPlug}"
         break
       fi
       sleep 1
