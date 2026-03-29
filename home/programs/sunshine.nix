@@ -2,7 +2,6 @@
 let
   hyprDir = "/run/user/1000/hypr";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  jq = "${pkgs.jq}/bin/jq";
 
   # HDMI dummy plug connector name (IDV AOC28E850.HDR)
   dummyPlug = "HDMI-A-3";
@@ -21,24 +20,23 @@ let
     ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
-  # Launch Steam Big Picture on the dummy plug monitor.
-  # The prep-cmd already sets the monitor to the correct resolution,
-  # so we just need to open Big Picture and move it there.
   steamBigPicture = pkgs.writeShellScript "steam-bigpicture" ''
     ${setHyprInstance}
     export WAYLAND_DISPLAY=wayland-1
     export XDG_RUNTIME_DIR=/run/user/1000
     export HOME=/home/mike
 
-    # Open Big Picture (works whether Steam is already running or not)
-    /run/current-system/sw/bin/flatpak run com.valvesoftware.Steam steam://open/bigpicture &
+    # Open Big Picture via steam:// URL (works whether Steam is already running or not)
+    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam steam://open/bigpicture' &
 
-    # Wait for the Steam window, then move it to the streaming monitor
-    for i in $(seq 1 30); do
-      if ${hyprctl} clients -j | ${jq} -e '.[] | select(.class == "steam")' > /dev/null 2>&1; then
+    # Wait for Steam window, move to dummy plug, and fullscreen
+    sleep 3
+    for i in {1..30}; do
+      if ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -e '.[] | select(.class == "steam")' > /dev/null 2>&1; then
         ${hyprctl} dispatch focuswindow class:steam
         ${hyprctl} dispatch movewindow "mon:${dummyPlug}"
         ${hyprctl} dispatch fullscreen 1
+        ${hyprctl} dispatch focusmonitor "${dummyPlug}"
         break
       fi
       sleep 1
