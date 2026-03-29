@@ -296,6 +296,12 @@ in {
     enable = true;
   };
 
+  # Gamescope nested compositor — presents correct resolutions to games during Sunshine streaming
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+
   # NVIDIA suspend fix: pause Hyprland before GPU suspends to prevent crash
   systemd.services.hyprland-suspend = {
     description = "Suspend Hyprland before sleep";
