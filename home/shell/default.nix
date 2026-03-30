@@ -348,6 +348,7 @@ in {
 
       # Layout zoom (toggle between splits and stack)
       "alt+z" = "toggle_layout stack";
+      "alt+r" = "layout_action rotate";
 
       # Marks
       "alt+m" = "toggle_marker text 1 ERROR";
