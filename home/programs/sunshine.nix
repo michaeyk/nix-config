@@ -20,6 +20,14 @@ let
     ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
+  # Prevent suspend while streaming (DPMS/lock still work normally)
+  inhibitSuspend = pkgs.writeShellScript "sunshine-inhibit-suspend" ''
+    touch /tmp/sunshine-streaming
+  '';
+  uninhibitSuspend = pkgs.writeShellScript "sunshine-uninhibit-suspend" ''
+    rm -f /tmp/sunshine-streaming
+  '';
+
   steamBigPicture = pkgs.writeShellScript "steam-bigpicture" ''
     ${setHyprInstance}
     export WAYLAND_DISPLAY=wayland-1
@@ -62,26 +70,26 @@ in
       {
         name = "Desktop (4K TV)";
         image-path = "desktop.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
       {
         name = "Desktop (Fold 7)";
         image-path = "desktop.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
       {
         name = "Desktop (Steam Deck)";
         image-path = "desktop.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
 
       # Steam Big Picture profiles
@@ -89,28 +97,28 @@ in
         name = "Steam (4K TV)";
         cmd = "${steamBigPicture}";
         image-path = "steam.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "4ktv" "3840x2160@60"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
       {
         name = "Steam (Fold 7)";
         cmd = "${steamBigPicture}";
         image-path = "steam.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "fold7" "modeline 557.50 2184 2232 2264 2344 1968 1971 1976 1982 +hsync -vsync"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
       {
         name = "Steam (Steam Deck)";
         cmd = "${steamBigPicture}";
         image-path = "steam.png";
-        prep-cmd = [{
-          "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}";
-          undo = "${restoreScript}";
-        }];
+        prep-cmd = [
+          { "do" = "${mkResolutionScript "steamdeck" "1280x800@60"}"; undo = "${restoreScript}"; }
+          { "do" = "${inhibitSuspend}"; undo = "${uninhibitSuspend}"; }
+        ];
       }
     ];
   };

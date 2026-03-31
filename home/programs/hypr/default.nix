@@ -85,7 +85,7 @@
         }
         {
           timeout = 1200;
-          on-timeout = "systemctl suspend";
+          on-timeout = "[ -f /tmp/sunshine-streaming ] || systemctl suspend";
         }
       ];
     };
