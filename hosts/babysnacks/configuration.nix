@@ -154,6 +154,7 @@ in {
         description = "Dell Color MFP H625cdw";
         deviceUri = "ipp://172.16.0.120/ipp/print";
         model = "everywhere";
+        ppdOptions.sides = "one-sided";
       }
       {
         name = "Zebra-ZP450";

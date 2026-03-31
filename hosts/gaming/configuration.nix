@@ -160,6 +160,7 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.browsed.enable = false;
   services.printing.drivers = with pkgs; [
     gutenprint
     gutenprintBin
@@ -174,6 +175,7 @@ in {
         description = "Dell Color MFP H625cdw";
         deviceUri = "ipp://172.16.0.120/ipp/print";
         model = "everywhere";
+        ppdOptions.sides = "one-sided";
       }
       {
         name = "Zebra-ZP450";
