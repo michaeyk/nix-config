@@ -22,7 +22,7 @@ password.fetch = ["command", "pass", "show", "hosting/vdirsyncer"]
 [pair my_calendar]
 a = "calendar_local"
 b = "calendar_remote"
-collections = ["from a", "from b"]
+collections = ["nextcloud", "contact_birthdays"]
 metadata = ["color"]
 
 [storage calendar_local]
