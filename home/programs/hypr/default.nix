@@ -75,12 +75,12 @@
       listener = [
         {
           timeout = 900;
-          on-timeout = "pidof hyprlock || hyprlock";
+          on-timeout = "[ -f /tmp/sunshine-streaming ] || (pidof hyprlock || hyprlock)";
         }
         {
           # DPMS off before suspend - helps NVIDIA resume properly
           timeout = 1140;
-          on-timeout = "hyprctl dispatch dpms off";
+          on-timeout = "[ -f /tmp/sunshine-streaming ] || hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
         {

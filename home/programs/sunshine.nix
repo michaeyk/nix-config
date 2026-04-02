@@ -5,6 +5,7 @@ let
 
   # HDMI dummy plug connector name (IDV AOC28E850.HDR)
   dummyPlug = "HDMI-A-3";
+  primaryMonitor = "desc:Samsung Electric Company Odyssey G95SC";
 
   setHyprInstance = ''
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 ${hyprDir}/ | head -1)
@@ -13,10 +14,12 @@ let
   mkResolutionScript = name: resolution: pkgs.writeShellScript "sunshine-res-${name}" ''
     ${setHyprInstance}
     ${hyprctl} keyword monitor "${dummyPlug},${resolution},auto,1"
+    ${hyprctl} keyword monitor "${primaryMonitor},disable"
   '';
 
   restoreScript = pkgs.writeShellScript "sunshine-res-restore" ''
     ${setHyprInstance}
+    ${hyprctl} keyword monitor "${primaryMonitor},5120x1440@240,0x0,1"
     ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
