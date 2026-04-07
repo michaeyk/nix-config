@@ -338,15 +338,14 @@ in {
     };
   };
 
-  # Restart Bluetooth after resume to fix device connection issues
+  # Restart Bluetooth after resume and explicitly power on the adapter
   systemd.services.bluetooth-resume = {
     description = "Restart Bluetooth after sleep";
     after = [ "systemd-resume.service" ];
     wantedBy = [ "suspend.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
-      ExecStart = "${pkgs.systemd}/bin/systemctl restart bluetooth.service";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.systemd}/bin/systemctl restart bluetooth.service && sleep 2 && ${pkgs.bluez}/bin/bluetoothctl power on'";
     };
   };
 
