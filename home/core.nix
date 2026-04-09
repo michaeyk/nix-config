@@ -65,7 +65,8 @@
     # lsp
     markdown-oxide
 
-    # pdf
+    # pdf / ebook
+    calibre
     poppler-utils
     python312Packages.weasyprint
     texlive.combined.scheme-full
