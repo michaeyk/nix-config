@@ -1,4 +1,5 @@
 {pkgs, lib, config, ...}: {
+  gtk.gtk4.theme = null;
   stylix = {
     enable = true;
     autoEnable = true;
@@ -75,7 +76,7 @@
       cava.enable = true;       # Audio visualizer
       fzf.enable = true;        # Fuzzy finder
       hyprlock.enable = false;  # Screen locker - disabled due to custom config
-      hyprpaper.enable = false; # Replaced with swww
+      hyprpaper.enable = false; # Replaced with awww
       ncspot.enable = true;     # Spotify TUI client
       zathura.enable = true;    # Document viewer
     };

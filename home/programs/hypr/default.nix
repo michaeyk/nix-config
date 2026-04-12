@@ -9,7 +9,7 @@
     hypridle
     hyprlock
     hyprpicker
-    swww
+    awww
     pyprland
     wl-clipboard
     cliphist
