@@ -15,7 +15,7 @@
     dprint
     black
     typescript-language-server
-    (lib.hiPrio nodePackages.prettier)
+    (lib.hiPrio prettier)
     # lsp-ai
     markdown-oxide
   ];
@@ -141,19 +141,19 @@
 
       [[language]]
       name = "html"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "html"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "html"] }
 
       [[language]]
       name = "json"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "json"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "json"] }
 
       [[language]]
       name = "css"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "css"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "css"] }
 
       [[language]]
       name = "javascript"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
       language-servers = ["typescript-language-server"]
       auto-format = true
 
@@ -161,16 +161,16 @@
       name = "typescript"
       auto-format = true
       language-servers = ["typescript-language-server"]
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
 
       [[language]]
       name = "tsx"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
       auto-format = true
 
       [[language]]
       name = "jsx"
-      formatter = { command = "${pkgs.nodePackages.prettier}/bin/prettier", args = ["--parser", "typescript"] }
+      formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
       auto-format = true
 
       [language-server.basedpyright]
