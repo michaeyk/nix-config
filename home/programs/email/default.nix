@@ -124,11 +124,11 @@
         passwordCommand = "${pkgs.pass}/bin/pass show email/mike@michaelkim.net | head -n1";
         imap.host = "imap.fastmail.com";
         smtp.host = "smtp.fastmail.com";
-        maildir.path = "~/.maildir";
+        maildir.path = ".";
         aerc = {
           enable = true;
           extraAccounts = {
-            source = "notmuch://~/.maildir";
+            source = "notmuch:///home/mike/.maildir";
             outgoing = "msmtpq --read-envelope-from --read-recipients";
           };
         };
