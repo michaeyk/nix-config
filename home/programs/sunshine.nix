@@ -20,6 +20,12 @@ let
   restoreScript = pkgs.writeShellScript "sunshine-res-restore" ''
     ${setHyprInstance}
     ${hyprctl} keyword monitor "${primaryMonitor},5120x1440@240,0x0,1"
+
+    # Move all windows from the dummy plug back to the primary monitor before disabling it
+    ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -r '.[] | select(.monitor_name == "${dummyPlug}") | .address' | while read -r addr; do
+      ${hyprctl} dispatch movetoworkspacesilent "1,address:$addr"
+    done
+
     ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
@@ -38,7 +44,7 @@ let
     export HOME=/home/mike
 
     # Open Big Picture via steam:// URL (works whether Steam is already running or not)
-    ${pkgs.libcap}/bin/capsh --caps="" --addamb="" -- -c '/run/current-system/sw/bin/flatpak run com.valvesoftware.Steam steam://open/bigpicture' &
+    steam steam://open/bigpicture &
 
     # Wait for Steam window, move to dummy plug, and fullscreen
     sleep 3
