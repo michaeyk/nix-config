@@ -19,14 +19,8 @@ let
 
   restoreScript = pkgs.writeShellScript "sunshine-res-restore" ''
     ${setHyprInstance}
+    ${hyprctl} keyword monitor "${dummyPlug},disable"
     ${hyprctl} keyword monitor "${primaryMonitor},5120x1440@240,0x0,1"
-
-    # Move all windows from the dummy plug back to the primary monitor before disabling it
-    ${hyprctl} clients -j | ${pkgs.jq}/bin/jq -r '.[] | select(.monitor_name == "${dummyPlug}") | .address' | while read -r addr; do
-      ${hyprctl} dispatch movetoworkspacesilent "1,address:$addr"
-    done
-
-    ${hyprctl} keyword monitor "${dummyPlug}",disable
   '';
 
   # Prevent suspend while streaming (DPMS/lock still work normally)
