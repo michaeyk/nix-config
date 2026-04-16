@@ -78,8 +78,8 @@
           H = ":bp";
           L = ":bn";
           D = ["ensure_selections_forward" "extend_to_line_end"];
-          C-y = ":sh zellij run -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash ~/.config/helix/yazi-picker.sh";
-          C-e = ":sh zellij run -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash ~/.config/helix/yazi-picker.sh";
+          C-y = [":sh rm -f /tmp/yazi-picker" ":insert-output yazi \"%{buffer_name}\" --chooser-file=/tmp/yazi-picker" ":sh printf \"\\x1b[?1049h\\x1b[?2004h\" > /dev/tty" ":open %sh{cat /tmp/yazi-picker}" ":redraw"];
+          C-e = [":sh rm -f /tmp/yazi-picker" ":insert-output yazi \"%{buffer_name}\" --chooser-file=/tmp/yazi-picker" ":sh printf \"\\x1b[?1049h\\x1b[?2004h\" > /dev/tty" ":open %sh{cat /tmp/yazi-picker}" ":redraw"];
           Z = {
             Z = ":x";
           };
@@ -87,25 +87,6 @@
         };
       };
     };
-  };
-
-  # yazi shell script
-  home.file.".config/helix/yazi-picker.sh" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      paths=$(yazi --chooser-file=/dev/stdout | while read -r; do printf "%q " "$REPLY"; done)
-
-      if [[ -n "$paths" ]]; then
-      	zellij action toggle-floating-panes
-      	zellij action write 27 # send <Escape> key
-      	zellij action write-chars ":open $paths"
-      	zellij action write 13 # send <Enter> key
-      	zellij action toggle-floating-panes
-      fi
-
-      zellij action close-pane
-    '';
   };
 
   # Configure LSP
