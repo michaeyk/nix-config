@@ -144,13 +144,24 @@ in {
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+  };
+
+  # NVIDIA + Hyprland environment — system-level so UWSM/systemd picks them up
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      default-session-name = "Hyprland (UWSM)";
+    };
+  };
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -267,7 +278,7 @@ in {
         };
       };
       services = {
-        login.u2fAuth = true;
+        login.u2fAuth = false;
         sudo = {
           u2fAuth = false;
           sshAgentAuth = true;
@@ -299,6 +310,7 @@ in {
 
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
   };
 
   # Gamescope nested compositor — presents correct resolutions to games during Sunshine streaming
