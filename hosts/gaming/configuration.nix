@@ -195,7 +195,7 @@ in {
         name = "Zebra-ZP450";
         description = "Zebra Technologies ZTC ZP 450-200dpi";
         location = "Mike Office";
-        deviceUri = "ipp://172.16.0.54/ipp/print";
+        deviceUri = "ipp://zebra.local/ipp/print";
         model = "drv:///sample.drv/zebra.ppd";
       }
     ];
@@ -230,6 +230,15 @@ in {
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
+
+    wireplumber.extraConfig."11-bluetooth" = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.codecs" = [ "aac" "sbc_xq" "sbc" ];
+      };
+    };
   };
 
   # FUSE mount filesystem on /bin for $PATH
