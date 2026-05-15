@@ -55,6 +55,7 @@
     fzf
     fd
     lsof
+    trash-cli
 
     # gaming
     heroic

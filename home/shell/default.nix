@@ -22,6 +22,7 @@ in {
       #some aliases here
       zj = "zellij";
       cat = "bat";
+      rm = ''f() { args=(); for a in "$@"; do case "$a" in (-r|-R|-f|-rf|-Rf|-fr|-fR) ;; (*) args+=("$a") ;; esac; done; trash-put "''${args[@]}"; }; f'';
       sxiv = "nsxiv";
       y = "yazi";
       lg = "lazygit";
