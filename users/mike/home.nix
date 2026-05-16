@@ -56,7 +56,7 @@
 
     # messaging / email
     dino
-    wasistlos
+    karere
     discord
 
     # encryption / passwords
