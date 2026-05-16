@@ -428,6 +428,18 @@ in {
     };
   };
 
+  # Remove sunshine-streaming flag on shutdown/reboot so hypridle isn't inhibited next boot
+  systemd.services.sunshine-cleanup = {
+    description = "Clean up Sunshine streaming flag";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.coreutils}/bin/rm -f /tmp/sunshine-streaming";
+    };
+  };
+
   # Flatpak
   services.flatpak.enable = true;
 
