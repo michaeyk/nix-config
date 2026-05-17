@@ -117,13 +117,12 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-
-  # Set screen brightness before SDDM greeter appears
-  services.xserver.displayManager.setupCommands = ''
-    ${pkgs.brightnessctl}/bin/brightnessctl set 50%
-  '';
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      default-session-name = "Hyprland (UWSM)";
+    };
+  };
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -299,6 +298,7 @@ in {
 
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
   };
 
   programs.seahorse.enable = true;
