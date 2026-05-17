@@ -56,7 +56,7 @@
 
     # messaging / email
     dino
-    wasistlos
+    karere
     discord
 
     # encryption / passwords
@@ -101,7 +101,7 @@
     (pkgs.writeShellScriptBin "tws" ''
       exec steam-run "$HOME/Jts/1044/tws" "$@"
     '')
-  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player lutris protonup-qt protontricks tradingview rustdesk-flutter] else []);
+  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player /* lutris */ protonup-qt protontricks tradingview rustdesk-flutter] else []);
 
   programs.browserpass = {
     enable = true;
