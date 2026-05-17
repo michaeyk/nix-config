@@ -11,13 +11,13 @@
     export XDG_RUNTIME_DIR=/run/user/1000
 
     # Wait for YubiKey USB device to appear (vendor 1050 = Yubico)
-    for i in $(seq 1 30); do
+    for i in $(${pkgs.coreutils}/bin/seq 1 30); do
       if ${pkgs.coreutils}/bin/ls /sys/bus/usb/devices/*/idVendor 2>/dev/null | \
          ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/cat {} 2>/dev/null | \
          ${pkgs.gnugrep}/bin/grep -q "1050"; then
         break
       fi
-      sleep 0.5
+      ${pkgs.coreutils}/bin/sleep 0.5
     done
 
     # Kill all GPG daemons to clear stale state (gpg-agent caches card info)
@@ -25,14 +25,15 @@
 
     # Restart pcscd to ensure it re-detects the reader after suspend
     ${pkgs.systemd}/bin/systemctl restart pcscd.service
-    sleep 1
+    ${pkgs.coreutils}/bin/sleep 1
 
-    # Verify card is accessible (with retry)
-    for i in $(seq 1 10); do
+    # Verify card is accessible (with retry); primes scdaemon with OpenPGP applet
+    # so it doesn't fall back to PIV (which spams PIN prompts via touch detector)
+    for i in $(${pkgs.coreutils}/bin/seq 1 10); do
       if ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --card-status &>/dev/null; then
         exit 0
       fi
-      sleep 0.5
+      ${pkgs.coreutils}/bin/sleep 0.5
     done
   '';
 in {
