@@ -55,6 +55,7 @@
     fzf
     fd
     lsof
+    rclip
     trash-cli
 
     # gaming
@@ -79,6 +80,7 @@
     dante
 
     # utils
+    usbutils
     ripgrep
     jq
     eza
