@@ -332,6 +332,12 @@ in {
       "alt+shift+k" = "resize_window taller";
       "alt+shift+l" = "resize_window wider";
 
+      # Move/swap panes
+      "alt+ctrl+h" = "move_window left";
+      "alt+ctrl+j" = "move_window down";
+      "alt+ctrl+k" = "move_window up";
+      "alt+ctrl+l" = "move_window right";
+
       # Tabs
       "alt+t" = "new_tab";
       "alt+q" = "close_tab";
