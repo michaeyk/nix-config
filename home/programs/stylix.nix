@@ -76,7 +76,8 @@
       cava.enable = true;       # Audio visualizer
       fzf.enable = true;        # Fuzzy finder
       hyprlock.enable = false;  # Screen locker - disabled due to custom config
-      hyprpaper.enable = false; # Replaced with awww
+      # mkForce: stylix's hyprland HM module flips this to true; we use awww.
+      hyprpaper.enable = lib.mkForce false;
       ncspot.enable = true;     # Spotify TUI client
       zathura.enable = true;    # Document viewer
     };

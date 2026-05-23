@@ -29,6 +29,249 @@
     crypto-tracker
   ];
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    # NixOS module (programs.hyprland) installs the compositor + portal.
+    package = null;
+    portalPackage = null;
+    configType = "lua";
+    # UWSM handles the session on babysnacks; the systemd target HM ships
+    # interferes with that and is unnecessary elsewhere too.
+    systemd.enable = false;
+
+    settings = {
+      mod = { _var = "SUPER"; };
+
+      monitor = [
+        {
+          # Match by description so the config survives DP port changes across reboots
+          output = "desc:Samsung Electric Company Odyssey G95SC";
+          mode = "5120x1440@240";
+          position = "0x0";
+          scale = 1;
+        }
+        {
+          # HDMI dummy plug — disabled by default, Sunshine prep-cmd enables it for streaming
+          output = "HDMI-A-3";
+          disabled = true;
+        }
+        {
+          # Fallback for any monitor - prevents crashes when monitor config is stale
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = "auto";
+        }
+      ];
+
+      config = {
+        ecosystem.no_update_news = true;
+
+        general = {
+          layout = "dwindle";
+          gaps_in = 20;
+          gaps_out = 40;
+          border_size = 2;
+          # Border colors come from stylix.targets.hyprland (Kanagawa scheme).
+        };
+
+        decoration = {
+          rounding = 5;
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 3;
+            new_optimizations = true;
+            ignore_opacity = true;
+          };
+        };
+
+        animations.enabled = true;
+
+        dwindle.force_split = 0;
+
+        master = {
+          new_on_top = true;
+          orientation = "center";
+        };
+
+        misc = {
+          disable_hyprland_logo = true;
+          disable_splash_rendering = true;
+          mouse_move_enables_dpms = true;
+          key_press_enables_dpms = true;
+          vrr = 2;
+        };
+
+        gestures.workspace_swipe_min_speed_to_force = 5;
+
+        input = {
+          # Remap Capslock -> Super for Vim users
+          kb_options = "caps:super";
+          repeat_rate = 50;
+          repeat_delay = 240;
+          sensitivity = 0.75;
+          touchpad = {
+            disable_while_typing = true;
+            natural_scroll = false;
+            clickfinger_behavior = true;
+            middle_button_emulation = false;
+            tap_to_click = true;
+          };
+        };
+      };
+
+      curve = {
+        _args = [
+          "overshot"
+          {
+            type = "bezier";
+            points = [ [ 0.13 0.99 ] [ 0.29 1.1 ] ];
+          }
+        ];
+      };
+
+      animation = [
+        { leaf = "windows"; enabled = true; speed = 4; bezier = "overshot"; style = "slide"; }
+        { leaf = "fade"; enabled = true; speed = 10; bezier = "default"; }
+        { leaf = "workspaces"; enabled = true; speed = 8.8; bezier = "overshot"; style = "slide"; }
+        { leaf = "border"; enabled = true; speed = 14; bezier = "default"; }
+      ];
+
+      window_rule = [
+        { match = { class = "^(brave-browser)$"; title = "^(Save File)$"; }; float = true; }
+        { match = { class = "^(brave-browser)$"; title = "^(Open File)$"; }; float = true; }
+        { match = { class = "^(brave-browser)$"; title = "^(Picture-in-Picture)$"; }; float = true; }
+        { match = { class = "^(firefox)$"; title = "^(Save File)$"; }; float = true; }
+        { match = { class = "^(firefox)$"; title = "^(Open File)$"; }; float = true; }
+        { match = { class = "^(firefox)$"; title = "^(Picture-in-Picture)$"; }; float = true; }
+        { match = { class = "^(xdg-desktop-portal-gtk)$"; }; float = true; }
+        { match = { class = "^(nmtui)$"; }; float = true; }
+        { match = { class = "^(\\.blueman-manager-wrapped)$"; }; float = true; size = [ 1200 800 ]; }
+        { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; size = [ 1200 800 ]; }
+        { match = { class = "^(yazi)$"; }; float = true; size = [ 1200 800 ]; }
+        { match = { class = "^(btop)$"; }; float = true; size = [ 1200 800 ]; }
+        { match = { class = "^(karere)$"; }; workspace = "7"; }
+        { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
+        { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
+        { match = { class = "^(brave-browser)$"; title = ".*messages\\.google\\.com.*"; }; workspace = "9"; }
+      ];
+    };
+
+    extraConfig = ''
+      -- Mouse drag/resize binds
+      hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+      hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+      -- Apps
+      hl.bind(mod .. " + B", hl.dsp.exec_cmd("brave"))
+      hl.bind(mod .. " + O", hl.dsp.exec_cmd("obsidian"))
+      hl.bind(mod .. " + C", hl.dsp.exec_cmd("google-chrome-stable"))
+      hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
+      hl.bind(mod .. " + R", hl.dsp.exec_cmd("fuzzel"))
+
+      -- Pyprland scratchpads
+      hl.bind(mod .. " + U", hl.dsp.exec_cmd("pypr toggle term"))
+      hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("pypr toggle volume"))
+      hl.bind(mod .. " + E", hl.dsp.exec_cmd("pypr toggle yazi"))
+
+      -- Misc launchers
+      hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("blueman-manager"))
+      hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/hyprPicker.sh"))
+      hl.bind(mod .. " + V", hl.dsp.exec_cmd("sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'"))
+      hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("sh -c 'BEMOJI_PICKER_CMD=\"fuzzel -d\" bemoji'"))
+
+      -- Window mgmt
+      hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized" }))
+      hl.bind(mod .. " + W", hl.dsp.window.close())
+      hl.bind(mod .. " + Q", hl.dsp.exec_cmd("~/.config/waybar/scripts/fuzzel-powermenu.sh"))
+      hl.bind(mod .. " + SHIFT + Q", hl.dsp.exit())
+
+      -- Layout switching
+      hl.bind(mod .. " + D", function() hl.config({ general = { layout = "dwindle" } }) end)
+      hl.bind(mod .. " + M", function() hl.config({ general = { layout = "master" } }) end)
+
+      -- Media keys
+      hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("~/.config/hypr/scripts/volume mute"))
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volume down"), { repeating = true })
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volume up"),   { repeating = true })
+      hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"))
+
+      -- Brightness
+      hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set 10%+"), { repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"), { repeating = true })
+
+      -- Screenshots and recording
+      hl.bind(mod .. " + S", hl.dsp.exec_cmd("sh -c 'grim -g \"$(slurp)\" /tmp/screenshot.png && swappy -f /tmp/screenshot.png && screenshot.sh'"))
+      hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd("sh -c 'wf-recorder -g \"$(slurp)\"'"))
+
+      -- Lock
+      hl.bind(mod .. " + Z", hl.dsp.exec_cmd("hyprlock"))
+
+      -- Scratchpad workspace
+      hl.bind(mod .. " + SHIFT + P", hl.dsp.window.move({ workspace = "special" }))
+      hl.bind(mod .. " + P", hl.dsp.workspace.toggle_special())
+
+      -- Random wallpaper
+      hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd("random-wallpaper.sh"))
+
+      -- Focus (hjkl)
+      hl.bind(mod .. " + h", hl.dsp.focus({ direction = "left" }))
+      hl.bind(mod .. " + l", hl.dsp.focus({ direction = "right" }))
+      hl.bind(mod .. " + j", hl.dsp.focus({ direction = "down" }))
+      hl.bind(mod .. " + k", hl.dsp.focus({ direction = "up" }))
+
+      -- Resize active window with arrow keys
+      hl.bind(mod .. " + left",  hl.dsp.window.resize({ x = -40, y = 0,   relative = true }))
+      hl.bind(mod .. " + right", hl.dsp.window.resize({ x = 40,  y = 0,   relative = true }))
+      hl.bind(mod .. " + up",    hl.dsp.window.resize({ x = 0,   y = -40, relative = true }))
+      hl.bind(mod .. " + down",  hl.dsp.window.resize({ x = 0,   y = 40,  relative = true }))
+
+      -- Swap windows
+      hl.bind(mod .. " + SHIFT + h", hl.dsp.window.swap({ direction = "left" }))
+      hl.bind(mod .. " + SHIFT + l", hl.dsp.window.swap({ direction = "right" }))
+      hl.bind(mod .. " + SHIFT + k", hl.dsp.window.swap({ direction = "up" }))
+      hl.bind(mod .. " + SHIFT + j", hl.dsp.window.swap({ direction = "down" }))
+
+      -- Workspaces 1-10 (key 10 maps to "0")
+      for i = 1, 10 do
+        local key = i % 10
+        hl.bind(mod .. " + " .. key,           hl.dsp.focus({ workspace = i }))
+        hl.bind(mod .. " + SHIFT + " .. key,   hl.dsp.window.move({ workspace = i, follow = false }))
+      end
+
+      -- Autostart
+      hl.on("hyprland.start", function()
+        -- Status bar
+        hl.exec_cmd("waybar")
+        hl.exec_cmd("~/.config/waybar/scripts/mpris-notifier.sh")
+
+        hl.exec_cmd("pypr")
+        hl.exec_cmd("dunst")
+        hl.exec_cmd("blueman-applet")
+        hl.exec_cmd("wl-paste --type text --watch cliphist store")
+        hl.exec_cmd("wl-paste --type image --watch cliphist store")
+
+        -- Wallpaper
+        hl.exec_cmd("awww-daemon")
+        hl.exec_cmd("sh -c 'sleep 1 && awww img /home/mike/Pictures/wallpaper/wallpaper.jpeg'")
+
+        hl.exec_cmd("hypridle")
+
+        hl.exec_cmd("karere")
+
+        -- Spawn-with-rules variants need the dispatcher form.
+        hl.dispatch(hl.dsp.exec_cmd("dino", { workspace = "9 silent" }))
+        hl.dispatch(hl.dsp.exec_cmd("obsidian", { workspace = "special" }))
+        hl.dispatch(hl.dsp.exec_cmd("brave --new-window https://messages.google.com/web/conversations", { workspace = "9 silent" }))
+
+        -- Screen sharing
+        hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+        hl.exec_cmd("~/.config/hypr/scripts/screensharing.sh")
+      end)
+    '';
+  };
+
   programs.hyprlock.enable = true;
   programs.hyprlock.settings = {
     general = {
@@ -265,6 +508,8 @@
   };
 
   home.file = {
+    # Scripts, pyprland.toml, wallpapers, egpu/igpu symlinks.
+    # hyprland.lua is generated by wayland.windowManager.hyprland above.
     ".config/hypr" = {
       source = ./config;
       recursive = true;
@@ -279,7 +524,7 @@
       };
     };
     ".config/waybar/style.css" = {
-      text = 
+      text =
         let
           waybarCSS = builtins.readFile ../waybar/style.css;
           # Replace CSS variables with actual stylix colors

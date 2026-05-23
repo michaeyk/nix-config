@@ -5,6 +5,21 @@
   ...
 }: let
   ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+  cargoAliases = {
+    cb = "cargo build";
+    cbr = "cargo build --release";
+    cr = "cargo run";
+    crr = "cargo run --release";
+    ct = "cargo test";
+    cch = "cargo check";
+    ccl = "cargo clippy";
+    cf = "cargo fmt";
+    cu = "cargo update";
+    ca = "cargo add";
+    cn = "cargo new";
+    cdoc = "cargo doc --open";
+    cclean = "cargo clean";
+  };
 in {
   programs.zsh = {
     enable = true;
@@ -18,7 +33,7 @@ in {
       expireDuplicatesFirst = true;
       size = 10000;
     };
-    shellAliases = {
+    shellAliases = cargoAliases // {
       #some aliases here
       zj = "zellij";
       cat = "bat";
@@ -105,7 +120,7 @@ in {
 
   programs.bash = {
     enable = true;
-    shellAliases = {
+    shellAliases = cargoAliases // {
       # AI agent protection aliases
       claude = "_ai_protected claude";
       codex = "_ai_protected codex";
@@ -318,6 +333,12 @@ in {
       "alt+shift+j" = "resize_window shorter";
       "alt+shift+k" = "resize_window taller";
       "alt+shift+l" = "resize_window wider";
+
+      # Move/swap panes
+      "alt+ctrl+h" = "move_window left";
+      "alt+ctrl+j" = "move_window down";
+      "alt+ctrl+k" = "move_window up";
+      "alt+ctrl+l" = "move_window right";
 
       # Tabs
       "alt+t" = "new_tab";
