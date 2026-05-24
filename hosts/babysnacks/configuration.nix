@@ -122,6 +122,11 @@ in {
     enable = true;
     settings = {
       default-session-name = "Hyprland (UWSM)";
+      # Don't remember last-picked session — otherwise ly's save.txt overrides
+      # default-session-name and we can end up in the non-UWSM Hyprland entry,
+      # which leaves graphical-session.target inactive and hypridle.service dead.
+      save = false;
+      load = false;
     };
   };
   # Configure keymap in X11
