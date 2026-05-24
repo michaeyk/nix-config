@@ -3,8 +3,9 @@ let
   hyprDir = "/run/user/1000/hypr";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
-  # HDMI dummy plug connector name (IDV AOC28E850.HDR)
-  dummyPlug = "HDMI-A-3";
+  # HDMI dummy plug — match by description, since the connector name (HDMI-A-1
+  # vs HDMI-A-3) is not stable across reboots.
+  dummyPlug = "desc:IDV AOC28E850.HDR";
   primaryMonitor = "desc:Samsung Electric Company Odyssey G95SC";
 
   setHyprInstance = ''

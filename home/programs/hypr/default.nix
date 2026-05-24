@@ -51,8 +51,10 @@
           scale = 1;
         }
         {
-          # HDMI dummy plug — disabled by default, Sunshine prep-cmd enables it for streaming
-          output = "HDMI-A-3";
+          # HDMI dummy plug — disabled by default, Sunshine prep-cmd enables it for streaming.
+          # Match by description: the kernel-assigned connector name (HDMI-A-1 vs -A-3)
+          # has shifted across reboots/driver updates and broke the disable rule.
+          output = "desc:IDV AOC28E850.HDR";
           disabled = true;
         }
         {
