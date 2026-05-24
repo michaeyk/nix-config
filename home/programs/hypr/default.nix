@@ -72,7 +72,7 @@
           gaps_in = 20;
           gaps_out = 40;
           border_size = 2;
-          # Border colors come from stylix.targets.hyprland (Kanagawa scheme).
+          # Border colors come from stylix.targets.hyprland.
         };
 
         decoration = {

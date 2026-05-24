@@ -425,26 +425,22 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    extraConfig = '''';
-    matchBlocks = {
+    settings = {
       "*" = {
-        # Explicitly set default values we want to keep
-        sendEnv = ["LANG" "LC_*"];
-        extraOptions = {
-          HashKnownHosts = "yes";
-        };
+        SendEnv = ["LANG" "LC_*"];
+        HashKnownHosts = true;
       };
       bastion = {
-        port = 22;
-        hostname = "34.197.186.111";
-        user = "mike";
-        forwardAgent = true;
+        Port = 22;
+        HostName = "34.197.186.111";
+        User = "mike";
+        ForwardAgent = true;
       };
       jbastion = {
-        port = 22;
-        hostname = "3.208.183.51";
-        user = "mike";
-        forwardAgent = true;
+        Port = 22;
+        HostName = "3.208.183.51";
+        User = "mike";
+        ForwardAgent = true;
       };
     };
   };
