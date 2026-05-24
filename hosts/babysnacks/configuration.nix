@@ -98,6 +98,9 @@ in {
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # ExpressVPN daemon (CLI: `expressvpn`). Run `sudo expressvpn activate` after rebuild.
+  services.expressvpn.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Denver";
 
