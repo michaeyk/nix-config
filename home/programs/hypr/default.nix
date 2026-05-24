@@ -150,15 +150,20 @@
         { match = { class = "^(firefox)$"; title = "^(Picture-in-Picture)$"; }; float = true; }
         { match = { class = "^(xdg-desktop-portal-gtk)$"; }; float = true; }
         { match = { class = "^(nmtui)$"; }; float = true; }
-        { match = { class = "^(\\.blueman-manager-wrapped)$"; }; float = true; size = [ 1200 800 ]; }
         { match = { class = "^(btop)$"; }; float = true; size = [ 1200 800 ]; }
 
         # Drop-down scratchpads. Each class is auto-routed to its own special
         # workspace at the configured size; the keybinds in extraConfig below
         # spawn the app if missing and toggle the workspace.
-        { match = { class = "^(kitty-dropterm)$"; };                 float = true; size = "exact 75% 60%"; workspace = "special:dropterm silent"; }
-        { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; size = "exact 40% 50%"; workspace = "special:volume silent"; }
-        { match = { class = "^(yazi)$"; };                           float = true; size = "exact 75% 75%"; workspace = "special:yazi silent"; }
+        { match = { class = "^(kitty-dropterm)$"; };                 float = true; size = "exact 70% 60%"; workspace = "special:dropterm"; }
+        # pavucontrol/blueman are GTK and call gtk_window_set_default_size after
+        # creation, clobbering Hyprland's size rule (window comes up ~500x400).
+        # min_size+max_size clamp the floating window and survive the GTK override.
+        # NB: snake_case is the Lua plugin's spelling — `minsize`/`maxsize` (the
+        # raw Hyprland keyword form) errors with "unknown field".
+        { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; min_size = [ 2000 1200 ]; max_size = [ 2000 1200 ]; workspace = "special:volume"; }
+        { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = [ 1600 1000 ]; max_size = [ 1600 1000 ]; workspace = "special:bluetooth"; }
+        { match = { class = "^(yazi)$"; };                           float = true; size = "exact 75% 75%"; workspace = "special:yazi"; }
         { match = { class = "^(karere)$"; }; workspace = "7"; }
         { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
         { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
@@ -179,20 +184,27 @@
       hl.bind(mod .. " + R", hl.dsp.exec_cmd("fuzzel"))
 
       -- Drop-down scratchpads. Window rules above route each class to its own
-      -- named special workspace at the right size; this helper spawns the app
-      -- if missing (idempotent via pgrep) and toggles the workspace.
+      -- named special workspace at the right size. First press spawns the app
+      -- and the window rule brings the workspace in (with the slidevert
+      -- animation); subsequent presses toggle visibility on/off.
       local function dropdown(pgrep_match, spawn_cmd, ws_name)
         return function()
-          hl.exec_cmd("sh -c 'pgrep -f \"" .. pgrep_match .. "\" >/dev/null || " .. spawn_cmd .. " &'")
-          hl.dispatch(hl.dsp.workspace.toggle_special({ name = ws_name }))
+          local pipe = io.popen("pgrep -f '" .. pgrep_match .. "'")
+          local pids = pipe:read("*a")
+          pipe:close()
+          if pids ~= "" then
+            hl.dispatch(hl.dsp.workspace.toggle_special(ws_name))
+          else
+            hl.exec_cmd(spawn_cmd)
+          end
         end
       end
       hl.bind(mod .. " + U",         dropdown("kitty.*--class kitty-dropterm", "kitty --class kitty-dropterm", "dropterm"))
       hl.bind(mod .. " + SHIFT + V", dropdown("^pavucontrol$",                  "pavucontrol",                  "volume"))
+      hl.bind(mod .. " + SHIFT + B", dropdown("blueman-manager",                "blueman-manager",              "bluetooth"))
       hl.bind(mod .. " + E",         dropdown("kitty.*--class yazi",            "kitty --class yazi -e yazi",   "yazi"))
 
       -- Misc launchers
-      hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("blueman-manager"))
       hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/hyprPicker.sh"))
       hl.bind(mod .. " + V", hl.dsp.exec_cmd("sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'"))
       hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("sh -c 'BEMOJI_PICKER_CMD=\"fuzzel -d\" bemoji'"))
