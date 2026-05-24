@@ -98,7 +98,9 @@ in {
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # ExpressVPN daemon (CLI: `expressvpn`). Run `sudo expressvpn activate` after rebuild.
+  # ExpressVPN daemon. The nixos module only runs expressvpnd — the `expressvpn`
+  # client CLI is added to environment.systemPackages below.
+  # Run `sudo expressvpn activate` after rebuild.
   services.expressvpn.enable = true;
 
   # Set your time zone.
@@ -363,6 +365,7 @@ in {
     yubikey-manager
     pam_u2f
     davfs2
+    expressvpn
   ];
 
   # Enable the OpenSSH daemon.
