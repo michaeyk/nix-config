@@ -20,15 +20,6 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     customOverlay = final: prev: {
-      pyprland = prev.pyprland.overridePythonAttrs (old: rec {
-        version = "2.6.1";
-        src = prev.fetchPypi {
-          pname = "pyprland";
-          inherit version;
-          hash = "sha256-9QsC3Kq4QShkWuZDchRe+/8LfembBedgnPMpirviKNM=";
-        };
-      });
-
       dell-h625cdw-ppd = prev.stdenv.mkDerivation {
         pname = "dell-h625cdw-ppd";
         version = "1.0";
