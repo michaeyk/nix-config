@@ -4,7 +4,25 @@
   lib,
   hostname ? "unknown",
   ...
-}: {
+}: let
+  # Drop-down scratchpad sizes. Hyprland's `size = exact X% Y%` rule is
+  # silently overridden by kitty (uses initial_window_width/height) and GTK
+  # apps (call gtk_window_set_default_size after creation); only the pixel
+  # min_size/max_size clamp survives. Percentages aren't accepted there
+  # (hyprwm/Hyprland#5099, "not planned"), so compute pixels per host from a
+  # shared % layout. screen.{w,h} is the *logical* (post-scale) resolution.
+  screen =
+    if hostname == "babysnacks"
+    then { w = 1440; h = 960; }   # eDP-1 2880x1920 @ scale 2
+    else { w = 5120; h = 1440; }; # Samsung Odyssey G95SC @ scale 1
+  pct = wp: hp: [ (screen.w * wp / 100) (screen.h * hp / 100) ];
+  dropdownSize = {
+    dropterm  = pct 80 60;
+    yazi      = pct 75 75;
+    volume    = pct 40 80;
+    bluetooth = pct 32 70;
+  };
+in {
   home.packages = with pkgs; [
     hypridle
     hyprlock
@@ -154,16 +172,14 @@
 
         # Drop-down scratchpads. Each class is auto-routed to its own special
         # workspace at the configured size; the keybinds in extraConfig below
-        # spawn the app if missing and toggle the workspace.
-        # kitty ignores Hyprland's `size = exact` rule and uses its built-in
-        # initial_window_width/height (640x400), same failure mode as the GTK
-        # apps below. min_size+max_size clamps the floating window reliably.
+        # spawn the app if missing and toggle the workspace. Sizes come from
+        # the per-host `dropdownSize` let-binding at the top of this file.
         # NB: snake_case is the Lua plugin's spelling — `minsize`/`maxsize` (the
         # raw Hyprland keyword form) errors with "unknown field".
-        { match = { class = "^(kitty-dropterm)$"; };                 float = true; min_size = [ 4096 864 ]; max_size = [ 4096 864 ]; workspace = "special:dropterm"; }
-        { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; min_size = [ 2000 1200 ]; max_size = [ 2000 1200 ]; workspace = "special:volume"; }
-        { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = [ 1600 1000 ]; max_size = [ 1600 1000 ]; workspace = "special:bluetooth"; }
-        { match = { class = "^(yazi)$"; };                           float = true; min_size = [ 3840 1080 ]; max_size = [ 3840 1080 ]; workspace = "special:yazi"; }
+        { match = { class = "^(kitty-dropterm)$"; };                 float = true; min_size = dropdownSize.dropterm;  max_size = dropdownSize.dropterm;  workspace = "special:dropterm"; }
+        { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; min_size = dropdownSize.volume;    max_size = dropdownSize.volume;    workspace = "special:volume"; }
+        { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = dropdownSize.bluetooth; max_size = dropdownSize.bluetooth; workspace = "special:bluetooth"; }
+        { match = { class = "^(yazi)$"; };                           float = true; min_size = dropdownSize.yazi;      max_size = dropdownSize.yazi;      workspace = "special:yazi"; }
         { match = { class = "^(karere)$"; }; workspace = "7"; }
         { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
         { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
