@@ -314,9 +314,6 @@ in {
       tab_powerline_style = "slanted";
       allow_remote_control = "socket-only";
       listen_on = "unix:/tmp/kitty-{kitty_pid}";
-      # Don't let kitty restore its previous geometry — it races with Hyprland's
-      # window rules and leaves the dropterm window at the wrong size.
-      remember_window_size = "no";
     };
     keybindings = {
       # Splits

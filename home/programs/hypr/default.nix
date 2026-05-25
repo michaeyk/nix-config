@@ -155,15 +155,15 @@
         # Drop-down scratchpads. Each class is auto-routed to its own special
         # workspace at the configured size; the keybinds in extraConfig below
         # spawn the app if missing and toggle the workspace.
-        { match = { class = "^(kitty-dropterm)$"; };                 float = true; size = "exact 70% 60%"; workspace = "special:dropterm"; }
-        # pavucontrol/blueman are GTK and call gtk_window_set_default_size after
-        # creation, clobbering Hyprland's size rule (window comes up ~500x400).
-        # min_size+max_size clamp the floating window and survive the GTK override.
+        # kitty ignores Hyprland's `size = exact` rule and uses its built-in
+        # initial_window_width/height (640x400), same failure mode as the GTK
+        # apps below. min_size+max_size clamps the floating window reliably.
         # NB: snake_case is the Lua plugin's spelling — `minsize`/`maxsize` (the
         # raw Hyprland keyword form) errors with "unknown field".
+        { match = { class = "^(kitty-dropterm)$"; };                 float = true; min_size = [ 4096 864 ]; max_size = [ 4096 864 ]; workspace = "special:dropterm"; }
         { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; min_size = [ 2000 1200 ]; max_size = [ 2000 1200 ]; workspace = "special:volume"; }
         { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = [ 1600 1000 ]; max_size = [ 1600 1000 ]; workspace = "special:bluetooth"; }
-        { match = { class = "^(yazi)$"; };                           float = true; size = "exact 75% 75%"; workspace = "special:yazi"; }
+        { match = { class = "^(yazi)$"; };                           float = true; min_size = [ 3840 1080 ]; max_size = [ 3840 1080 ]; workspace = "special:yazi"; }
         { match = { class = "^(karere)$"; }; workspace = "7"; }
         { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
         { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
