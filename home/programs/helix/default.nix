@@ -75,6 +75,10 @@
             w = ":write";
             r = ":reload-all";
           };
+          C-h = "jump_view_left";
+          C-j = "jump_view_down";
+          C-k = "jump_view_up";
+          C-l = "jump_view_right";
           H = ":bp";
           L = ":bn";
           D = ["ensure_selections_forward" "extend_to_line_end"];
