@@ -79,6 +79,7 @@
           C-j = "jump_view_down";
           C-k = "jump_view_up";
           C-l = "jump_view_right";
+          C-q = "wclose";
           H = ":bp";
           L = ":bn";
           D = ["ensure_selections_forward" "extend_to_line_end"];
