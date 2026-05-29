@@ -175,6 +175,9 @@
       [language-server.nixd]
       command = "${pkgs.nixd}/bin/nixd"
 
+      [language-server.rust-analyzer.config]
+      check.command = "clippy"
+
     '';
   };
 }

@@ -12,6 +12,8 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     yazi.url = "github:sxyazi/yazi";
     nur.url = "github:nix-community/NUR";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = {
     nixpkgs,
@@ -41,7 +43,7 @@
     pkgs = import nixpkgs {
       localSystem = "x86_64-linux";
       config.allowUnfree = true;
-      overlays = [customOverlay];
+      overlays = [customOverlay inputs.rust-overlay.overlays.default];
     };
     nurPkgs = import inputs.nur {
       inherit pkgs;
@@ -53,7 +55,7 @@
       specialArgs = {inherit inputs;};
       modules = [
         {nixpkgs.hostPlatform = "x86_64-linux";}
-        {nixpkgs.overlays = [customOverlay];}
+        {nixpkgs.overlays = [customOverlay inputs.rust-overlay.overlays.default];}
         ./hosts/babysnacks/configuration.nix
       ];
     };
@@ -62,7 +64,7 @@
       specialArgs = {inherit inputs;};
       modules = [
         {nixpkgs.hostPlatform = "x86_64-linux";}
-        {nixpkgs.overlays = [customOverlay];}
+        {nixpkgs.overlays = [customOverlay inputs.rust-overlay.overlays.default];}
         ./hosts/gaming/configuration.nix
       ];
     };

@@ -20,7 +20,9 @@
     # dev
     python313
     uv
-    rustup
+    (rust-bin.stable.latest.default.override {
+      extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
+    })
     gcc
     just
     gnumake
