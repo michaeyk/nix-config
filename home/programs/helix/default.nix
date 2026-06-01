@@ -74,6 +74,7 @@
           space = {
             w = ":write";
             r = ":reload-all";
+            q = ":buffer-close";
           };
           C-h = "jump_view_left";
           C-j = "jump_view_down";
