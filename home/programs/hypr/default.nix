@@ -182,6 +182,7 @@ in {
         { match = { class = "^(yazi)$"; };                           float = true; min_size = dropdownSize.yazi;      max_size = dropdownSize.yazi;      workspace = "special:yazi"; }
         { match = { class = "^(karere)$"; }; workspace = "7"; }
         { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
+        { match = { class = "^(org\\.gajim\\.Gajim)$"; }; workspace = "9"; }
         { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
         { match = { class = "^(brave-browser)$"; title = ".*messages\\.google\\.com.*"; }; workspace = "9"; }
       ];
@@ -304,7 +305,7 @@ in {
         hl.exec_cmd("karere")
 
         -- Spawn-with-rules variants need the dispatcher form.
-        hl.dispatch(hl.dsp.exec_cmd("dino", { workspace = "9 silent" }))
+        hl.dispatch(hl.dsp.exec_cmd("gajim", { workspace = "9 silent" }))
         hl.dispatch(hl.dsp.exec_cmd("obsidian", { workspace = "special" }))
         hl.dispatch(hl.dsp.exec_cmd("brave --new-window https://messages.google.com/web/conversations", { workspace = "9 silent" }))
 

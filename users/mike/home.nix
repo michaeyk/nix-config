@@ -54,7 +54,8 @@
     ncspot
     nsxiv
 
-    # messaging / email
+    # chat
+    gajim
     dino
     karere
     discord
