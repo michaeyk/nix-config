@@ -69,6 +69,15 @@
       ];
     };
 
+    nixosConfigurations.minipc = lib.nixosSystem {
+      specialArgs = {inherit inputs;};
+      modules = [
+        {nixpkgs.hostPlatform = "x86_64-linux";}
+        {nixpkgs.overlays = [customOverlay inputs.rust-overlay.overlays.default];}
+        ./hosts/minipc/configuration.nix
+      ];
+    };
+
     homeConfigurations = {
       mike = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
