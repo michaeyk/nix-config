@@ -74,6 +74,11 @@ in {
       owner = config.users.users.mike.name;
       mode = "0400";
     };
+
+    picoshare_token = {
+      owner = config.users.users.mike.name;
+      mode = "0400";
+    };
   };
 
   # Bootloader.

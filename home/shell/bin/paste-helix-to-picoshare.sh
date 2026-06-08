@@ -3,17 +3,20 @@
 # Read from stdin (Helix will always provide input via stdin)
 text=$(cat)
 
+PICOSHARE_BASE="https://picoshare.pimpchoko.com"
+PICOSHARE_GUEST_LINK=$(cat /run/secrets/picoshare_token)
+
 # Create temporary file for upload
 tmpfile=$(mktemp /tmp/paste.XXXXXX.txt)
 echo "$text" > "$tmpfile"
 
-# Upload to 0x0.st and capture the URL
-url=$(curl -s -F"file=@$tmpfile" https://0x0.st)
+# Upload to PicoShare via guest link; server returns plaintext URL when Accept != JSON
+url=$(curl -s -F "file=@$tmpfile" "$PICOSHARE_BASE/api/guest/$PICOSHARE_GUEST_LINK" | tr -d '\r\n')
 
 # Clean up temp file
 rm -f "$tmpfile"
 
-if [ -n "$url" ]; then
+if [ -n "$url" ] && [ "${url#http}" != "$url" ]; then
     # Output just the URL (this will replace the selection in Helix)
     printf "%s" "$url"
 
@@ -24,6 +27,6 @@ else
     # Return original text if upload fails
     printf "%s" "$text"
     # Send error notification in background
-    notify-send "Text upload failed" "Unable to upload to 0x0.st" -i dialog-error &
+    notify-send "Text upload failed" "Unable to upload to PicoShare" -i dialog-error &
     exit 1
 fi

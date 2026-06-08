@@ -71,6 +71,11 @@ in {
       owner = "root";
       path = "/etc/davfs2/secrets";
     };
+
+    picoshare_token = {
+      owner = config.users.users.mike.name;
+      mode = "0400";
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
