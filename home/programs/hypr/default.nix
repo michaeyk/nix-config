@@ -180,11 +180,15 @@ in {
         { match = { class = "^(org\\.pulseaudio\\.pavucontrol)$"; }; float = true; min_size = dropdownSize.volume;    max_size = dropdownSize.volume;    workspace = "special:volume"; }
         { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = dropdownSize.bluetooth; max_size = dropdownSize.bluetooth; workspace = "special:bluetooth"; }
         { match = { class = "^(yazi)$"; };                           float = true; min_size = dropdownSize.yazi;      max_size = dropdownSize.yazi;      workspace = "special:yazi"; }
-        { match = { class = "^(karere)$"; }; workspace = "7"; }
-        { match = { class = "^(im\\.dino\\.Dino)$"; }; workspace = "9"; }
-        { match = { class = "^(org\\.gajim\\.Gajim)$"; }; workspace = "9"; }
-        { match = { class = "^(brave-browser)$"; title = "^Google Messages"; }; workspace = "9"; }
-        { match = { class = "^(brave-browser)$"; title = ".*messages\\.google\\.com.*"; }; workspace = "9"; }
+
+        # Send the dedicated Google Messages brave window to ws9. The class is
+        # set via `--class=brave-messages` in autostart, so this won't catch
+        # regular brave windows or the GTK portal Save-As dialog.
+        { match = { class = "^(brave-messages)$"; }; workspace = "9"; }
+        # Send the Gajim roster to ws9. Title-restricted to "Gajim" exactly so
+        # dialogs (prefs, send-file, downloads) — which share the class but have
+        # different titles — stay on the current workspace.
+        { match = { class = "^(org\\.gajim\\.Gajim)$"; title = "^Gajim$"; }; workspace = "9"; }
       ];
     };
 
@@ -307,7 +311,7 @@ in {
         -- Spawn-with-rules variants need the dispatcher form.
         hl.dispatch(hl.dsp.exec_cmd("gajim", { workspace = "9 silent" }))
         hl.dispatch(hl.dsp.exec_cmd("obsidian", { workspace = "special" }))
-        hl.dispatch(hl.dsp.exec_cmd("brave --new-window https://messages.google.com/web/conversations", { workspace = "9 silent" }))
+        hl.dispatch(hl.dsp.exec_cmd("brave --new-window --class=brave-messages https://messages.google.com/web/conversations", { workspace = "9 silent" }))
 
         -- Screen sharing
         hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
