@@ -33,6 +33,10 @@
     defaultNetwork.settings.dns_enabled = true;
   };
 
+  environment.shells = with pkgs; [zsh bash];
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
+
   users.users.mike = {
     isNormalUser = true;
     extraGroups = ["networkmanager" "wheel" "podman"];
