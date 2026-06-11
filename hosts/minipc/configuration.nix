@@ -36,6 +36,7 @@
   environment.shells = with pkgs; [zsh bash];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+  programs.dconf.enable = true;
 
   users.users.mike = {
     isNormalUser = true;
