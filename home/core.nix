@@ -81,6 +81,7 @@
     lftp
     sshfs
     dante
+    cloudflared
 
     # utils
     usbutils
