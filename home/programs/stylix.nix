@@ -1,5 +1,4 @@
 {pkgs, lib, config, ...}: {
-  gtk.gtk4.theme = null;
   stylix = {
     enable = true;
     autoEnable = true;
