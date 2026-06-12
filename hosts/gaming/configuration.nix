@@ -323,7 +323,7 @@ in {
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "video" "render" "input"];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "video" "render" "input" "libvirtd"];
   };
 
   programs.git.enable = true;
@@ -470,6 +470,16 @@ in {
     enable = true;
     setSocketVariable = true;
   };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+    };
+  };
+  programs.virt-manager.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
