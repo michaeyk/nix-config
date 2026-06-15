@@ -227,7 +227,30 @@ in {
 
   programs.fzf.enableZshIntegration = true;
 
-  programs.tmux.enable = true;
+  programs.tmux = {
+    enable = true;
+    prefix = "C-a";
+    keyMode = "vi";
+    extraConfig = ''
+      # vim-like pane navigation: prefix + h/j/k/l
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      # vim-like pane resizing: prefix + H/J/K/L (repeatable)
+      bind -r H resize-pane -L 5
+      bind -r J resize-pane -D 5
+      bind -r K resize-pane -U 5
+      bind -r L resize-pane -R 5
+
+      # mnemonic splits, opened in the current pane's directory
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind '"' split-window -v -c "#{pane_current_path}"
+    '';
+  };
 
   programs.gpg = {
     enable = true;
