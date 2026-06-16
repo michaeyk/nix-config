@@ -181,9 +181,15 @@ in {
         { match = { class = "^(\\.blueman-manager-wrapped)$"; };     float = true; min_size = dropdownSize.bluetooth; max_size = dropdownSize.bluetooth; workspace = "special:bluetooth"; }
         { match = { class = "^(yazi)$"; };                           float = true; min_size = dropdownSize.yazi;      max_size = dropdownSize.yazi;      workspace = "special:yazi"; }
 
+        # Float Gajim dialogs only (prefs, send-file, downloads). They share the
+        # class with the roster but have non-"Gajim" titles, so without this they
+        # tile into the current workspace and get swallowed by the layout. The
+        # negative title match excludes the roster, which stays tiled on ws9.
+        { match = { class = "^(org\\.gajim\\.Gajim)$"; title = "negative:^Gajim$"; }; float = true; }
+
         # Send the Gajim roster to ws9. Title-restricted to "Gajim" exactly so
-        # dialogs (prefs, send-file, downloads) — which share the class but have
-        # different titles — stay on the current workspace.
+        # dialogs — matched only by the float rule above — stay on the current
+        # workspace.
         { match = { class = "^(org\\.gajim\\.Gajim)$"; title = "^Gajim$"; }; workspace = "9"; }
       ];
     };
