@@ -1,1 +1,5 @@
 .crush
+
+# nix build artifacts
+result
+result-man
