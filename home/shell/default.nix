@@ -113,8 +113,6 @@ in {
       export ANTHROPIC_API_KEY=$(cat /run/secrets/ANTHROPIC_API_KEY)
       export LESS="-XR"
       export UV_PYTHON_DOWNLOADS=never
-
-      source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
     '';
   };
 

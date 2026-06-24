@@ -97,7 +97,6 @@
     mailutils
     glow
     mdcat
-    spaceship-prompt
     killall
     fastfetch
     bc
