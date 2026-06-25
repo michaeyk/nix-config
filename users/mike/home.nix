@@ -57,7 +57,7 @@
     # chat
     gajim
     dino
-    karere
+    zapzap
     discord
 
     # encryption / passwords

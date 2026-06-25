@@ -308,7 +308,7 @@ in {
 
         hl.exec_cmd("hypridle")
 
-        hl.exec_cmd("karere")
+        hl.exec_cmd("zapzap")
 
         -- Spawn-with-rules variants need the dispatcher form.
         hl.dispatch(hl.dsp.exec_cmd("gajim", { workspace = "9 silent" }))
