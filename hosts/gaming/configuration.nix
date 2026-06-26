@@ -150,7 +150,7 @@ in {
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # NVIDIA + Hyprland environment — system-level so UWSM/systemd picks them up
