@@ -22,6 +22,23 @@
     volume    = pct 40 80;
     bluetooth = pct 32 70;
   };
+  # pavucontrol 6.x is GTK4, and GTK 4.14+ defaults to the Vulkan GSK renderer,
+  # which paints a black window on this host's NVIDIA driver (the open
+  # `nvidiaPackages.production` branch). Force the OpenGL (ngl) renderer.
+  # Wrapping the package (rather than the keybind's spawn string) covers every
+  # launch path. Note the binary wrapper sets argv[0] to the resolved store
+  # path, so the running process is `/…/bin/pavucontrol`, not bare
+  # `pavucontrol`; the dropdown below matches with an end-anchored
+  # `pavucontrol$` rather than `^pavucontrol$`. The window rule keys off the
+  # GTK app-id, which is unaffected.
+  pavucontrol-ngl = pkgs.symlinkJoin {
+    name = "pavucontrol-gsk-ngl";
+    paths = [ pkgs.pavucontrol ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/pavucontrol --set GSK_RENDERER ngl
+    '';
+  };
 in {
   home.packages = with pkgs; [
     hypridle
@@ -39,7 +56,7 @@ in {
     matugen
     brightnessctl
     gnome-bluetooth
-    pavucontrol
+    pavucontrol-ngl
     upower
     waybar
     wttrbar
@@ -223,7 +240,7 @@ in {
         end
       end
       hl.bind(mod .. " + U",         dropdown("kitty.*--class kitty-dropterm", "kitty --class kitty-dropterm", "dropterm"))
-      hl.bind(mod .. " + SHIFT + V", dropdown("^pavucontrol$",                  "pavucontrol",                  "volume"))
+      hl.bind(mod .. " + SHIFT + V", dropdown("pavucontrol$",                   "pavucontrol",                  "volume"))
       hl.bind(mod .. " + SHIFT + B", dropdown("blueman-manager",                "blueman-manager",              "bluetooth"))
       hl.bind(mod .. " + E",         dropdown("kitty.*--class yazi",            "kitty --class yazi -e yazi",   "yazi"))
 
