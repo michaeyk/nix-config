@@ -27,10 +27,7 @@
     };
   };
 
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
+  virtualisation.docker.enable = true;
 
   environment.shells = with pkgs; [zsh bash];
   users.defaultUserShell = pkgs.zsh;
