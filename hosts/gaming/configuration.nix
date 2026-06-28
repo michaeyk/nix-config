@@ -82,6 +82,14 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Disable x86 split-lock / bus-lock detection. 007 First Light's engine
+  # triggers hundreds of bus_lock traps; with mitigation on, the kernel
+  # throttles the game's threads enough to starve the GPU command submitter,
+  # producing NVRM Xid 109 CTX SWITCH TIMEOUT freezes. (CachyOS ships this off
+  # by default — which is why the game was stabler there.)
+  boot.kernelParams = [ "split_lock_detect=off" ];
+  boot.kernel.sysctl."kernel.split_lock_mitigate" = 0;
+
   networking.hostName = "gaming"; # Define your hostname.
 
   environment.shells = with pkgs; [zsh bash];
