@@ -158,7 +158,10 @@ in {
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    # 610.43.02 ("latest"): trying forward from legacy_580 to fix the 007 First Light
+    # Xid 109 GSP-firmware-heartbeat hang on Blackwell (NVIDIA open-gpu-kernel-modules #1080).
+    # Do NOT use "production"/595.x — that branch is worse (freezes every few min).
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
   # NVIDIA + Hyprland environment — system-level so UWSM/systemd picks them up
