@@ -463,6 +463,12 @@ in {
         User = "mike";
         ForwardAgent = true;
       };
+      ikaprod = {
+        Port = 22;
+        HostName = "159.89.135.47";
+        User = "mike";
+        ForwardAgent = true;
+      };
     };
   };
 
