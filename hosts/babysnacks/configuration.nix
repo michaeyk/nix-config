@@ -365,6 +365,7 @@ in {
     yubikey-manager
     pam_u2f
     davfs2
+    moonlight-qt # Client for Sunshine game streaming (host: gaming)
   ];
 
   # Enable the OpenSSH daemon.
