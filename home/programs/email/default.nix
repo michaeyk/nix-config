@@ -170,7 +170,9 @@
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.notmuch}/bin/notmuch new"; # Command to run
-      Restart = "on-failure"; # Optional: restart on failure
+      # No Restart: this is a timer-driven oneshot. On failure (e.g. YubiKey
+      # briefly unavailable during a rebuild), wait for the next timer tick
+      # instead of hammering restarts.
     };
     Install = {
       WantedBy = ["default.target"];
@@ -199,7 +201,7 @@
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync"; # Command to run
-      Restart = "on-failure"; # Optional: restart on failure
+      # No Restart: timer-driven oneshot; retry on the next tick, not instantly.
     };
     Install = {
       WantedBy = ["default.target"];
