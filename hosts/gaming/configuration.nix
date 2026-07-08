@@ -530,13 +530,32 @@ in {
     "/mnt/mike" = {
       device = "10.253.0.1:/mnt/user/mike";
       fsType = "nfs";
-      options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+      options = [
+        "noauto"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=600"
+        "x-systemd.mount-timeout=10s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.after=wg-quick-wg0.service"
+        "x-systemd.requires=wg-quick-wg0.service"
+      ];
     };
 
     "/mnt/nextcloud" = {
       device = "https://nextcloud.michaelkim.net/remote.php/dav/files/mike";
       fsType = "davfs";
-      options = ["uid=1000" "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+      options = [
+        "uid=1000"
+        "noauto"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=600"
+        "x-systemd.mount-timeout=10s"
+        "x-systemd.device-timeout=5s"
+      ];
     };
   };
 

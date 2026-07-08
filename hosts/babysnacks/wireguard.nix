@@ -1,4 +1,11 @@
-{ pkgs, ... }: {
+{ lib, ... }: {
+  systemd.services = lib.genAttrs ["wg-quick-wg0" "wg-quick-wg1"] (_: {
+    serviceConfig = {
+      TimeoutStartSec = "15s";
+      TimeoutStopSec = "15s";
+    };
+  });
+
   networking.wg-quick.interfaces = let
     server_ip = "dellbro00.pimpchoko.com";
   in {
