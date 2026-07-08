@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   theme,
   ...
@@ -37,7 +38,10 @@
         "application/pdf" = "pdftotext - -l 10 -nopgbrk -q  - | fmt -w 100";
       };
       ui = {
-        styleset-name = "stylix";
+        # Load the Stylix-generated styleset, then a small override that adds
+        # foreground colors to normal rows so the theme is clearly visible.
+        # Only fg is set here (never bg) so text can never become invisible.
+        styleset-name = lib.mkForce "stylix,stylix-extra";
       };
     };
   };
@@ -144,6 +148,21 @@
     ".config/aerc" = {
       source = ./aerc;
       recursive = true;
+    };
+
+    ".config/aerc/stylesets/stylix-extra" = {
+      text = ''
+        # Small override applied on top of the Stylix styleset.
+        # Only foreground colors are set (no backgrounds), so message text can
+        # never collide with its background and disappear.
+        # msglist_default is only a fallback; real rows are read/unread, so
+        # color those states explicitly or the list looks monochrome.
+        msglist_default.fg = #${config.lib.stylix.colors.base0C}
+        msglist_read.fg = #${config.lib.stylix.colors.base0C}
+        msglist_unread.fg = #${config.lib.stylix.colors.base0B}
+        dirlist_default.fg = #${config.lib.stylix.colors.base0D}
+        statusline_default.fg = #${config.lib.stylix.colors.base0A}
+      '';
     };
 
     ".config/vdirsyncer" = {
