@@ -110,6 +110,7 @@ in {
       export HISTFILE="$HOME/.zsh_history"
       export COPILOT_API_KEY=$(cat /run/secrets/COPILOT_API_KEY)
       export ANTHROPIC_API_KEY=$(cat /run/secrets/ANTHROPIC_API_KEY)
+      export BRAVE_API_KEY=$(cat /run/secrets/BRAVE_API_KEY)
       export LESS="-XR"
       export UV_PYTHON_DOWNLOADS=never
     '';

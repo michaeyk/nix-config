@@ -25,6 +25,7 @@
     ../../home/programs/zellij
     ../../home/programs/firefox.nix
     ../../home/programs/dprint.nix
+    ../../home/programs/pi
   ] ++ (if hostname == "gaming" then [../../home/programs/sunshine.nix] else []);
 
   fonts.fontconfig.enable = true;

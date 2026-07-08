@@ -56,6 +56,11 @@ in {
       owner = config.users.users.mike.name;
     };
 
+    BRAVE_API_KEY = {
+      owner = config.users.users.mike.name;
+      mode = "0400";
+    };
+
     "yubico/u2f_keys" = {
       owner = config.users.users.mike.name;
       inherit (config.users.users.mike) group;
