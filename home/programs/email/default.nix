@@ -181,7 +181,9 @@
     };
   };
 
-  # Define the systemd service
+  # Timer-driven only; do not install this into default.target, because Home
+  # Manager activation/rebuilds can otherwise start it immediately and race GPG
+  # YubiKey refresh while `pass` is decrypting mail passwords.
   systemd.user.services.notmuch-index = {
     Unit = {
       Description = "Run notmuch index";
@@ -192,9 +194,6 @@
       # No Restart: this is a timer-driven oneshot. On failure (e.g. YubiKey
       # briefly unavailable during a rebuild), wait for the next timer tick
       # instead of hammering restarts.
-    };
-    Install = {
-      WantedBy = ["default.target"];
     };
   };
 
@@ -213,6 +212,8 @@
     };
   };
 
+  # Timer-driven only; avoid starting during Home Manager activation/rebuilds
+  # where it may prompt for `pass`/YubiKey at the same time as GPG refresh.
   systemd.user.services.vdirsyncer = {
     Unit = {
       Description = "Run vdirsyncer sync";
@@ -221,9 +222,6 @@
       Type = "oneshot";
       ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync"; # Command to run
       # No Restart: timer-driven oneshot; retry on the next tick, not instantly.
-    };
-    Install = {
-      WantedBy = ["default.target"];
     };
   };
 

@@ -293,11 +293,11 @@ in {
         # Give pcscd time to detect the reader
         ${pkgs.coreutils}/bin/sleep 1
 
-        # Wait for card to be accessible (up to 10 seconds)
-        # gpg --card-status primes scdaemon with the OpenPGP applet so it
-        # doesn't fall back to PIV (which spams PIN prompts via touch detector)
+        # Wait for card to be accessible (up to 10 seconds).
+        # gpg --card-status primes scdaemon with the OpenPGP applet, but this
+        # unattended login service must never open pinentry during rebuilds.
         for i in $(${pkgs.coreutils}/bin/seq 1 20); do
-          if ${pkgs.gnupg}/bin/gpg --card-status > /dev/null 2>&1; then
+          if ${pkgs.gnupg}/bin/gpg --batch --no-tty --pinentry-mode error --card-status > /dev/null 2>&1; then
             exit 0
           fi
           ${pkgs.coreutils}/bin/sleep 0.5

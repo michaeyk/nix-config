@@ -25,10 +25,10 @@ let
     ${pkgs.systemd}/bin/systemctl restart pcscd.service
     ${pkgs.coreutils}/bin/sleep 1
 
-    # Verify card is accessible (with retry); primes scdaemon with OpenPGP applet
-    # so it doesn't fall back to PIV (which spams PIN prompts via touch detector)
+    # Verify card is accessible (with retry); primes scdaemon with OpenPGP applet.
+    # This udev hook is unattended, so never open pinentry during rebuilds.
     for i in $(${pkgs.coreutils}/bin/seq 1 10); do
-      if ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --card-status &>/dev/null; then
+      if ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpg --batch --no-tty --pinentry-mode error --card-status &>/dev/null; then
         exit 0
       fi
       ${pkgs.coreutils}/bin/sleep 0.5
