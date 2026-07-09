@@ -17,7 +17,8 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/spaceduck.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/danqing.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa-dragon.yaml";
     
     # Configure polarity (dark/light theme)
     polarity = "dark";
