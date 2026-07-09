@@ -138,7 +138,9 @@
 
   programs.zathura.enable = true;
 
-  # Define systemd service to back up home directory
+  # Timer-driven backup only. Do not install this into default.target: Home
+  # Manager activation/rebuilds would otherwise start the backup immediately,
+  # which can outlive switch-to-configuration's systemd post-reload timeout.
   systemd.user.services.restic = {
     Unit = {
       Description = "Back up home directory";
@@ -146,10 +148,6 @@
     Service = {
       Type = "oneshot";
       ExecStart = "/home/mike/bin/backup.sh"; # Command to run
-      Restart = "on-failure"; # Optional: restart on failure
-    };
-    Install = {
-      WantedBy = ["default.target"];
     };
   };
 
