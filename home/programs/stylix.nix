@@ -1,4 +1,8 @@
 {pkgs, lib, config, ...}: {
+  # Stylix sets home.pointerCursor.{package,name,size} from stylix.cursor but
+  # no longer sets .enable; home-manager now requires it explicitly.
+  home.pointerCursor.enable = true;
+
   stylix = {
     enable = true;
     autoEnable = true;
