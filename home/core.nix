@@ -29,7 +29,7 @@
     gnumake
     dart-sass
     #postman
-    mongodb-compass
+    #mongodb-compass # currently broken in nixpkgs — build errors out
     cargo-lambda
     openssl
     foundry
