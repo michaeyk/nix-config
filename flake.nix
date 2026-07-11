@@ -22,20 +22,6 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     customOverlay = final: prev: {
-      # Upstream nixpkgs bug: click-threading's pytest phase collects
-      # docs/conf.py, which imports pkg_resources — unavailable under
-      # Python 3.14. Patch it in every Python package set (via
-      # pythonPackagesExtensions) so both vdirsyncer and khal build.
-      pythonPackagesExtensions =
-        prev.pythonPackagesExtensions
-        ++ [
-          (pyfinal: pyprev: {
-            click-threading = pyprev.click-threading.overridePythonAttrs (_: {
-              doCheck = false;
-            });
-          })
-        ];
-
       dell-h625cdw-ppd = prev.stdenv.mkDerivation {
         pname = "dell-h625cdw-ppd";
         version = "1.0";
