@@ -250,6 +250,7 @@ in {
   # yubikey and ledger live udev rules
   services.udev.packages = with pkgs; [
     yubikey-personalization
+    imsprog # CH341A EEPROM programmer: ships 71-CH341.rules (uaccess for logged-in user)
   ];
   services.udev.extraRules = ''
     # Refresh GPG stubs when YubiKey is inserted
@@ -307,7 +308,7 @@ in {
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2"];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "dialout"];
   };
 
   programs.git.enable = true;
@@ -371,6 +372,12 @@ in {
     pam_u2f
     davfs2
     moonlight-qt # Client for Sunshine game streaming (host: gaming)
+    picocom # serial console for Dell MD1200 EMM diagnostics
+    lrzsz # sx: plain XMODEM for EMM firmware flashing
+    imsprog # CH341A EEPROM programmer GUI
+    ch341eeprom # CH341A 24Cxx EEPROM CLI
+    usbutils # lsusb, usbreset
+    uhubctl # USB hub port power cycling
   ];
 
   # Enable the OpenSSH daemon.

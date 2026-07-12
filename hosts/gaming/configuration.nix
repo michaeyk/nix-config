@@ -340,7 +340,7 @@ in {
   users.users.mike = {
     isNormalUser = true;
     description = "Michael Kim";
-    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "video" "render" "input" "libvirtd"];
+    extraGroups = ["networkmanager" "wheel" "plugdev" "davfs2" "video" "render" "input" "libvirtd" "dialout"];
   };
 
   programs.git.enable = true;
@@ -519,6 +519,12 @@ in {
     yubikey-manager
     pam_u2f
     davfs2
+    picocom # serial console for Dell MD1200 EMM diagnostics
+    lrzsz # sx: plain XMODEM for EMM firmware flashing
+    imsprog # CH341A EEPROM programmer GUI
+    ch341eeprom # CH341A 24Cxx EEPROM CLI
+    usbutils # lsusb, usbreset
+    uhubctl # USB hub port power cycling
   ];
 
 
