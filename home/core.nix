@@ -100,6 +100,7 @@
     # utils
     usbutils
     imsprog # CH341A EEPROM/Flash chip programmer GUI
+    ch341eeprom # CH341A 24Cxx EEPROM programmer CLI (uses imsprog's udev rules)
     ripgrep
     jq
     eza
