@@ -278,6 +278,7 @@ in {
   services.pcscd.enable = true;
   services.udev.packages = with pkgs; [
     yubikey-personalization
+    imsprog # CH341A EEPROM programmer: ships 71-CH341.rules (uaccess for logged-in user)
   ];
   services.udev.extraRules = ''
     # Refresh GPG stubs when YubiKey is inserted

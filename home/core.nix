@@ -99,6 +99,7 @@
 
     # utils
     usbutils
+    imsprog # CH341A EEPROM/Flash chip programmer GUI
     ripgrep
     jq
     eza
