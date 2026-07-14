@@ -1,4 +1,7 @@
-{ lib, ... }: {
+{ config, lib, ... }: {
+  # WireGuard private key, decrypted by sops-nix to /run/secrets on rebuild.
+  sops.secrets."wireguard/babysnacks-wg0-privkey" = { };
+
   systemd.services = lib.genAttrs ["wg-quick-wg0"] (_: {
     # Travel-only: don't bring the tunnel up at boot. At home we reach
     # dellbro00 directly on the LAN; start manually when remote with
@@ -16,11 +19,11 @@
     wg0 = {
       # IP address of this machine in the *tunnel network*
       address = [
-        "10.253.0.5/32"
+        "10.253.0.3/32"
       ];
 
-      # Path to the private key file.
-      privateKeyFile = "/home/mike/.wireguard/private-key";
+      # Path to the private key file (managed by sops-nix).
+      privateKeyFile = config.sops.secrets."wireguard/babysnacks-wg0-privkey".path;
 
       peers = [{
         publicKey = "FjqISjUvlqYIjYxWHO4K4RNfo+O//qaGiOEInXzJjBY=";
