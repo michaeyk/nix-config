@@ -3,10 +3,9 @@
   sops.secrets."wireguard/gaming-wg0-privkey" = { };
 
   systemd.services = lib.genAttrs ["wg-quick-wg0"] (_: {
-    # Travel-only: don't bring the tunnel up at boot. At home we reach
-    # dellbro00 directly on the LAN; start manually when remote with
-    # `systemctl start wg-quick-wg0`.
-    wantedBy = lib.mkForce [ ];
+    # Bring the tunnel up at boot (wg-quick's default wantedBy is
+    # multi-user.target); keep the timeouts short so a rebuild/boot
+    # doesn't hang if dellbro00 is unreachable.
     serviceConfig = {
       TimeoutStartSec = "15s";
       TimeoutStopSec = "15s";
