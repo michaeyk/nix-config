@@ -1,5 +1,9 @@
 { lib, ... }: {
   systemd.services = lib.genAttrs ["wg-quick-wg0"] (_: {
+    # Travel-only: don't bring the tunnel up at boot. At home we reach
+    # dellbro00 directly on the LAN; start manually when remote with
+    # `systemctl start wg-quick-wg0`.
+    wantedBy = lib.mkForce [ ];
     serviceConfig = {
       TimeoutStartSec = "15s";
       TimeoutStopSec = "15s";
@@ -20,7 +24,7 @@
 
       peers = [{
         publicKey = "FjqISjUvlqYIjYxWHO4K4RNfo+O//qaGiOEInXzJjBY=";
-        allowedIPs = [ "10.253.0.1/32" "172.16.0.142/32"];
+        allowedIPs = [ "10.253.0.1/32" "172.16.0.135/32"];
         endpoint = "${server_ip}:51820";
         persistentKeepalive = 25;
       }];
