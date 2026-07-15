@@ -107,6 +107,9 @@ in {
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.hosts = {
+    "10.253.0.1" = ["dellbro00"];
+  };
 
   # Set your time zone.
   time.timeZone = "America/Denver";

@@ -469,6 +469,9 @@ in {
         User = "mike";
         ForwardAgent = true;
       };
+      "minipc.local" = {
+        ForwardAgent = true;
+      };
     };
   };
 
