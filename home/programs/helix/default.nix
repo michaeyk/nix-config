@@ -124,7 +124,22 @@
 
       [[language]]
       name = "markdown"
-      language-servers = ["markdown-oxide", { name = "marksman", only-features = ["goto-definition", "goto-reference", "diagnostics"] }]
+      # Two servers, split by strength (Helix merges goto-definition from both):
+      #  - markdown-oxide: fast on the 35GB/28k-file Obsidian vault, resolves
+      #    Obsidian-style [[wikilinks]] and note-name links. But it resolves by
+      #    note NAME, not filesystem path, so it flags standard CommonMark
+      #    relative-path / #anchor links as "unresolved reference" (false
+      #    positives) — diagnostics disabled for it below.
+      #  - marksman: resolves CommonMark relative-path + #anchor links correctly,
+      #    but indexes its whole workspace root, so it MUST be scoped to a small
+      #    tree or it times out on the full vault. `roots` below makes any dir
+      #    containing a `.marksman.toml` marker the workspace root; drop an empty
+      #    one in each doc tree you want link-following in, e.g.:
+      #        touch ~/documents/obsidian/03_Resources/miryoku_qmk/docs/.marksman.toml
+      # Files with no marker fall back to the vault root, where marksman can't
+      # keep up and bows out — markdown-oxide still covers those.
+      roots = [".marksman.toml"]
+      language-servers = [{ name = "markdown-oxide", except-features = ["diagnostics"] }, "marksman"]
       formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--config", "~/.config/dprint/dprint.json", "--stdin", "md"] }
       auto-format = true
 
@@ -180,6 +195,20 @@
 
       [language-server.rust-analyzer.config]
       check.command = "clippy"
+
+      # 35GB / ~28k-file Obsidian vault: cold-start indexing exceeds Helix's
+      # default 20s LSP init timeout, which kills the server before it answers
+      # goto-definition. Pin the binary and give it plenty of headroom.
+      [language-server.markdown-oxide]
+      command = "${pkgs.markdown-oxide}/bin/markdown-oxide"
+      timeout = 120
+
+      # Scoped to a doc tree via `.marksman.toml` (see markdown roots above), but
+      # indexing a few hundred files still takes ~15s, so give it headroom.
+      [language-server.marksman]
+      command = "${pkgs.marksman}/bin/marksman"
+      args = ["server"]
+      timeout = 60
 
     '';
   };
