@@ -18,6 +18,7 @@
     (lib.hiPrio prettier)
     # lsp-ai
     markdown-oxide
+    marksman
   ];
 
   programs.helix = {
@@ -123,7 +124,7 @@
 
       [[language]]
       name = "markdown"
-      language-servers = ["markdown-oxide"]
+      language-servers = ["markdown-oxide", { name = "marksman", only-features = ["goto-definition", "goto-reference", "diagnostics"] }]
       formatter = { command = "${pkgs.dprint}/bin/dprint", args = ["fmt", "--config", "~/.config/dprint/dprint.json", "--stdin", "md"] }
       auto-format = true
 
