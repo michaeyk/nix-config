@@ -2,10 +2,10 @@
   "lastChangelogVersion": "0.80.3",
   "theme": "dark",
   "defaultProvider": "ollama",
-  "defaultModel": "qwen3:30b",
+  "defaultModel": "qwen3-coder:30b",
   "defaultThinkingLevel": "high",
   "enabledModels": [
-    "ollama/qwen3:30b",
+    "ollama/qwen3-coder:30b",
     "openai-codex/gpt-5.5"
   ]
 }

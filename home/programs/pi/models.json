@@ -1,7 +1,7 @@
 {
   "providers": {
     "ollama": {
-      "baseUrl": "http://10.8.0.1:11434/v1",
+      "baseUrl": "http://10.253.0.1:11434/v1",
       "api": "openai-completions",
       "apiKey": "ollama",
       "compat": {
@@ -10,8 +10,8 @@
       },
       "models": [
         {
-          "id": "qwen3:30b",
-          "name": "Qwen3 30B-A3B MoE (A6000)",
+          "id": "qwen3-coder:30b",
+          "name": "Qwen3 Coder 30B (A6000)",
           "reasoning": false,
           "input": [
             "text"
