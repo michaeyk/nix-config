@@ -40,6 +40,7 @@ in {
       inputs.sops-nix.nixosModules.sops
       ./hardware-configuration.nix
       ./wireguard.nix
+      ./ollama.nix
     ];
 
   sops.defaultSopsFile = ../../home/programs/secrets/secrets.yaml;
