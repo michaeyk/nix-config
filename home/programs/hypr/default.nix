@@ -109,6 +109,14 @@ in {
           gaps_out = 40;
           border_size = 2;
           # Border colors come from stylix.targets.hyprland.
+
+          # Resize floating windows by dragging their edge/corner. Qt/Wayland
+          # dialogs (kdenlive's Render, Project Settings, file pickers, …) get no
+          # server-side title bar or border under Hyprland, so without this there
+          # is nothing to grab and they appear un-resizable. extend_border_grab_area
+          # widens the invisible grab zone so the edge is easy to catch.
+          resize_on_border = true;
+          extend_border_grab_area = 15;
         };
 
         decoration = {
