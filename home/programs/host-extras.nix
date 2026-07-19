@@ -8,5 +8,6 @@
     tradingview
     rustdesk-flutter
     shotcut
+    openshot-qt
   ];
 }
