@@ -75,6 +75,16 @@ in {
       path = "/etc/davfs2/secrets";
     };
 
+    # CIFS credentials file for //dellbro00.local/share_media.
+    # Read by root-run mount.cifs at automount time; owner=root, mode 0400.
+    # Decrypted content must be a mount.cifs credentials file, e.g.:
+    #   username=youruser
+    #   password=yourpass
+    "smb_dellbro00" = {
+      owner = "root";
+      mode = "0400";
+    };
+
     "coinmarketcap_api" = {
       owner = config.users.users.mike.name;
       mode = "0400";
@@ -374,6 +384,7 @@ in {
     yubikey-manager
     pam_u2f
     davfs2
+    cifs-utils # mount.cifs helper for the //dellbro00.local/share_media SMB mount
     moonlight-qt # Client for Sunshine game streaming (host: gaming)
     picocom # serial console for Dell MD1200 EMM diagnostics
     lrzsz # sx: plain XMODEM for EMM firmware flashing
@@ -417,6 +428,28 @@ in {
         "x-systemd.idle-timeout=600"
         "x-systemd.mount-timeout=10s"
         "x-systemd.device-timeout=5s"
+      ];
+    };
+
+    "/mnt/media" = {
+      device = "//10.253.0.1/share_media";
+      fsType = "cifs";
+      options = [
+        "credentials=${config.sops.secrets.smb_dellbro00.path}"
+        "uid=1000"
+        "gid=100"
+        "iocharset=utf8"
+        "file_mode=0664"
+        "dir_mode=0775"
+        "noauto"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=600"
+        "x-systemd.mount-timeout=10s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.after=wg-quick-wg0.service"
+        "x-systemd.requires=wg-quick-wg0.service"
       ];
     };
   };
