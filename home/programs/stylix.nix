@@ -86,16 +86,24 @@
       hyprpaper.enable = lib.mkForce false;
       ncspot.enable = true;     # Spotify TUI client
       zathura.enable = true;    # Document viewer
-    };
-  };
 
-  # Qt theme configuration for Qt-based applications (Discord, VLC, Spotify, LibreOffice)
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-    style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
+      # Qt/KDE apps (kdenlive, shotcut, VLC): give them the SAME base16 palette
+      # as GTK apps. Stylix's qt target (platform = qtct, the default) generates
+      # a Kvantum theme "Base16Kvantum" from the active scheme (kanagawa-dragon)
+      # and points qt5ct/qt6ct at it with custom_palette=true. So KDE apps render
+      # in your actual colors, not a generic adwaita-dark.
+      #
+      # Must be enabled EXPLICITLY: this target's autoEnable is
+      # `nixosConfig != null`, and we build via standalone home-manager
+      # (homeManagerConfiguration), so it is off by default. An earlier bare
+      # `platformTheme = qtct` rendered KDE apps *light* precisely because this
+      # target never ran and the palette was never generated.
+      #
+      # Bonus: qtct makes Qt use its own file dialogs instead of qgtk3's native
+      # GTK ones, so the "No GSettings schemas installed" crash that forced the
+      # old gtk3 bridge no longer applies. (GSETTINGS_SCHEMA_DIR in home.nix is
+      # now vestigial but harmless.)
+      qt.enable = true;
     };
   };
 

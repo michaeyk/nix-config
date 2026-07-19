@@ -31,10 +31,17 @@
 
   fonts.fontconfig.enable = true;
 
-  # Environment variables for Qt theming
+  # Qt/KDE apps are themed by `stylix.targets.qt` (platform = qtct + Kvantum),
+  # which applies the base16 palette and manages QT_QPA_PLATFORMTHEME itself — so
+  # no QT_STYLE_OVERRIDE here (it would force adwaita over the Kvantum theme).
+  #
+  # GSETTINGS_SCHEMA_DIR is now vestigial: it was the companion to the old
+  # platformTheme = "gtk3", where qgtk3 opened native GTK file dialogs that
+  # aborted with "No GSettings schemas installed" unless the GTK + desktop
+  # schemas were on the path. Under qtct, Qt uses its own dialogs and never hits
+  # that call. Kept as harmless belt-and-suspenders; safe to delete later.
   home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "gtk3";
-    QT_STYLE_OVERRIDE = "adwaita-dark";
+    GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas:${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
   };
 
   # The home.packages option allows you to install Nix packages into your
