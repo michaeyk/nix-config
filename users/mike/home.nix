@@ -1,4 +1,4 @@
-{pkgs, hostname ? "unknown", ...}: {
+{pkgs, ...}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mike";
@@ -27,7 +27,7 @@
     ../../home/programs/dprint.nix
     ../../home/programs/herdr
     ../../home/programs/pi
-  ] ++ (if hostname == "gaming" then [../../home/programs/sunshine.nix] else []);
+  ];
 
   fonts.fontconfig.enable = true;
 
@@ -105,7 +105,7 @@
     (pkgs.writeShellScriptBin "tws" ''
       exec steam-run "$HOME/Jts/1044/tws" "$@"
     '')
-  ] ++ (if (hostname == "gaming" || hostname == "babysnacks") then [zulu21 jellyfin-media-player /* lutris */ protonup-qt protontricks tradingview rustdesk-flutter] else []);
+  ];
 
   programs.browserpass = {
     enable = true;

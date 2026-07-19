@@ -63,9 +63,6 @@
     rclip
     trash-cli
 
-    # gaming
-    heroic
-
     # git
     gh # github command line
 

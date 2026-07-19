@@ -103,6 +103,8 @@
         modules = [
           inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
+          ./home/programs/host-extras.nix
+          ./home/programs/gaming.nix
         ];
       };
 
@@ -115,6 +117,7 @@
         modules = [
           inputs.stylix.homeModules.stylix
           ./users/mike/home.nix
+          ./home/programs/host-extras.nix
         ];
       };
 
