@@ -8,6 +8,6 @@
     tradingview
     rustdesk-flutter
     shotcut
-    openshot-qt
+    kdePackages.kdenlive
   ];
 }
