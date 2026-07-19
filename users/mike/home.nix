@@ -55,6 +55,7 @@
     imv
     ncspot
     nsxiv
+    mp3gain
 
     # chat
     gajim

@@ -16,7 +16,7 @@
     black
     typescript-language-server
     (lib.hiPrio prettier)
-    # lsp-ai
+    lsp-ai
     markdown-oxide
     marksman
   ];
@@ -102,19 +102,19 @@
     text = ''
       [[language]]
       name = "python"
-      language-servers = ["basedpyright", "ruff"]
+      language-servers = ["basedpyright", "ruff", "lsp-ai"]
       # formatter = { command = "bash", args = ["-c", "ruff check --fix - | ruff format -"] }
       formatter = { command = "black", args = ["--quiet", "-"] }
       auto-format = true
 
       [[language]]
       name = "rust"
-      language-servers = ["rust-analyzer"]
+      language-servers = ["rust-analyzer", "lsp-ai"]
       auto-format = true
 
       [[language]]
       name = "nix"
-      language-servers = ["nixd"]
+      language-servers = ["nixd", "lsp-ai"]
       formatter = { command = "${pkgs.alejandra}/bin/alejandra" }
 
       [[language]]
@@ -158,13 +158,13 @@
       [[language]]
       name = "javascript"
       formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
-      language-servers = ["typescript-language-server"]
+      language-servers = ["typescript-language-server", "lsp-ai"]
       auto-format = true
 
       [[language]]
       name = "typescript"
       auto-format = true
-      language-servers = ["typescript-language-server"]
+      language-servers = ["typescript-language-server", "lsp-ai"]
       formatter = { command = "${pkgs.prettier}/bin/prettier", args = ["--parser", "typescript"] }
 
       [[language]]
@@ -209,6 +209,56 @@
       command = "${pkgs.marksman}/bin/marksman"
       args = ["server"]
       timeout = 60
+
+      # ---------------------------------------------------------------------
+      # lsp-ai: AI language server backed by a SHARED Ollama (replaces the now
+      # removed/archived helix-gpt). Two features, two models:
+      #   - inline completion  -> qwen2.5-coder:3b-base  (fast, real FIM)
+      #   - chat / code-action -> qwen3-coder:30b         (agentic, no FIM)
+      # Ollama runs on dellbro00's A6000 (48GB) at 10.253.0.1:11434 over the
+      # WireGuard tunnel, so both gaming + babysnacks share one GPU-backed
+      # server (both models fit at once with room to spare). Attach "lsp-ai" to
+      # a language's `language-servers` list (below) to turn it on for it.
+      #
+      # Chat is invoked from Helix via a code action: put `!C` in a comment on
+      # the line you want addressed, then run `space + a` and pick "Chat".
+      [language-server.lsp-ai]
+      command = "${pkgs.lsp-ai}/bin/lsp-ai"
+
+      [language-server.lsp-ai.config.memory]
+      file_store = {}
+
+      [language-server.lsp-ai.config.models.completion]
+      type = "ollama"
+      model = "qwen2.5-coder:3b-base"
+      generate_endpoint = "http://10.253.0.1:11434/api/generate"
+      chat_endpoint = "http://10.253.0.1:11434/api/chat"
+
+      [language-server.lsp-ai.config.models.chat]
+      type = "ollama"
+      model = "qwen3-coder:30b"
+      generate_endpoint = "http://10.253.0.1:11434/api/generate"
+      chat_endpoint = "http://10.253.0.1:11434/api/chat"
+
+      [language-server.lsp-ai.config.completion]
+      model = "completion"
+
+      [language-server.lsp-ai.config.completion.parameters]
+      max_context = 2000
+      # Qwen2.5-Coder FIM tokens. lsp-ai assembles:
+      #   {start}<before-cursor>{middle}<after-cursor>{end}
+      fim = { start = "<|fim_prefix|>", middle = "<|fim_suffix|>", end = "<|fim_middle|>" }
+      options = { num_predict = 64, temperature = 0.1 }
+
+      [[language-server.lsp-ai.config.chat]]
+      trigger = "!C"
+      action_display_name = "Chat"
+      model = "chat"
+
+      [language-server.lsp-ai.config.chat.parameters]
+      max_context = 8192
+      max_tokens = 2048
+      messages = [{ role = "system", content = "You are a concise, accurate coding assistant embedded in the Helix editor. Answer the request in the code/comment marked with !C. Prefer code; keep prose short." }]
 
     '';
   };
