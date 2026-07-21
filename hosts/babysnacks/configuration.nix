@@ -41,6 +41,7 @@ in {
     # Include the results of the hardware scan.
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     inputs.sops-nix.nixosModules.sops
+    ../common/login-manager.nix
     ./hardware-configuration.nix
     ./wireguard.nix
   ];
@@ -141,17 +142,9 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      default-session-name = "Hyprland (UWSM)";
-      # Don't remember last-picked session — otherwise ly's save.txt overrides
-      # default-session-name and we can end up in the non-UWSM Hyprland entry,
-      # which leaves graphical-session.target inactive and hypridle.service dead.
-      save = false;
-      load = false;
-    };
-  };
+  # SDDM (Wayland Qt6 greeter) + Stylix theming live in ../common/login-manager.nix.
+  # AMD (Framework 13): weston is a fine, lightweight greeter compositor here.
+  services.displayManager.sddm.wayland.compositor = "weston";
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
