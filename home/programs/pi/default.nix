@@ -24,6 +24,10 @@
       source = ./skills/jj-commit-push;
       recursive = true;
     };
+    ".pi/agent/skills/kdenlive" = {
+      source = ./skills/kdenlive;
+      recursive = true;
+    };
     ".pi/agent/skills/plan-mode.md".source = ./skills/plan-mode.md;
     ".pi/agent/settings.json".source = ./settings.json;
     ".pi/agent/models.json".source = ./models.json;

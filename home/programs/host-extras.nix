@@ -8,6 +8,23 @@
     tradingview
     rustdesk-flutter
     shotcut
-    kdePackages.kdenlive
+    kdenlive-patched-dbus
+    kdenlive-mcp-dbus
   ];
+
+  home.file."kdenlive/.mcp.json" = {
+    force = true;
+    text = ''
+      {
+        "mcpServers": {
+          "kdenlive": {
+            "type": "stdio",
+            "command": "${pkgs.kdenlive-mcp-dbus}/bin/kdenlive-mcp-dbus",
+            "args": [],
+            "env": {}
+          }
+        }
+      }
+    '';
+  };
 }

@@ -22,6 +22,64 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     customOverlay = final: prev: {
+      kdenlive-patched-dbus = prev.kdePackages.kdenlive.overrideAttrs (_old: rec {
+        version = "26.03.70-dbus-fb0c86d";
+        src = final.fetchFromGitHub {
+          owner = "D-Ogi";
+          repo = "kdenlive";
+          rev = "fb0c86d4e6f6197a13e9b84aa45ef3da82a5f38a"; # feature/dbus-api-expansion
+          hash = "sha256-hVU2UcxRCT/122a667sIHKwCxVqdMINBx8NbEmjr1qA=";
+        };
+        patches = (_old.patches or []) ++ [./pkgs/kdenlive-dbus/cxx20-quickjs-designators.patch];
+        meta = (_old.meta or {}) // {
+          description = "Kdenlive with D-Bus scripting API patch for mcp-kdenlive";
+        };
+      });
+
+      kdenlive-mcp-dbus = let
+        mcpKdenliveSrc = final.fetchFromGitHub {
+          owner = "D-Ogi";
+          repo = "mcp-kdenlive";
+          rev = "afe585143f631fa00f62a1d22207d85df06a0d74";
+          hash = "sha256-eB4ZUntB4ooLS1FXgRmEwW8wVLK1gxNQqJV9gss+IcE=";
+        };
+        kdenliveApiSrc = final.fetchFromGitHub {
+          owner = "D-Ogi";
+          repo = "kdenlive-api";
+          rev = "d1f87baa127d2950d89b923f7a0206defb124073";
+          hash = "sha256-7rXrBiD6RyZ6tXrqPWEALAvOszoamyiPfVjvfbTla4A=";
+        };
+        python = (final.python312.override {
+          packageOverrides = pyFinal: pyPrev: {
+            # Avoid rebuilding/checking a flaky transitive test dependency of
+            # python312Packages.mcp on nixos-unstable.
+            inline-snapshot = pyPrev.inline-snapshot.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            fastapi = pyPrev.fastapi.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+            mcp = pyPrev.mcp.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+          };
+        }).withPackages (ps:
+          with ps; [
+            mcp
+            pydbus
+            pygobject3
+            dbus-next
+          ]);
+      in
+        final.writeShellApplication {
+          name = "kdenlive-mcp-dbus";
+          runtimeInputs = [final.dbus];
+          text = ''
+            export PYTHONPATH="${mcpKdenliveSrc}:${kdenliveApiSrc}''${PYTHONPATH:+:$PYTHONPATH}"
+            exec ${python}/bin/python -m mcp_kdenlive "$@"
+          '';
+        };
+
       dell-h625cdw-ppd = prev.stdenv.mkDerivation {
         pname = "dell-h625cdw-ppd";
         version = "1.0";
