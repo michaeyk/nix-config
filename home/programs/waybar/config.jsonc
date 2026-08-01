@@ -117,7 +117,7 @@
         "format": "{}°",
         "tooltip": true,
         "interval": 600,
-        "exec": "wttrbar --fahrenheit",
+        "exec": "~/.config/waybar/scripts/weather.sh",
         "return-type": "json"
      },
     "custom/cryptotracking": {
