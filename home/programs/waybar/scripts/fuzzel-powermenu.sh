@@ -8,13 +8,13 @@ case $SELECTION in
 	*"Suspend")
 		systemctl suspend;;
 	*"Log out")
-		hyprctl dispatch exit;;
+		cliphist wipe; hyprctl dispatch exit;;
 	*"Reboot")
-		systemctl reboot;;
+		cliphist wipe; systemctl reboot;;
 	*"Reboot to UEFI")
-		systemctl reboot --firmware-setup;;
+		cliphist wipe; systemctl reboot --firmware-setup;;
 	*"Hard reboot")
-		pkexec "echo b > /proc/sysrq-trigger";;
+		cliphist wipe; pkexec "echo b > /proc/sysrq-trigger";;
 	*"Shutdown")
-		systemctl poweroff;;
+		cliphist wipe; systemctl poweroff;;
 esac

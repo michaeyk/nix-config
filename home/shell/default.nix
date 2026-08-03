@@ -84,6 +84,28 @@ in {
         command "$@"
       }
 
+      # Keep `pass -c` secrets out of clipboard history. pass copies via wl-copy,
+      # which doesn't tag the clipboard sensitive, so the cliphist watcher can't
+      # filter it — scrub the entry from history right after it lands instead
+      # (delete-query matches by content). Retries a few times because the
+      # watcher records the copy asynchronously.
+      function pass() {
+        command pass "$@"
+        local rc=$?
+        if [ $rc -eq 0 ]; then
+          case " $* " in
+            *" -c"*|*" --clip"*)
+              ( for _ in 1 2 3; do
+                  sleep 0.3
+                  q=$(wl-paste -n 2>/dev/null)
+                  [ -n "$q" ] && cliphist delete-query "$q"
+                done ) >/dev/null 2>&1 &!
+              ;;
+          esac
+        fi
+        return $rc
+      }
+
       # Add nix-profile bin to PATH
       export PATH="$HOME/.nix-profile/bin:$PATH"
 

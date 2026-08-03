@@ -39,6 +39,26 @@
       wrapProgram $out/bin/pavucontrol --set GSK_RENDERER ngl
     '';
   };
+  # Clipboard-history gatekeeper. Wired in place of a bare `cliphist store` on
+  # the text watcher so secrets never reach the on-disk history db:
+  #   * CLIPBOARD_STATE=sensitive — set by wl-paste when the source tagged the
+  #     offer (`wl-copy --sensitive` / x-kde-passwordManagerHint: KeePassXC,
+  #     1Password, …). pass(1) does NOT set this, so pass copies are scrubbed
+  #     separately by the `pass` wrapper in home/shell/default.nix.
+  #   * crypto private keys / BIP39 seed phrases — matched by shape and dropped,
+  #     erring toward not persisting (a stray SHA-256 hash won't be kept either).
+  cliphist-store = pkgs.writeShellScript "cliphist-store" ''
+    [ "$CLIPBOARD_STATE" = sensitive ] && exit 0
+    data=$(cat)
+    if printf '%s\n' "$data" | ${pkgs.gnugrep}/bin/grep -Eq \
+      -e '^[[:space:]]*(0x)?[0-9a-fA-F]{64}[[:space:]]*$' \
+      -e '^[[:space:]]*[5KL][1-9A-HJ-NP-Za-km-z]{50,51}[[:space:]]*$' \
+      -e '^[[:space:]]*(xprv|yprv|zprv|tprv)[1-9A-HJ-NP-Za-km-z]{100,120}[[:space:]]*$' \
+      -e '^[[:space:]]*([a-z]{3,8}[[:space:]]+){11,23}[a-z]{3,8}[[:space:]]*$'; then
+      exit 0
+    fi
+    printf '%s' "$data" | ${pkgs.cliphist}/bin/cliphist store
+  '';
 in {
   home.packages = with pkgs; [
     hypridle
@@ -261,7 +281,7 @@ in {
       hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized" }))
       hl.bind(mod .. " + W", hl.dsp.window.close())
       hl.bind(mod .. " + Q", hl.dsp.exec_cmd("~/.config/waybar/scripts/fuzzel-powermenu.sh"))
-      hl.bind(mod .. " + SHIFT + Q", hl.dsp.exit())
+      hl.bind(mod .. " + SHIFT + Q", hl.dsp.exec_cmd("sh -c 'cliphist wipe; hyprctl dispatch exit'"))
 
       -- Layout switching
       hl.bind(mod .. " + D", function() hl.config({ general = { layout = "dwindle" } }) end)
@@ -324,8 +344,8 @@ in {
 
         hl.exec_cmd("dunst")
         hl.exec_cmd("blueman-applet")
-        hl.exec_cmd("wl-paste --type text --watch cliphist store")
-        hl.exec_cmd("wl-paste --type image --watch cliphist store")
+        hl.exec_cmd("wl-paste --type text --watch ${cliphist-store}")
+        hl.exec_cmd("wl-paste --type image --watch sh -c '[ \"$CLIPBOARD_STATE\" = sensitive ] || cliphist store'")
 
         -- Wallpaper
         hl.exec_cmd("awww-daemon")
@@ -579,6 +599,27 @@ in {
     };
     Install = {
       WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+    };
+  };
+
+  # Wipe clipboard history when the graphical session ends, so copied secrets
+  # never outlive a login. The Mod+Shift+Q bind and the power menu already wipe
+  # on explicit logout; this covers session teardown on the UWSM host, where
+  # graphical-session.target is managed. Harmless where that target never
+  # activates (the unit simply isn't pulled in).
+  systemd.user.services.cliphist-wipe = {
+    Unit = {
+      Description = "Wipe cliphist clipboard history on logout";
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.cliphist}/bin/cliphist wipe";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 
