@@ -105,11 +105,17 @@ in {
           scale = 1;
         }
         {
-          # HDMI dummy plug — disabled by default, Sunshine prep-cmd enables it for streaming.
-          # Match by description: the kernel-assigned connector name (HDMI-A-1 vs -A-3)
-          # has shifted across reboots/driver updates and broke the disable rule.
+          # HDMI dummy plug — kept enabled but parked off to the side at a
+          # tiny resolution; Sunshine prep-cmd just changes its mode for
+          # streaming. Disabling/re-enabling Hyprland monitors dynamically
+          # has a known bug where the output can get stuck dark and require
+          # a full session restart, so we never toggle this one off.
+          # Match by description: the kernel-assigned connector name
+          # (HDMI-A-1 vs -A-3) has shifted across reboots/driver updates.
           output = "desc:IDV AOC28E850.HDR";
-          disabled = true;
+          mode = "640x480@59.94";
+          position = "6000x0";
+          scale = 1;
         }
         {
           # Fallback for any monitor - prevents crashes when monitor config is stale
