@@ -422,9 +422,13 @@ in {
           on-timeout = "[ -f /tmp/sunshine-streaming ] || (pidof hyprlock || hyprlock)";
         }
         {
-          # DPMS off before suspend - helps NVIDIA resume properly
+          # DPMS off before suspend - helps NVIDIA resume properly. Not
+          # guarded by the streaming flag: the actual capture happens on
+          # the dummy plug (see sunshine.nix), never the primary monitor,
+          # so blanking the primary while playing via Moonlight is safe
+          # and desired (nobody's looking at it locally during a stream).
           timeout = 1140;
-          on-timeout = "[ -f /tmp/sunshine-streaming ] || hyprctl dispatch dpms off";
+          on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
         {
