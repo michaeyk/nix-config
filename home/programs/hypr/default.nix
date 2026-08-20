@@ -59,6 +59,9 @@
     fi
     printf '%s' "$data" | ${pkgs.cliphist}/bin/cliphist store
   '';
+  # Shared with the monitor block and the workspace_rule pins below — must
+  # match sunshine.nix's primaryMonitor.
+  primaryMonitorDesc = "desc:Samsung Electric Company Odyssey G95SC";
 in {
   home.packages = with pkgs; [
     hypridle
@@ -99,7 +102,7 @@ in {
       monitor = [
         {
           # Match by description so the config survives DP port changes across reboots
-          output = "desc:Samsung Electric Company Odyssey G95SC";
+          output = primaryMonitorDesc;
           mode = "5120x1440@240";
           position = "0x0";
           scale = 1;
@@ -125,6 +128,19 @@ in {
           scale = "auto";
         }
       ];
+
+      # Without this, Hyprland round-robins new workspaces across whichever
+      # monitor is focused when they're first created. Since the HDMI dummy
+      # plug (see sunshine.nix) is always enabled, some of workspaces 1-10
+      # end up bound to it instead of the primary monitor — invisible,
+      # since the dummy plug is parked off-screen at 6000x0, so switching to
+      # one of those workspaces looks like it silently does nothing. Pin
+      # them all to the primary monitor explicitly.
+      workspace_rule = map (i: {
+        workspace = toString i;
+        monitor = primaryMonitorDesc;
+        default = i == 1;
+      }) (lib.range 1 10);
 
       config = {
         ecosystem.no_update_news = true;
