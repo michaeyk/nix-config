@@ -128,9 +128,17 @@ let
     # see it, then leave it alone — Steam's own window may legitimately
     # need to drop out of fullscreen during the handoff to the game, and
     # re-forcing it on every poll would fight that transition instead of
-    # letting it happen. Also keeps Sunshine's app process alive.
+    # letting it happen.
+    #
+    # Bounded to 10 minutes, not "while true": Sunshine only runs this
+    # app's Undo Cmd (which clears /tmp/sunshine-streaming, restoring
+    # normal hypridle lock/suspend) once this script's process exits, not
+    # when the client disconnects — so keeping it alive indefinitely means
+    # the streaming flag never clears, even hours after you've stopped
+    # playing. 10 minutes is generous for the Big Picture -> game handoff;
+    # the game itself keeps running as its own process either way.
     declare -A fullscreened
-    while true; do
+    for i in {1..300}; do
       dummy_id=$(${hyprctl} -j monitors all | ${pkgs.jq}/bin/jq -r --arg desc "${dummyPlugDesc}" '.[] | select(.description | startswith($desc)) | .id')
       if [ -n "$dummy_id" ]; then
         while read -r addr; do

@@ -411,7 +411,7 @@ in {
     settings = {
       general = {
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on; loginctl unlock-session; sleep 1; loginctl lock-session";
+        after_sleep_cmd = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"enable\" }))'; loginctl unlock-session; sleep 1; loginctl lock-session";
         ignore_dbus_inhibit = false;
         lock_cmd = "pidof hyprlock || hyprlock";
       };
@@ -422,14 +422,14 @@ in {
           on-timeout = "[ -f /tmp/sunshine-streaming ] || (pidof hyprlock || hyprlock)";
         }
         {
-          # DPMS off before suspend - helps NVIDIA resume properly. Not
-          # guarded by the streaming flag: the actual capture happens on
-          # the dummy plug (see sunshine.nix), never the primary monitor,
-          # so blanking the primary while playing via Moonlight is safe
-          # and desired (nobody's looking at it locally during a stream).
+          # DPMS off before suspend - helps NVIDIA resume properly.
+          # Guarded by the streaming flag: "dpms" toggles all outputs at
+          # once (Hyprland has no per-monitor DPMS dispatch), so an
+          # unguarded call here would also blank the dummy plug mid-stream
+          # (see sunshine.nix) and could freeze/black out the Moonlight feed.
           timeout = 1140;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = "[ -f /tmp/sunshine-streaming ] || hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"disable\" }))'";
+          on-resume = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"enable\" }))'";
         }
         {
           timeout = 1200;
