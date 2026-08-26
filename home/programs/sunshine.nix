@@ -130,15 +130,19 @@ let
     # re-forcing it on every poll would fight that transition instead of
     # letting it happen.
     #
-    # Bounded to 10 minutes, not "while true": Sunshine only runs this
-    # app's Undo Cmd (which clears /tmp/sunshine-streaming, restoring
-    # normal hypridle lock/suspend) once this script's process exits, not
-    # when the client disconnects — so keeping it alive indefinitely means
-    # the streaming flag never clears, even hours after you've stopped
-    # playing. 10 minutes is generous for the Big Picture -> game handoff;
-    # the game itself keeps running as its own process either way.
+    # Bounded to 24 hours, not "while true": Sunshine only runs this app's
+    # Undo Cmd (which clears /tmp/sunshine-streaming, restoring normal
+    # hypridle lock/suspend, and resets the dummy plug's resolution/focus)
+    # once this script's process exits — not when the client disconnects,
+    # and not when the game itself exits (Steam daemonizes and reparents
+    # away from this script, so we can't wait on it directly). A short
+    # bound (this used to be 10 minutes) causes the script to exit mid-game,
+    # which Sunshine reads as "the app terminated" and tears down the
+    # capture pipeline — killing the stream while the game keeps running
+    # underneath. 24 hours comfortably outlasts any real session while
+    # still eventually cleaning up if the box is left streaming unattended.
     declare -A fullscreened
-    for i in {1..300}; do
+    for i in {1..43200}; do
       dummy_id=$(${hyprctl} -j monitors all | ${pkgs.jq}/bin/jq -r --arg desc "${dummyPlugDesc}" '.[] | select(.description | startswith($desc)) | .id')
       if [ -n "$dummy_id" ]; then
         while read -r addr; do
