@@ -487,6 +487,15 @@ in {
 
   nix.settings.download-buffer-size = 524288000;
 
+  nix.settings.extra-substituters = [
+    "https://devenv.cachix.org"
+    "https://cachix.cachix.org"
+  ];
+  nix.settings.extra-trusted-public-keys = [
+    "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+    "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+  ];
+
   nix.extraOptions = ''
     trusted-users = root mike
   '';
