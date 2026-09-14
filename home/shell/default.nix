@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+  ezaParams = "--git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale=all";
   cargoAliases = {
     cb = "cargo build";
     cbr = "cargo build --release";
