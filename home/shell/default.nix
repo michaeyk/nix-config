@@ -287,6 +287,13 @@ in {
       "4B8632E0A2698E0CCB84DA4B1C7F0D56870ECCA9"
     ];
     defaultCacheTtl = 1800;
+    # Default "grab" makes pinentry-gtk2 seize the keyboard/mouse via an
+    # XWayland grab, which Hyprland doesn't always honor reliably -- when it
+    # silently fails, gpg-agent gets no pinentry response and gpg reports
+    # "decryption failed: End of file". That broke background secret-service
+    # decrypts for Gajim (pass-secret-service), making it re-prompt for a
+    # password every launch even though the secret was stored correctly.
+    grabKeyboardAndMouse = false;
   };
 
 
