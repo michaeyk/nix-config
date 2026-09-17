@@ -18,6 +18,17 @@ let
       ${pkgs.coreutils}/bin/sleep 0.5
     done
 
+    # Skip the whole reset if a pinentry prompt is currently up -- restarting
+    # pcscd (or killing gpg-agent) out from under a live PIN request yanks the
+    # reader out from under scdaemon's open connection ("Reader Exclusive" in
+    # pcscd's log), so the pending request never gets its PIN and times out
+    # 60s later. That's what breaks Gajim's pass-secret-service decrypt after
+    # resume: this hook races a real request and wins, then the real request
+    # dies waiting on a connection that no longer exists.
+    if ${pkgs.procps}/bin/pgrep -f pinentry >/dev/null; then
+      exit 0
+    fi
+
     # Kill all GPG daemons to clear stale state (gpg-agent caches card info)
     ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
 
@@ -420,10 +431,15 @@ in {
     };
   };
 
-  # Reset GPG after resume so YubiKey is recognized
+  # Reset GPG after resume so YubiKey is recognized. Guarded the same way as
+  # yubikey-gpg-refresh: this and the udev "add" hook both fire around resume,
+  # and restarting pcscd (or killing gpg-agent) while a real pinentry prompt
+  # is up yanks the reader out from under it, so skip the whole reset.
   powerManagement.resumeCommands = ''
-    ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
-    ${pkgs.systemd}/bin/systemctl restart pcscd.service
+    if ! ${pkgs.procps}/bin/pgrep -f pinentry >/dev/null; then
+      ${pkgs.util-linux}/bin/runuser -u mike -- ${pkgs.gnupg}/bin/gpgconf --kill all
+      ${pkgs.systemd}/bin/systemctl restart pcscd.service
+    fi
   '';
 
   programs.seahorse.enable = true;
