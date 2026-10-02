@@ -455,6 +455,11 @@ in {
           on = ["Y"];
           mode = ["normal"];
         }
+        {
+          run = "cd ~/documents/obsidian";
+          on = ["g" "o"];
+          mode = ["normal"];
+        }
       ];
     };
     settings = {
