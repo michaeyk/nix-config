@@ -506,6 +506,10 @@ in {
       "minipc.local" = {
         ForwardAgent = true;
       };
+      "dellbro00.local" = {
+        User = "root";
+        ForwardAgent = true;
+      };
     };
   };
 
