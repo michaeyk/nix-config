@@ -492,7 +492,7 @@ in {
     };
   };
 
-  # Flatpak
+  # Flatpak (GeForce Infinity for GeForce Now)
   services.flatpak.enable = true;
 
   # Allow unfree packages

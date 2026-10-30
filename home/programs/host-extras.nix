@@ -11,6 +11,12 @@
     shotcut
     kdenlive-patched-dbus
     kdenlive-mcp-dbus
+    # GeForce Now has no native Linux client; GeForce Infinity (flatpak,
+    # io.github.astralvixen.geforce-infinity) wraps the web client. One-time
+    # per host: flatpak install flathub io.github.astralvixen.geforce-infinity
+    (pkgs.writeShellScriptBin "geforce-infinity" ''
+      exec flatpak run io.github.astralvixen.geforce-infinity "$@"
+    '')
   ];
 
   # Background daemon that lets the Jellyfin web/mobile app "cast" playback to
