@@ -193,6 +193,9 @@ in {
   programs = {
     nushell = {
       enable = true;
+      # Pin pre-26.11 behavior explicitly rather than relying on stateVersion
+      # to pick it implicitly (which now emits a warning).
+      loadSessionVariables = false;
       # The config.nu can be anywhere you want if you like to edit your Nushell with Nu
       # configFile.source = ./.../config.nu;
       # for editing directly to config.nu
@@ -280,14 +283,14 @@ in {
   };
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-gtk2;
+    pinentry.package = pkgs.pinentry-gnome3;
     enableSshSupport = true;
     enableScDaemon = true;
     sshKeys = [
       "4B8632E0A2698E0CCB84DA4B1C7F0D56870ECCA9"
     ];
     defaultCacheTtl = 1800;
-    # Default "grab" makes pinentry-gtk2 seize the keyboard/mouse via an
+    # Default "grab" makes pinentry-gnome3 seize the keyboard/mouse via an
     # XWayland grab, which Hyprland doesn't always honor reliably -- when it
     # silently fails, gpg-agent gets no pinentry response and gpg reports
     # "decryption failed: End of file". That broke background secret-service

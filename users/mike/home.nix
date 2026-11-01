@@ -72,7 +72,7 @@
 
     # encryption / passwords
     pass
-    pinentry-gtk2
+    pinentry-gnome3
     libsecret
     sops
     ledger-live-desktop
@@ -84,7 +84,7 @@
 
     # productivity
     obsidian
-    libreoffice-fresh
+    libreoffice
     # glabels
 
     # Raspberry Pi

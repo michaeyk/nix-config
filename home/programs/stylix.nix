@@ -73,6 +73,10 @@
       kitty.enable = true;      # Terminal emulator
       helix.enable = true;      # Text editor
       fuzzel.enable = true;     # Application launcher
+      # Not used (fuzzel is the launcher); autoEnable would otherwise turn
+      # this on and set the pre-rename `programs.rofi.font` option, which
+      # emits a deprecation warning upstream hasn't fixed yet.
+      rofi.enable = false;
       firefox = {
         enable = true;
         profileNames = [ "default" ];  # Match the profile name from firefox.nix

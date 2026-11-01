@@ -50,19 +50,12 @@
     # encryption / passwords
     cryptsetup
     pass
-    pinentry-gtk2
+    pinentry-gnome3
     libsecret
     # Backs the freedesktop Secret Service D-Bus API (org.freedesktop.secrets)
     # with the existing pass/gpg-agent store, so apps like Gajim that want a
     # keyring don't need gnome-keyring (which fights gpg-agent, see hypr).
-    # Upstream is unmaintained since 2023 and calls asyncio.get_event_loop()
-    # with no running loop, which Python 3.14 no longer auto-creates for.
-    (pkgs.pass-secret-service.overrideAttrs (old: {
-      postPatch = (old.postPatch or "") + ''
-        substituteInPlace pass_secret_service/pass_secret_service.py \
-          --replace-fail "asyncio.get_event_loop()" "asyncio.new_event_loop()"
-      '';
-    }))
+    pass-secret-service
     sops
     ledger-live-desktop
     qrencode
