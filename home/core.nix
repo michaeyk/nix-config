@@ -40,7 +40,6 @@
     visidata
     claude-code
     codex
-    gemini-cli
     herdr
     pi-coding-agent
     nurPkgs.repos.charmbracelet.crush
