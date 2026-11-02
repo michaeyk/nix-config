@@ -132,7 +132,7 @@
         aerc = {
           enable = true;
           extraAccounts = {
-            source = "notmuch:///home/mike/.maildir";
+            source = "notmuch://";
             outgoing = "msmtpq --read-envelope-from --read-recipients";
           };
         };
