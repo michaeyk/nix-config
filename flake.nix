@@ -14,6 +14,9 @@
     nur.url = "github:nix-community/NUR";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    # Brave 1.98 renders Netflix (Widevine) video black under native Wayland on
+    # NVIDIA; 1.92 from this rev works. Drop once a newer Brave is fixed.
+    nixpkgs-brave.url = "github:NixOS/nixpkgs/753cc8a3a87467296ddd1fa93f0cc3e81120ee46";
   };
   outputs = {
     nixpkgs,
@@ -22,6 +25,14 @@
   } @ inputs: let
     lib = nixpkgs.lib;
     customOverlay = final: prev: {
+      inherit
+        (import inputs.nixpkgs-brave {
+          localSystem = final.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        })
+        brave
+        ;
+
       kdenlive-patched-dbus = prev.kdePackages.kdenlive.overrideAttrs (_old: rec {
         version = "26.03.70-dbus-fb0c86d";
         src = final.fetchFromGitHub {
