@@ -8,7 +8,7 @@ case $SELECTION in
 	*"Suspend")
 		systemctl suspend;;
 	*"Log out")
-		cliphist wipe; hyprctl dispatch exit;;
+		cliphist wipe; uwsm stop;;
 	*"Reboot")
 		cliphist wipe; systemctl reboot;;
 	*"Reboot to UEFI")

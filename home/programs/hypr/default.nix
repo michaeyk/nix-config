@@ -303,7 +303,7 @@ in {
       hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized" }))
       hl.bind(mod .. " + W", hl.dsp.window.close())
       hl.bind(mod .. " + Q", hl.dsp.exec_cmd("~/.config/waybar/scripts/fuzzel-powermenu.sh"))
-      hl.bind(mod .. " + SHIFT + Q", hl.dsp.exec_cmd("sh -c 'cliphist wipe; hyprctl dispatch exit'"))
+      hl.bind(mod .. " + SHIFT + Q", hl.dsp.exec_cmd("sh -c 'cliphist wipe; uwsm stop'"))
 
       -- Layout switching
       hl.bind(mod .. " + D", function() hl.config({ general = { layout = "dwindle" } }) end)
@@ -611,7 +611,10 @@ in {
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 2 && hyprctl dispatch dpms on'";
+      ExecStart = "${pkgs.writeShellScript "hyprland-resume-dpms" ''
+        sleep 2
+        hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = "enable" }))'
+      ''}";
     };
     Install = {
       WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
