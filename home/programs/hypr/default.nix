@@ -392,10 +392,7 @@ in {
   programs.hyprlock.enable = true;
   programs.hyprlock.settings = {
     general = {
-      disable_loading_bar = true;
-      grace = 300;
       hide_cursor = true;
-      no_fade_in = false;
     };
 
     background = [
@@ -437,16 +434,9 @@ in {
           timeout = 900;
           on-timeout = "[ -f /tmp/sunshine-streaming ] || (pidof hyprlock || hyprlock)";
         }
-        {
-          # DPMS off before suspend - helps NVIDIA resume properly.
-          # Guarded by the streaming flag: "dpms" toggles all outputs at
-          # once (Hyprland has no per-monitor DPMS dispatch), so an
-          # unguarded call here would also blank the dummy plug mid-stream
-          # (see sunshine.nix) and could freeze/black out the Moonlight feed.
-          timeout = 1140;
-          on-timeout = "[ -f /tmp/sunshine-streaming ] || hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"disable\" }))'";
-          on-resume = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"enable\" }))'";
-        }
+        # No DPMS-off step before suspend: on Hyprland 0.57 + NVIDIA,
+        # dispatching dpms disable makes Hyprland exit uncleanly every time,
+        # and start-hyprland then restarts it in --safe-mode (no user config).
         {
           timeout = 1200;
           on-timeout = "[ -f /tmp/sunshine-streaming ] || systemctl suspend";
