@@ -241,8 +241,8 @@ in {
         name = "Zebra-ZP450";
         description = "Zebra Technologies ZTC ZP 450-200dpi";
         location = "Mike Office";
-        deviceUri = "ipp://zebra.local/ipp/print";
-        model = "drv:///sample.drv/zebra.ppd";
+        deviceUri = "ipp://zebra.local:631/printers/Zebra_Technologies_ZTC_ZP_450-200dpi";
+        model = "raw"; # Pi runs the Zebra driver; rendering here too double-converts
       }
     ];
     ensureDefaultPrinter = "Dell-H625cdw";
