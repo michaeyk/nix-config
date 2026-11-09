@@ -424,7 +424,9 @@ in {
     settings = {
       general = {
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"enable\" }))'; loginctl unlock-session; sleep 1; loginctl lock-session";
+        # No dpms dispatch on resume: nothing turns DPMS off anymore, and
+        # dispatching it ~1s after wake killed Hyprland 0.57 on NVIDIA.
+        after_sleep_cmd = "loginctl unlock-session; sleep 1; loginctl lock-session";
         ignore_dbus_inhibit = false;
         lock_cmd = "pidof hyprlock || hyprlock";
       };
@@ -602,24 +604,6 @@ in {
 
   # interferes with gpg-agent, force it off
   services.gnome-keyring.enable = lib.mkForce false;
-
-  # Fallback for NVIDIA resume - systemd is more reliable than hypridle's after_sleep_cmd
-  systemd.user.services.hyprland-resume = {
-    Unit = {
-      Description = "Turn on DPMS after resume from suspend";
-      After = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScript "hyprland-resume-dpms" ''
-        sleep 2
-        hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = "enable" }))'
-      ''}";
-    };
-    Install = {
-      WantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    };
-  };
 
   # Wipe clipboard history when the graphical session ends, so copied secrets
   # never outlive a login. The Mod+Shift+Q bind and the power menu already wipe
