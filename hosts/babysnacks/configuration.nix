@@ -264,6 +264,11 @@ in {
   # Ledger Nano X
   hardware.ledger.enable = true;
 
+  # pinentry-gnome3 (gpg-agent's pinentry, see home/shell) draws its dialog via
+  # gcr's org.gnome.keyring.SystemPrompter D-Bus service. Without gcr on the
+  # bus it silently falls back to the curses prompt in the calling terminal.
+  services.dbus.packages = [ pkgs.gcr_3 ];
+
   # yubikey and ledger live udev rules
   services.udev.packages = with pkgs; [
     yubikey-personalization
